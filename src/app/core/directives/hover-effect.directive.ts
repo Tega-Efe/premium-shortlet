@@ -1,4 +1,5 @@
-import { Directive, ElementRef, HostListener, OnInit, input } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnInit, input, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Directive to add smooth hover effects to elements
@@ -14,9 +15,17 @@ export class HoverEffectDirective implements OnInit {
   duration = input<number>(300); // Transition duration in ms
   shadowColor = input<string>('rgba(125, 25, 53, 0.15)'); // Shadow color for lift/glow effects
 
-  constructor(private el: ElementRef<HTMLElement>) {}
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser: boolean;
+
+  constructor(private el: ElementRef<HTMLElement>) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit(): void {
+    // Only run in browser environment (not during SSR)
+    if (!this.isBrowser) return;
+    
     const element = this.el.nativeElement;
     
     // Set base transition
@@ -33,6 +42,7 @@ export class HoverEffectDirective implements OnInit {
 
   @HostListener('mouseenter')
   onMouseEnter(): void {
+    if (!this.isBrowser) return;
     const element = this.el.nativeElement;
     const effectType = this.effect();
     const originalTransform = element.getAttribute('data-original-transform') || '';
@@ -64,6 +74,8 @@ export class HoverEffectDirective implements OnInit {
 
   @HostListener('mouseleave')
   onMouseLeave(): void {
+    if (!this.isBrowser) return;
+    
     const element = this.el.nativeElement;
     const originalTransform = element.getAttribute('data-original-transform') || '';
 
@@ -75,6 +87,8 @@ export class HoverEffectDirective implements OnInit {
 
   @HostListener('mousedown')
   onMouseDown(): void {
+    if (!this.isBrowser) return;
+    
     const element = this.el.nativeElement;
     const originalTransform = element.getAttribute('data-original-transform') || '';
     
@@ -84,6 +98,8 @@ export class HoverEffectDirective implements OnInit {
 
   @HostListener('mouseup')
   onMouseUp(): void {
+    if (!this.isBrowser) return;
+    
     // Trigger mouseenter again to restore hover state
     this.onMouseEnter();
   }

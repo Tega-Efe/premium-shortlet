@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ApartmentFilter } from '../../../core/services/apartment.service';
+import { ApartmentFilter } from '../../../core/services/apartment.service.firestore';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({

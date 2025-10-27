@@ -1,0 +1,194 @@
+{
+  "apartments": {
+    "main-apartment-001": {
+      "id": "main-apartment-001",
+      "title": "Luxury Two-Bedroom Apartment in Victoria Island",
+      "description": "Experience luxury living in this stunning two-bedroom apartment located in the heart of Victoria Island, Lagos.\n\nThis beautifully furnished apartment features:\n- Spacious living room with modern furniture\n- Fully equipped kitchen with premium appliances\n- Two comfortable bedrooms with king-size beds\n- Two bathrooms with hot water showers\n- High-speed WiFi and Smart TV\n- 24/7 security and power backup\n- Dedicated parking space\n- Access to swimming pool and gym\n\nPerfect for business travelers, families, or couples looking for a comfortable short-term stay in Lagos. The apartment is within walking distance to restaurants, shopping centers, and business districts.\n\nBook the entire apartment or just one room - flexible options to suit your needs!",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "guests": 4,
+      "pricePerNight": 35000,
+      "images": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800",
+        "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+        "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800",
+        "https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=800"
+      ],
+      "amenities": [
+        "WiFi",
+        "Air Conditioning",
+        "Kitchen",
+        "TV",
+        "Parking",
+        "Security",
+        "Generator",
+        "Swimming Pool",
+        "Gym",
+        "Elevator",
+        "Balcony",
+        "Washer/Dryer"
+      ],
+      "location": {
+        "city": "Lagos",
+        "state": "Lagos",
+        "country": "Nigeria",
+        "address": "Victoria Island, Lagos",
+        "coordinates": {
+          "lat": 6.4281,
+          "lng": 3.4219
+        }
+      },
+      "pricing": {
+        "oneRoomPerNight": 20000,
+        "entireApartmentPerNight": 35000,
+        "weeklyDiscount": 10,
+        "monthlyDiscount": 25,
+        "cleaningFee": 5000,
+        "securityDeposit": 50000
+      },
+      "houseRules": [
+        "No smoking inside the apartment",
+        "No parties or events",
+        "Quiet hours: 10 PM - 7 AM",
+        "Maximum 4 guests",
+        "Pets not allowed",
+        "Check-in: 2:00 PM - 10:00 PM",
+        "Check-out: 12:00 PM"
+      ],
+      "availability": true,
+      "featured": true,
+      "verified": true,
+      "rating": 4.8,
+      "totalReviews": 127,
+      "owner": {
+        "id": "owner-001",
+        "name": "Shortlet Connect",
+        "email": "admin@shortletconnect.com",
+        "phone": "+234 809 123 4567",
+        "verified": true
+      },
+      "createdAt": "2025-10-27T10:00:00.000Z",
+      "updatedAt": "2025-10-27T10:00:00.000Z"
+    }
+  },
+  "apartment-availability": {
+    "main-apartment": {
+      "isAvailable": true,
+      "unavailableMessage": null,
+      "lastUpdated": "2025-10-27T10:00:00.000Z",
+      "updatedBy": "System"
+    }
+  },
+  "simplified-bookings": [
+    {
+      "guestName": "Chinedu Okonkwo",
+      "guestEmail": "chinedu.okonkwo@email.com",
+      "guestPhone": "+234 803 456 7890",
+      "address": "45 Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
+      "bookingOption": "entire-apartment",
+      "checkInDate": "2025-11-05",
+      "checkOutDate": "2025-11-10",
+      "numberOfNights": 5,
+      "status": "pending",
+      "idPhotoUrl": null,
+      "idPhotoPath": null,
+      "createdAt": "2025-10-25T10:30:00.000Z",
+      "updatedAt": "2025-10-25T10:30:00.000Z",
+      "approvedBy": null,
+      "rejectedBy": null,
+      "rejectionReason": null
+    },
+    {
+      "guestName": "Aisha Bello",
+      "guestEmail": "aisha.bello@email.com",
+      "guestPhone": "+234 805 678 9012",
+      "address": "12 Ogudu Road, Ojota, Lagos, Nigeria",
+      "bookingOption": "one-room",
+      "checkInDate": "2025-11-15",
+      "checkOutDate": "2025-11-18",
+      "numberOfNights": 3,
+      "status": "approved",
+      "idPhotoUrl": null,
+      "idPhotoPath": null,
+      "createdAt": "2025-10-20T14:20:00.000Z",
+      "updatedAt": "2025-10-21T09:15:00.000Z",
+      "approvedBy": "Admin User",
+      "approvedAt": "2025-10-21T09:15:00.000Z",
+      "rejectedBy": null,
+      "rejectionReason": null
+    },
+    {
+      "guestName": "Emeka Nwosu",
+      "guestEmail": "emeka.nwosu@email.com",
+      "guestPhone": "+234 807 890 1234",
+      "address": "78 Herbert Macaulay Street, Yaba, Lagos, Nigeria",
+      "bookingOption": "entire-apartment",
+      "checkInDate": "2025-10-28",
+      "checkOutDate": "2025-10-30",
+      "numberOfNights": 2,
+      "status": "rejected",
+      "idPhotoUrl": null,
+      "idPhotoPath": null,
+      "createdAt": "2025-10-18T16:45:00.000Z",
+      "updatedAt": "2025-10-19T11:30:00.000Z",
+      "approvedBy": null,
+      "rejectedBy": "Admin User",
+      "rejectedAt": "2025-10-19T11:30:00.000Z",
+      "rejectionReason": "Dates already booked by another guest"
+    },
+    {
+      "guestName": "Funke Adeyemi",
+      "guestEmail": "funke.adeyemi@email.com",
+      "guestPhone": "+234 809 012 3456",
+      "address": "23 Allen Avenue, Ikeja, Lagos, Nigeria",
+      "bookingOption": "one-room",
+      "checkInDate": "2025-11-20",
+      "checkOutDate": "2025-11-27",
+      "numberOfNights": 7,
+      "status": "pending",
+      "idPhotoUrl": null,
+      "idPhotoPath": null,
+      "createdAt": "2025-10-26T08:15:00.000Z",
+      "updatedAt": "2025-10-26T08:15:00.000Z",
+      "approvedBy": null,
+      "rejectedBy": null,
+      "rejectionReason": null
+    },
+    {
+      "guestName": "Ibrahim Yusuf",
+      "guestEmail": "ibrahim.yusuf@email.com",
+      "guestPhone": "+234 802 345 6789",
+      "address": "56 Adeola Odeku Street, Victoria Island, Lagos, Nigeria",
+      "bookingOption": "entire-apartment",
+      "checkInDate": "2025-12-01",
+      "checkOutDate": "2025-12-15",
+      "numberOfNights": 14,
+      "status": "approved",
+      "idPhotoUrl": null,
+      "idPhotoPath": null,
+      "createdAt": "2025-10-22T13:00:00.000Z",
+      "updatedAt": "2025-10-23T10:20:00.000Z",
+      "approvedBy": "Admin User",
+      "approvedAt": "2025-10-23T10:20:00.000Z",
+      "rejectedBy": null,
+      "rejectionReason": null
+    }
+  ],
+  "users": {
+    "admin-001": {
+      "uid": "admin-001",
+      "email": "admin@shortletconnect.com",
+      "displayName": "Admin User",
+      "role": "admin",
+      "permissions": [
+        "manage_bookings",
+        "manage_availability",
+        "view_analytics"
+      ],
+      "createdAt": "2025-10-27T10:00:00.000Z",
+      "lastLogin": "2025-10-27T10:00:00.000Z"
+    }
+  }
+}

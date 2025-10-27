@@ -1,11 +1,12 @@
 import { Component, OnInit, inject, signal, computed, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ApartmentService, NotificationService } from '../../core/services';
+// import { ApartmentService, NotificationService } from '../../core/services'; // COMMENTED OUT: Using Firestore version
+import { ApartmentServiceFirestore, ApartmentFilter } from '../../core/services/apartment.service.firestore'; // NEW: Firestore-based service
+import { NotificationService } from '../../core/services';
 import { SimplifiedBookingService } from '../../core/services/simplified-booking.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { Apartment, Booking } from '../../core/interfaces';
-import { ApartmentFilter } from '../../core/services/apartment.service';
 import { CardComponent } from '../../shared/components/card/card.component';
 // import { FilterComponent } from '../../shared/components/filter/filter.component'; // COMMENTED OUT: Not used in single-apartment mode
 import { ModalComponent } from '../../shared/components/modal/modal.component';
@@ -669,8 +670,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
   `]
 })
 export class HomeComponent implements OnInit {
-  private apartmentService = inject(ApartmentService);
-  
+  // private apartmentService = inject(ApartmentService); // COMMENTED OUT: Using Firestore version
+  private apartmentService = inject(ApartmentServiceFirestore); // NEW: Firestore-based service
+  private simplifiedBookingService = inject(SimplifiedBookingService);
   private notificationService = inject(NotificationService);
   private route = inject(ActivatedRoute);
   protected themeService = inject(ThemeService);
@@ -732,9 +734,6 @@ export class HomeComponent implements OnInit {
   });
 
   bookingFormConfig = simplifiedBookingFormConfig;
-
-  // simplified booking service for single-apartment operation
-  private simplifiedBookingService = inject(SimplifiedBookingService);
 
   ngOnInit(): void {
     this.loadApartments();

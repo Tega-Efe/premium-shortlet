@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ApartmentService } from '../../core/services';
+import { ApartmentServiceFirestore } from '../../core/services/apartment.service.firestore';
 import { ThemeService } from '../../core/services/theme.service';
 import { Apartment } from '../../core/interfaces';
 import { CardComponent } from '../../shared/components/card/card.component';
@@ -810,16 +810,16 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
   `]
 })
 export class LandingComponent implements OnInit {
-  private apartmentService = inject(ApartmentService);
+  private apartmentService = inject(ApartmentServiceFirestore);
   private router = inject(Router);
   protected themeService = inject(ThemeService);
 
   featuredApartments = signal<Apartment[]>([]);
   isLoading = signal<boolean>(false);
   stats = signal({
-    totalListings: 150,
-    totalBookings: 500,
-    cities: 12
+    totalListings: 1, // Single two-bedroom apartment
+    totalBookings: 12, // Realistic for small-scale operation
+    cities: 1 // Single location: Lagos
   });
 
   ngOnInit(): void {

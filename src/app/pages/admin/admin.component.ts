@@ -1,8 +1,8 @@
 import { Component, OnInit, inject, signal, computed, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AdminService, BookingService, NotificationService } from '../../core/services';
-import { SimplifiedBookingService } from '../../core/services/simplified-booking.service'; // NEW: For single-apartment operations
+import { NotificationService } from '../../core/services';
+import { SimplifiedBookingService } from '../../core/services/simplified-booking.service'; // For single-apartment operations
 import { Booking, AdminAction } from '../../core/interfaces';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
@@ -619,9 +619,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
   `]
 })
 export class AdminComponent implements OnInit {
-  private adminService = inject(AdminService);
-  private bookingService = inject(BookingService);
-  private simplifiedBookingService = inject(SimplifiedBookingService); // NEW: For single-apartment operations
+  private simplifiedBookingService = inject(SimplifiedBookingService); // For single-apartment operations
   private notificationService = inject(NotificationService);
 
   @ViewChild('approvalModal') approvalModal!: ModalComponent;
@@ -662,11 +660,11 @@ export class AdminComponent implements OnInit {
   loadData(): void {
     this.isLoading.set(true);
     
-    // Load all bookings
-    this.bookingService.getBookings().subscribe({
-      next: (bookings) => {
-        this.allBookings.set(bookings);
-        this.updateStats(bookings);
+    // Load all bookings using SimplifiedBookingService
+    this.simplifiedBookingService.getAllBookings().subscribe({
+      next: (bookings: any[]) => {
+        this.allBookings.set(bookings as any);
+        this.updateStats(bookings as any);
         this.isLoading.set(false);
       },
       error: () => {
@@ -676,18 +674,18 @@ export class AdminComponent implements OnInit {
     });
 
     // Load pending bookings
-    this.bookingService.getPendingBookings().subscribe({
-      next: (bookings) => {
-        this.pendingBookings.set(bookings);
+    this.simplifiedBookingService.getPendingBookings().subscribe({
+      next: (bookings: any[]) => {
+        this.pendingBookings.set(bookings as any);
       }
     });
 
-    // Load admin actions
-    this.adminService.getRecentActivity(20).subscribe({
-      next: (actions) => {
-        this.adminActions.set(actions);
-      }
-    });
+    // Admin actions - commented out as not needed for simplified booking
+    // this.adminService.getRecentActivity(20).subscribe({
+    //   next: (actions) => {
+    //     this.adminActions.set(actions);
+    //   }
+    // });
   }
 
   updateStats(bookings: Booking[]): void {
@@ -740,7 +738,7 @@ export class AdminComponent implements OnInit {
     const action = this.approvalAction();
     
     if (action === 'approve') {
-      this.adminService.approveBooking(booking.id, this.adminId).subscribe({
+      this.simplifiedBookingService.approveBooking(booking.id, this.rejectionReason).subscribe({
         next: () => {
           this.notificationService.success('Booking approved successfully');
           this.closeApprovalModal();
@@ -756,7 +754,7 @@ export class AdminComponent implements OnInit {
         return;
       }
 
-      this.adminService.rejectBooking(booking.id, this.adminId, this.rejectionReason).subscribe({
+      this.simplifiedBookingService.rejectBooking(booking.id, this.rejectionReason).subscribe({
         next: () => {
           this.notificationService.success('Booking rejected');
           this.closeApprovalModal();

@@ -44,17 +44,17 @@
         <div class="hero-content" appAnimateOnScroll="fade-in">
           <div class="hero-badge" appAnimateOnScroll="slide-up" [delay]="100">
             <i class="fas fa-award"></i>
-            <span>Trusted by 500+ Happy Guests</span>
+            <span>Verified Luxury Apartment</span>
           </div>
           
           <h1 class="hero-title" appAnimateOnScroll="slide-up" [delay]="200">
-            Find Your Perfect
-            <span class="highlight">Shortlet Apartment</span>
+            Your Perfect
+            <span class="highlight">Victoria Island Stay</span>
           </h1>
           
           <p class="hero-subtitle" appAnimateOnScroll="slide-up" [delay]="300">
-            Discover amazing apartments for your short-term stay. 
-            Verified properties, instant booking, hassle-free experience.
+            Experience our beautiful two-bedroom apartment in the heart of Victoria Island, Lagos. 
+            Verified property, instant booking, hassle-free experience.
           </p>
           
           <div class="hero-actions" appAnimateOnScroll="slide-up" [delay]="400">
@@ -63,16 +63,16 @@
               (click)="navigateToBrowse()"
               appHoverEffect="glow"
             >
-              <i class="fas fa-search"></i>
-              Browse Apartments
+              <i class="fas fa-home"></i>
+              View Apartment
             </button>
             <button 
               class="btn btn-secondary btn-lg"
               (click)="scrollToFeatured()"
               appHoverEffect="glow"
             >
-              <i class="fas fa-star"></i>
-              View Featured
+              <i class="fas fa-info-circle"></i>
+              Learn More
             </button>
           </div>
 
@@ -80,10 +80,10 @@
           <div class="stats" appAnimateOnScroll="fade-in" [delay]="500">
             <div class="stat">
               <div class="stat-icon">
-                <i class="fas fa-building"></i>
+                <i class="fas fa-bed"></i>
               </div>
-              <span class="stat-value">{{ stats().totalListings }}+</span>
-              <span class="stat-label">Properties</span>
+              <span class="stat-value">2</span>
+              <span class="stat-label">Bedrooms</span>
             </div>
             <div class="stat">
               <div class="stat-icon">
@@ -96,15 +96,15 @@
               <div class="stat-icon">
                 <i class="fas fa-map-marker-alt"></i>
               </div>
-              <span class="stat-value">{{ stats().cities }}+</span>
-              <span class="stat-label">Cities</span>
+              <span class="stat-value">Victoria Island</span>
+              <span class="stat-label">Location</span>
             </div>
             <div class="stat">
               <div class="stat-icon">
                 <i class="fas fa-star"></i>
               </div>
               <span class="stat-value">4.8</span>
-              <span class="stat-label">Avg Rating</span>
+              <span class="stat-label">Guest Rating</span>
             </div>
           </div>
         </div>
@@ -114,15 +114,15 @@
           <div class="image-container">
             <div class="floating-card card-1">
               <i class="fas fa-home"></i>
-              <span>Luxury Apartments</span>
+              <span>2-Bedroom Luxury</span>
             </div>
             <div class="floating-card card-2">
               <i class="fas fa-check-circle"></i>
-              <span>Verified Properties</span>
+              <span>Verified & Safe</span>
             </div>
             <div class="floating-card card-3">
               <i class="fas fa-bolt"></i>
-              <span>Instant Booking</span>
+              <span>Quick Booking</span>
             </div>
             <div class="main-illustration">
               <i class="fas fa-building"></i>
@@ -137,11 +137,11 @@
           <div class="section-header" appAnimateOnScroll="slide-up">
             <div class="section-tag">
               <i class="fas fa-certificate"></i>
-              <span>Featured Properties</span>
+              <span>Our Property</span>
             </div>
-            <h2 class="section-title">Handpicked Apartments</h2>
+            <h2 class="section-title">Luxury Two-Bedroom Apartment</h2>
             <p class="section-subtitle">
-              Carefully selected properties offering the best experience and value
+              A carefully maintained property offering the best experience and value in Victoria Island
             </p>
           </div>
 
@@ -150,7 +150,7 @@
               <div class="spinner">
                 <i class="fas fa-circle-notch fa-spin"></i>
               </div>
-              <p>Discovering amazing apartments...</p>
+              <p>Loading apartment details...</p>
             </div>
           } @else if (featuredApartments().length > 0) {
             <div class="apartments-grid">
@@ -170,8 +170,8 @@
               <div class="empty-icon">
                 <i class="fas fa-home"></i>
               </div>
-              <h3>No Featured Apartments Yet</h3>
-              <p>Check back soon for our handpicked selection of amazing properties.</p>
+              <h3>Coming Soon</h3>
+              <p>Our beautiful apartment listing will be available shortly.</p>
             </div>
           }
 
@@ -181,7 +181,7 @@
               (click)="navigateToBrowse()"
               appHoverEffect="glow"
             >
-              <span>View All Apartments</span>
+              <span>View Full Details</span>
               <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -207,9 +207,9 @@
               <div class="feature-icon burgundy">
                 <i class="fas fa-shield-alt"></i>
               </div>
-              <h3 class="feature-title">Verified Properties</h3>
+              <h3 class="feature-title">Verified Property</h3>
               <p class="feature-description" appTypingEffect [config]="{typingSpeed: 3, autoStart: true}">
-                All apartments are thoroughly verified and quality-checked to ensure your safety and comfort.
+                Our apartment is thoroughly verified and quality-checked to ensure your safety and comfort throughout your stay.
               </p>
             </div>
 
@@ -217,9 +217,9 @@
               <div class="feature-icon tan">
                 <i class="fas fa-bolt"></i>
               </div>
-              <h3 class="feature-title">Instant Booking</h3>
+              <h3 class="feature-title">Easy Booking</h3>
               <p class="feature-description" appTypingEffect [config]="{typingSpeed: 2.5, autoStart: true}">
-                Quick and easy booking process with instant confirmation. No waiting, no hassle.
+                Simple booking process with quick confirmation. Reserve your room or the entire apartment hassle-free.
               </p>
             </div>
 
@@ -227,9 +227,9 @@
               <div class="feature-icon terracotta">
                 <i class="fas fa-tags"></i>
               </div>
-              <h3 class="feature-title">Best Prices</h3>
+              <h3 class="feature-title">Transparent Pricing</h3>
               <p class="feature-description" appTypingEffect [config]="{typingSpeed: 2.5, autoStart: true}">
-                Competitive pricing with transparent rates. No hidden fees or surprise charges.
+                Clear, upfront pricing with no hidden fees. Choose between one room or the entire apartment.
               </p>
             </div>
 
@@ -252,11 +252,11 @@
           <div class="section-header" appAnimateOnScroll="slide-up">
             <div class="section-tag">
               <i class="fas fa-quote-left"></i>
-              <span>Testimonials</span>
+              <span>Guest Reviews</span>
             </div>
             <h2 class="section-title">What Our Guests Say</h2>
             <p class="section-subtitle">
-              Real experiences from our satisfied guests
+              Real experiences from guests who stayed at our Victoria Island apartment
             </p>
           </div>
 
@@ -270,15 +270,15 @@
                 <i class="fas fa-star"></i>
               </div>
               <p class="testimonial-text">
-                "Amazing experience! The apartment was exactly as described, clean, and in a perfect location. The booking process was smooth and hassle-free."
+                "The apartment exceeded my expectations! Clean, spacious, and perfectly located in Victoria Island. The booking process was straightforward and the host was very responsive."
               </p>
               <div class="testimonial-author">
                 <div class="author-avatar">
                   <i class="fas fa-user"></i>
                 </div>
                 <div class="author-info">
-                  <h4 class="author-name">Sarah Johnson</h4>
-                  <p class="author-role">Business Traveler</p>
+                  <h4 class="author-name">Chinedu O.</h4>
+                  <p class="author-role">Business Traveler · Oct 2025</p>
                 </div>
               </div>
             </div>
@@ -292,15 +292,15 @@
                 <i class="fas fa-star"></i>
               </div>
               <p class="testimonial-text">
-                "Great value for money! The property exceeded my expectations. Customer support was responsive and helpful throughout my stay."
+                "Great value! I stayed for a week and felt right at home. The two bedrooms were perfect for my family visit. Everything was as described and the location is excellent."
               </p>
               <div class="testimonial-author">
                 <div class="author-avatar">
                   <i class="fas fa-user"></i>
                 </div>
                 <div class="author-info">
-                  <h4 class="author-name">Michael Chen</h4>
-                  <p class="author-role">Vacation Guest</p>
+                  <h4 class="author-name">Aisha B.</h4>
+                  <p class="author-role">Family Vacation · Sep 2025</p>
                 </div>
               </div>
             </div>
@@ -311,18 +311,18 @@
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
               </div>
               <p class="testimonial-text">
-                "Highly recommend! The platform is user-friendly, and the verification process gave me peace of mind. Will definitely use again."
+                "Comfortable stay in a prime location. The apartment had all the amenities I needed. Would definitely book again for my next trip to Lagos."
               </p>
               <div class="testimonial-author">
                 <div class="author-avatar">
                   <i class="fas fa-user"></i>
                 </div>
                 <div class="author-info">
-                  <h4 class="author-name">Emily Rodriguez</h4>
-                  <p class="author-role">Regular Guest</p>
+                  <h4 class="author-name">Ibrahim Y.</h4>
+                  <p class="author-role">Corporate Guest · Aug 2025</p>
                 </div>
               </div>
             </div>
@@ -342,30 +342,30 @@
           <div class="cta-icon">
             <i class="fas fa-home"></i>
           </div>
-          <h2 class="cta-title">Ready to Find Your Perfect Stay?</h2>
+          <h2 class="cta-title">Ready to Book Your Stay?</h2>
           <p class="cta-subtitle">
-            Browse our collection of amazing apartments and book your next stay today
+            Book our luxury two-bedroom apartment in Victoria Island today and experience comfort at its best
           </p>
           <button 
             class="btn btn-primary btn-lg btn-cta"
             (click)="navigateToBrowse()"
             appHoverEffect="glow"
           >
-            <span>Get Started Now</span>
+            <span>Book Now</span>
             <i class="fas fa-arrow-right"></i>
           </button>
           <div class="cta-features">
             <div class="cta-feature">
               <i class="fas fa-check-circle"></i>
-              <span>Free Cancellation</span>
+              <span>Flexible Options</span>
             </div>
             <div class="cta-feature">
               <i class="fas fa-check-circle"></i>
-              <span>Best Price Guarantee</span>
+              <span>Quick Approval</span>
             </div>
             <div class="cta-feature">
               <i class="fas fa-check-circle"></i>
-              <span>Secure Payment</span>
+              <span>Verified & Safe</span>
             </div>
           </div>
         </div>

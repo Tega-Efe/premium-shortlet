@@ -1,0 +1,34 @@
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  
+  &:hover {
+    background: var(--bg-secondary);
+    border-color: var(--border-medium);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--color-burgundy);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  i {
+    transition: transform var(--transition-base);
+  }
+
+  &:hover i {
+    transform: rotate(20deg) scale(1.1);
+  }
+}

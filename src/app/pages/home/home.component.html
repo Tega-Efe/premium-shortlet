@@ -1,0 +1,257 @@
+<div class="home-page">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="header-background">
+          <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+            <path fill="rgba(212, 165, 116, 0.2)" d="M0,192 Q360,128 720,192 T1440,192 L1440,0 L0,0 Z"></path>
+            <path fill="rgba(125, 25, 53, 0.15)" d="M0,160 Q360,96 720,160 T1440,160 L1440,0 L0,0 Z"></path>
+          </svg>
+        </div>
+        <div class="container" appAnimateOnScroll="slide-up">
+          <div class="header-content">
+            <div class="header-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <h1 class="page-title">Our Two-Bedroom Apartment</h1>
+            <p class="page-subtitle">
+              Book your comfortable stay in our verified two-bedroom apartment.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="content-grid">
+          <!-- COMMENTED OUT FOR SINGLE-APARTMENT OPERATION -->
+          <!-- To re-enable filters: uncomment this section when scaling back up -->
+          <!--
+          <aside class="sidebar" appAnimateOnScroll="slide-right">
+            <app-filter (filterChange)="onFilterChange($event)" />
+          </aside>
+          -->
+
+          <!-- Main Content -->
+          <main class="main-content">
+            <!-- Results Header -->
+            <div class="results-header" appAnimateOnScroll="fade-in">
+              <div class="results-info">
+                <div class="results-count-badge">
+                  <i class="fas fa-home"></i>
+                  <span class="count-number">{{ filteredApartments().length }}</span>
+                </div>
+                <div class="results-text">
+                  <h2 class="results-count">
+                    {{ filteredApartments().length === 1 ? 'Apartment' : 'Apartments' }} Available
+                  </h2>
+                  @if (hasActiveFilters()) {
+                    <button 
+                      class="btn-text"
+                      (click)="clearFilters()"
+                    >
+                      <i class="fas fa-times-circle"></i>
+                      Clear all filters
+                    </button>
+                  }
+                </div>
+              </div>
+
+              <!-- COMMENTED OUT: Sort options not needed for single apartment -->
+              <!--
+              <div class="sort-section">
+                <label for="sort" class="sort-label">
+                  <i class="fas fa-sort-amount-down"></i>
+                  Sort by:
+                </label>
+                <select 
+                  id="sort"
+                  [value]="currentSort()"
+                  (change)="onSortChange($event)"
+                  class="sort-select"
+                >
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="rating-desc">Highest Rated</option>
+                  <option value="newest">Newest First</option>
+                </select>
+              </div>
+              -->
+            </div>
+
+            <!-- Loading State -->
+            @if (isLoading()) {
+              <div class="loading-container" appAnimateOnScroll="fade-in">
+                <app-loader />
+              </div>
+            }
+
+            <!-- Apartments Grid -->
+            @else if (paginatedApartments().length > 0) {
+              <div class="apartments-grid">
+                @for (apartment of paginatedApartments(); track apartment.id; let i = $index) {
+                  <div appAnimateOnScroll="fade-in" [delay]="i * 50">
+                    <app-card
+                      [apartment]="apartment"
+                      [showBookButton]="true"
+                      [showViewButton]="false"
+                      (book)="openBookingModal($event)"
+                    />
+                  </div>
+                }
+              </div>
+
+              <!-- COMMENTED OUT: Pagination not needed for single apartment -->
+              <!--
+              @if (totalPages() > 1) {
+                <div class="pagination" appAnimateOnScroll="slide-up">
+                  <button 
+                    class="pagination-btn"
+                    [disabled]="currentPage() === 1"
+                    (click)="goToPage(currentPage() - 1)"
+                  >
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                  </button>
+
+                  <div class="pagination-pages">
+                    @for (page of pageNumbers(); track page) {
+                      <button
+                        class="pagination-page"
+                        [class.active]="page === currentPage()"
+                        (click)="goToPage(page)"
+                      >
+                        {{ page }}
+                      </button>
+                    }
+                  </div>
+
+                  <button 
+                    class="pagination-btn"
+                    [disabled]="currentPage() === totalPages()"
+                    (click)="goToPage(currentPage() + 1)"
+                  >
+                    Next
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+              }
+              -->
+            }
+
+            <!-- Empty State -->
+            @else {
+              <div class="empty-state" appAnimateOnScroll="scale-in">
+                <div class="empty-illustration">
+                  <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      @if (themeService.effectiveTheme() === 'dark') {
+                        <!-- Dark Mode Gradient -->
+                        <linearGradient id="emptyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style="stop-color:#C7956D;stop-opacity:0.15" />
+                          <stop offset="100%" style="stop-color:#B84D66;stop-opacity:0.15" />
+                        </linearGradient>
+                      } @else {
+                        <!-- Light Mode Gradient -->
+                        <linearGradient id="emptyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style="stop-color:#D4A574;stop-opacity:0.2" />
+                          <stop offset="100%" style="stop-color:#7D1935;stop-opacity:0.2" />
+                        </linearGradient>
+                      }
+                    </defs>
+                    <rect x="50" y="80" width="300" height="180" rx="10" fill="url(#emptyGradient)"/>
+                    @if (themeService.effectiveTheme() === 'dark') {
+                      <circle cx="200" cy="140" r="40" fill="#C7956D" opacity="0.25"/>
+                      <path d="M180,140 L200,120 L220,140 L220,160 L180,160 Z" fill="#B84D66" opacity="0.3"/>
+                    } @else {
+                      <circle cx="200" cy="140" r="40" fill="#D4A574" opacity="0.3"/>
+                      <path d="M180,140 L200,120 L220,140 L220,160 L180,160 Z" fill="#7D1935" opacity="0.4"/>
+                    }
+                  </svg>
+                </div>
+                <h3 class="empty-title">
+                  <i class="fas fa-search"></i>
+                  No Apartments Found
+                </h3>
+                <p class="empty-text">
+                  We couldn't find any apartments matching your criteria. Try adjusting your filters or search terms.
+                </p>
+                @if (hasActiveFilters()) {
+                  <button 
+                    class="btn btn-primary"
+                    (click)="clearFilters()"
+                  >
+                    <i class="fas fa-redo"></i>
+                    Clear All Filters
+                  </button>
+                }
+              </div>
+            }
+          </main>
+        </div>
+      </div>
+
+      <!-- Booking Modal -->
+      <app-modal
+        #bookingModal
+        [size]="'lg'"
+        [showFooter]="false"
+        (modalClose)="closeBookingModal()"
+      >
+        @if (selectedApartment()) {
+          <div class="booking-modal-content">
+            <!-- Apartment Summary -->
+            <div class="apartment-summary">
+              <div class="summary-image-wrapper">
+                <img 
+                  [src]="selectedApartment()!.images[0]" 
+                  [alt]="selectedApartment()!.title"
+                  class="summary-image"
+                />
+                <div class="summary-badge">
+                  <i class="fas fa-check-circle"></i>
+                  Verified
+                </div>
+              </div>
+              <div class="summary-info">
+                <h3 class="summary-title">{{ selectedApartment()!.title }}</h3>
+                <p class="summary-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  {{ selectedApartment()!.location.city }}, {{ selectedApartment()!.location.state }}
+                </p>
+                <div class="summary-specs">
+                  <span class="spec">
+                    <i class="fas fa-bed"></i>
+                    {{ selectedApartment()!.specifications.bedrooms }} Beds
+                  </span>
+                  <span class="spec">
+                    <i class="fas fa-bath"></i>
+                    {{ selectedApartment()!.specifications.bathrooms }} Baths
+                  </span>
+                  <span class="spec">
+                    <i class="fas fa-users"></i>
+                    {{ selectedApartment()!.specifications.maxGuests }} Guests
+                  </span>
+                </div>
+                <div class="summary-price-block">
+                  <span class="price-amount">
+                    {{ selectedApartment()!.pricing.currency }}{{ selectedApartment()!.pricing.basePrice | number }}
+                  </span>
+                  <span class="price-period">/night</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="booking-form-container">
+              <div class="form-header">
+                <i class="fas fa-calendar-check"></i>
+                <h3 class="form-heading">Complete Your Booking</h3>
+              </div>
+              <app-dynamic-form
+                [config]="bookingFormConfig"
+                (formSubmit)="onBookingSubmit($event)"
+              />
+            </div>
+          </div>
+        }
+      </app-modal>
+    </div>

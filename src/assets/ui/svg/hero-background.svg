@@ -1,0 +1,26 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Elegant wave pattern with tan and burgundy gradient -->
+  <defs>
+    <linearGradient id="heroGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5E6D3;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4A574;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#C9A961;stop-opacity:0.6" />
+    </linearGradient>
+    <linearGradient id="heroGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7D1935;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#C67B5C;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#heroGradient1)"/>
+  
+  <!-- Decorative waves -->
+  <path d="M0,400 Q480,300 960,400 T1920,400 L1920,1080 L0,1080 Z" fill="url(#heroGradient2)"/>
+  <path d="M0,500 Q480,420 960,500 T1920,500 L1920,1080 L0,1080 Z" fill="#FAF7F2" opacity="0.4"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="200" cy="200" r="100" fill="#D4A574" opacity="0.1"/>
+  <circle cx="1720" cy="300" r="150" fill="#7D1935" opacity="0.08"/>
+  <circle cx="1500" cy="800" r="80" fill="#C67B5C" opacity="0.12"/>
+</svg>

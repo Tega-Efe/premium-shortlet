@@ -1,0 +1,129 @@
+<div class="filter-container">
+      <div class="filter-header">
+        <h3 class="filter-title">
+          <span class="filter-icon">🔍</span>
+          Filter Apartments
+        </h3>
+        @if (hasActiveFilters()) {
+          <button 
+            class="btn-clear"
+            (click)="clearFilters()"
+          >
+            Clear All
+          </button>
+        }
+      </div>
+
+      <div class="filter-content">
+        <!-- Search -->
+        <div class="filter-group">
+          <label class="filter-label">Search</label>
+          <input
+            type="text"
+            [formControl]="searchControl"
+            placeholder="Search by title or location..."
+            class="filter-input"
+          />
+        </div>
+
+        <!-- Location -->
+        <div class="filter-group">
+          <label class="filter-label">Location</label>
+          <select [formControl]="cityControl" class="filter-select">
+            <option value="">All Cities</option>
+            @for (city of cities; track city) {
+              <option [value]="city">{{ city }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Price Range -->
+        <div class="filter-group">
+          <label class="filter-label">
+            Max Price: {{ maxPriceControl.value ? (maxPriceControl.value | number) : 'Any' }}
+          </label>
+          <input
+            type="range"
+            [formControl]="maxPriceControl"
+            min="0"
+            max="10000"
+            step="100"
+            class="filter-range"
+          />
+          <div class="range-labels">
+            <span>₦0</span>
+            <span>₦10,000</span>
+          </div>
+        </div>
+
+        <!-- Bedrooms -->
+        <div class="filter-group">
+          <label class="filter-label">Bedrooms</label>
+          <div class="filter-chips">
+            @for (option of bedroomOptions; track option) {
+              <button
+                class="filter-chip"
+                [class.active]="bedroomsControl.value === option"
+                (click)="bedroomsControl.setValue(option)"
+              >
+                {{ option === 0 ? 'Any' : option + (option === 4 ? '+' : '') }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Guests -->
+        <div class="filter-group">
+          <label class="filter-label">Maximum Guests</label>
+          <div class="filter-chips">
+            @for (option of guestOptions; track option) {
+              <button
+                class="filter-chip"
+                [class.active]="guestsControl.value === option"
+                (click)="guestsControl.setValue(option)"
+              >
+                {{ option === 0 ? 'Any' : option + (option === 8 ? '+' : '') }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="filter-group">
+          <label class="filter-label">Amenities</label>
+          <div class="amenity-list">
+            @for (amenity of commonAmenities; track amenity) {
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [checked]="selectedAmenities().includes(amenity)"
+                  (change)="toggleAmenity(amenity)"
+                  class="checkbox-input"
+                />
+                <span>{{ amenity }}</span>
+              </label>
+            }
+          </div>
+        </div>
+
+        <!-- Availability Status -->
+        <div class="filter-group">
+          <label class="filter-label">Availability</label>
+          <select [formControl]="statusControl" class="filter-select">
+            <option value="">All</option>
+            <option value="available">Available</option>
+            <option value="booked">Booked</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Active Filters Count -->
+      @if (hasActiveFilters()) {
+        <div class="filter-footer">
+          <span class="active-count">
+            {{ activeFiltersCount() }} active filter{{ activeFiltersCount() > 1 ? 's' : '' }}
+          </span>
+        </div>
+      }
+    </div>

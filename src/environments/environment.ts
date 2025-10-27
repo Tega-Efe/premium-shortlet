@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:3000/api', // Development API URL
   firebase: {
     apiKey: "AIzaSyDIS034JeQMWf9iT0WuBuVjuVyxc3sDRu4",
     authDomain: "shortlet-connect.firebaseapp.com",

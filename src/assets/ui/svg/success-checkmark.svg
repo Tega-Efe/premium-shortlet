@@ -1,0 +1,16 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Success checkmark for confirmation states -->
+  <defs>
+    <linearGradient id="successGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6B9B7E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B9B7E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Circle background -->
+  <circle cx="60" cy="60" r="55" fill="url(#successGradient)" opacity="0.15"/>
+  <circle cx="60" cy="60" r="50" fill="none" stroke="url(#successGradient)" stroke-width="4"/>
+  
+  <!-- Checkmark -->
+  <path d="M 35 60 L 52 77 L 85 44" stroke="#6B9B7E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

@@ -1,0 +1,264 @@
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormFieldConfig } from '../form-field.config';
+
+@Component({
+  selector: 'app-form-field',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div [class]="'form-field ' + (config.containerClass || '')" 
+         [class.has-error]="control.invalid && control.touched">
+      
+      <label [for]="config.name" class="form-label">
+        {{ config.label }}
+        @if (isRequired) {
+          <span class="required">*</span>
+        }
+      </label>
+
+      @switch (config.type) {
+        @case ('textarea') {
+          <textarea
+            [id]="config.name"
+            [formControl]="control"
+            [placeholder]="config.placeholder || ''"
+            [rows]="config.rows || 3"
+            [readonly]="config.readonly || false"
+            [class]="'form-control ' + (config.cssClass || '')"
+          ></textarea>
+        }
+        @case ('select') {
+          <select
+            [id]="config.name"
+            [formControl]="control"
+            [multiple]="config.multiple || false"
+            [class]="'form-control ' + (config.cssClass || '')"
+          >
+            <option value="">{{ config.placeholder || 'Select...' }}</option>
+            @for (option of config.options; track option.value) {
+              <option 
+                [value]="option.value"
+                [disabled]="option.disabled || false"
+              >
+                {{ option.label }}
+              </option>
+            }
+          </select>
+        }
+        @case ('checkbox') {
+          <div class="form-check">
+            <input
+              type="checkbox"
+              [id]="config.name"
+              [formControl]="control"
+              [class]="'form-check-input ' + (config.cssClass || '')"
+            />
+            <label [for]="config.name" class="form-check-label">
+              {{ config.placeholder }}
+            </label>
+          </div>
+        }
+        @case ('radio') {
+          <div class="form-radio-group">
+            @for (option of config.options; track option.value) {
+              <div class="form-check">
+                <input
+                  type="radio"
+                  [id]="config.name + '_' + option.value"
+                  [formControl]="control"
+                  [value]="option.value"
+                  [disabled]="option.disabled || false"
+                  [class]="'form-check-input ' + (config.cssClass || '')"
+                />
+                <label 
+                  [for]="config.name + '_' + option.value" 
+                  class="form-check-label"
+                >
+                  {{ option.label }}
+                </label>
+              </div>
+            }
+          </div>
+        }
+        @default {
+          <input
+            [type]="config.type"
+            [id]="config.name"
+            [formControl]="control"
+            [placeholder]="config.placeholder || ''"
+            [min]="config.min"
+            [max]="config.max"
+            [step]="config.step"
+            [readonly]="config.readonly || false"
+            [class]="'form-control ' + (config.cssClass || '')"
+          />
+        }
+      }
+
+      @if (config.hint && !hasError) {
+        <small class="form-hint">{{ config.hint }}</small>
+      }
+
+      @if (hasError) {
+        <div class="form-error">
+          @for (error of errorMessages; track error) {
+            <small>{{ error }}</small>
+          }
+        </div>
+      }
+    </div>
+  `,
+  styles: [`
+    .form-field {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .required {
+      color: #ef4444;
+      margin-left: 0.25rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-control:disabled,
+    .form-control:read-only {
+      background-color: #f3f4f6;
+      cursor: not-allowed;
+    }
+
+    .has-error .form-control {
+      border-color: #ef4444;
+    }
+
+    .has-error .form-control:focus {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .form-hint {
+      display: block;
+      margin-top: 0.25rem;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    .form-error {
+      margin-top: 0.25rem;
+    }
+
+    .form-error small {
+      display: block;
+      color: #ef4444;
+      font-size: 0.875rem;
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-check-input {
+      margin-right: 0.5rem;
+    }
+
+    .form-check-label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+
+    .form-radio-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 80px;
+    }
+  `]
+})
+export class FormFieldComponent {
+  @Input({ required: true }) config!: FormFieldConfig;
+  @Input({ required: true }) control!: FormControl;
+
+  get isRequired(): boolean {
+    return this.control.hasValidator(Validators.required);
+  }
+
+  get hasError(): boolean {
+    return this.control.invalid && this.control.touched;
+  }
+
+  get errorMessages(): string[] {
+    if (!this.hasError || !this.control.errors) {
+      return [];
+    }
+
+    const messages: string[] = [];
+    const errors = this.control.errors;
+
+    Object.keys(errors).forEach(key => {
+      const customMessage = this.config.errorMessages?.[key];
+      if (customMessage) {
+        messages.push(customMessage);
+      } else {
+        messages.push(this.getDefaultErrorMessage(key, errors[key]));
+      }
+    });
+
+    return messages;
+  }
+
+  private getDefaultErrorMessage(errorKey: string, errorValue: any): string {
+    const label = this.config.label;
+
+    switch (errorKey) {
+      case 'required':
+        return `${label} is required`;
+      case 'email':
+        return `Please enter a valid email address`;
+      case 'min':
+        return `${label} must be at least ${errorValue.min}`;
+      case 'max':
+        return `${label} must not exceed ${errorValue.max}`;
+      case 'minlength':
+        return `${label} must be at least ${errorValue.requiredLength} characters`;
+      case 'maxlength':
+        return `${label} must not exceed ${errorValue.requiredLength} characters`;
+      case 'pattern':
+        return `${label} format is invalid`;
+      case 'phone':
+        return `Please enter a valid phone number`;
+      case 'futureDate':
+        return `${label} must be in the future`;
+      case 'minGuests':
+        return `Minimum ${errorValue.min} guest${errorValue.min > 1 ? 's' : ''} required`;
+      default:
+        return `${label} is invalid`;
+    }
+  }
+}

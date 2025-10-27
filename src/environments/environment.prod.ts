@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  apiUrl: 'https://your-production-api.com/api', // Production API URL
   firebase: {
     apiKey: "AIzaSyDIS034JeQMWf9iT0WuBuVjuVyxc3sDRu4",
     authDomain: "shortlet-connect.firebaseapp.com",

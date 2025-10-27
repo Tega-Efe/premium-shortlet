@@ -1,1 +1,796 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===========================
+   Global Styles
+   Shortlet Apartment Booking Platform
+   =========================== */
+
+/* Font Awesome Icons */
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:wght@400;600;700;900&display=swap');
+
+/* ===== CSS Reset & Base Styles ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ===== CSS Custom Properties (Design Tokens) ===== */
+:root, 
+:root.light-theme,
+[data-theme='light'] {
+  /* Primary Theme Colors - Tan, Dark Vanilla, Burgundy */
+  --color-tan: #D4A574;
+  --color-tan-light: #E8C9A0;
+  --color-tan-dark: #B8895E;
+  --color-dark-vanilla: #F5E6D3;
+  --color-vanilla-light: #FFF8F0;
+  --color-burgundy: #7D1935;
+  --color-burgundy-light: #A42F4F;
+  --color-burgundy-dark: #5E1127;
+
+  /* Complementary Colors */
+  --color-sage: #8B9B7E;
+  --color-terracotta: #C67B5C;
+  --color-gold: #C9A961;
+
+  /* Neutrals */
+  --color-cream: #FAF7F2;
+  --color-beige: #E8DFD4;
+  --color-warm-gray: #A69A8E;
+  --color-charcoal: #3E3832;
+  --color-almost-black: #1F1C18;
+
+  /* Semantic Colors */
+  --success: #6B9B7E;
+  --success-light: #D8E8DD;
+  --error: #C65D4F;
+  --error-light: #F3DDD9;
+  --warning: #D4A460;
+  --warning-light: #F5E8CE;
+  --info: #7B93A8;
+  --info-light: #DDE5EB;
+
+  /* Background Colors */
+  --bg-primary: var(--color-cream);
+  --bg-secondary: var(--color-vanilla-light);
+  --bg-overlay: rgba(31, 28, 24, 0.5);
+
+  /* Text Colors */
+  --text-primary: var(--color-charcoal);
+  --text-secondary: var(--color-warm-gray);
+  --text-inverse: var(--color-cream);
+
+  /* Border Colors */
+  --border-light: var(--color-beige);
+  --border-medium: var(--color-warm-gray);
+
+  /* Shadow Values */
+  --shadow-sm: 0 1px 2px 0 rgba(31, 28, 24, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(31, 28, 24, 0.1), 0 2px 4px -1px rgba(31, 28, 24, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(31, 28, 24, 0.1), 0 4px 6px -2px rgba(31, 28, 24, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(31, 28, 24, 0.1), 0 10px 10px -5px rgba(31, 28, 24, 0.04);
+
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+
+  /* Z-Index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-toast: 1080;
+}
+
+/* ===== Dark Theme ===== */
+:root.dark-theme,
+[data-theme='dark'] {
+  /* Primary Theme Colors - Adjusted for dark mode visibility */
+  --color-tan: #D4A574;
+  --color-tan-light: #E8C9A0;
+  --color-tan-dark: #B8895E;
+  --color-dark-vanilla: #3A3530;
+  --color-vanilla-light: #2C2922;
+  --color-burgundy: #B84D66;
+  --color-burgundy-light: #D97182;
+  --color-burgundy-dark: #9B2943;
+
+  /* Complementary Colors - Brighter for dark mode */
+  --color-sage: #9CAE8F;
+  --color-terracotta: #D48B6C;
+  --color-gold: #D9B871;
+
+  /* Neutrals - Adjusted for readability */
+  --color-cream: #1A1816;
+  --color-beige: #2C2922;
+  --color-warm-gray: #9A8E82;
+  --color-charcoal: #E5DFD6;
+  --color-almost-black: #F5F0EA;
+
+  /* Semantic Colors - Adjusted for better contrast */
+  --success: #7EAD91;
+  --success-light: #2D3F35;
+  --error: #E88679;
+  --error-light: #3F2C29;
+  --warning: #E0B570;
+  --warning-light: #3D3428;
+  --info: #8BA3B8;
+  --info-light: #2B3440;
+
+  /* Background Colors - Softer dark backgrounds */
+  --bg-primary: #1A1816;
+  --bg-secondary: #2C2922;
+  --bg-overlay: rgba(250, 247, 242, 0.08);
+
+  /* Text Colors - Improved readability */
+  --text-primary: #E5DFD6;
+  --text-secondary: #B3A89C;
+  --text-inverse: #1F1C18;
+
+  /* Border Colors - More visible in dark mode */
+  --border-light: #3E3832;
+  --border-medium: #5A5047;
+
+  /* Shadow Values - Softer shadows for dark mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+}
+
+/* Smooth transition when switching themes */
+:root {
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+/* Respect user's system preference if no theme is explicitly set */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme):not(.dark-theme):not([data-theme]) {
+    /* Primary Theme Colors - Adjusted for dark mode visibility */
+    --color-tan: #D4A574;
+    --color-tan-light: #E8C9A0;
+    --color-tan-dark: #B8895E;
+    --color-dark-vanilla: #3A3530;
+    --color-vanilla-light: #2C2922;
+    --color-burgundy: #B84D66;
+    --color-burgundy-light: #D97182;
+    --color-burgundy-dark: #9B2943;
+
+    /* Complementary Colors - Brighter for dark mode */
+    --color-sage: #9CAE8F;
+    --color-terracotta: #D48B6C;
+    --color-gold: #D9B871;
+
+    /* Neutrals - Adjusted for readability */
+    --color-cream: #1A1816;
+    --color-beige: #2C2922;
+    --color-warm-gray: #9A8E82;
+    --color-charcoal: #E5DFD6;
+    --color-almost-black: #F5F0EA;
+
+    /* Semantic Colors - Adjusted for better contrast */
+    --success: #7EAD91;
+    --success-light: #2D3F35;
+    --error: #E88679;
+    --error-light: #3F2C29;
+    --warning: #E0B570;
+    --warning-light: #3D3428;
+    --info: #8BA3B8;
+    --info-light: #2B3440;
+
+    /* Background Colors - Softer dark backgrounds */
+    --bg-primary: #1A1816;
+    --bg-secondary: #2C2922;
+    --bg-overlay: rgba(250, 247, 242, 0.08);
+
+    /* Text Colors - Improved readability */
+    --text-primary: #E5DFD6;
+    --text-secondary: #B3A89C;
+    --text-inverse: #1F1C18;
+
+    /* Border Colors - More visible in dark mode */
+    --border-light: #3E3832;
+    --border-medium: #5A5047;
+
+    /* Shadow Values - Softer shadows for dark mode */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ===== Typography ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--color-burgundy);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-burgundy-light);
+}
+
+/* ===== Lists ===== */
+ul, ol {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-lg);
+}
+
+li {
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-secondary);
+}
+
+/* ===== Images ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== Buttons ===== */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ===== Forms ===== */
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  width: 100%;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  background: var(--bg-primary);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-burgundy);
+  box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--color-beige);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Dark mode specific input styling */
+:root.dark-theme input,
+:root.dark-theme textarea,
+:root.dark-theme select,
+[data-theme='dark'] input,
+[data-theme='dark'] textarea,
+[data-theme='dark'] select {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+}
+
+:root.dark-theme input:focus,
+:root.dark-theme textarea:focus,
+:root.dark-theme select:focus,
+[data-theme='dark'] input:focus,
+[data-theme='dark'] textarea:focus,
+[data-theme='dark'] select:focus {
+  background-color: var(--bg-secondary);
+  border-color: var(--color-burgundy-light);
+  box-shadow: 0 0 0 3px rgba(184, 77, 102, 0.2);
+}
+
+:root.dark-theme input::placeholder,
+:root.dark-theme textarea::placeholder,
+[data-theme='dark'] input::placeholder,
+[data-theme='dark'] textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-warm-gray);
+}
+
+/* Dark mode scrollbar improvements */
+:root.dark-theme ::-webkit-scrollbar-track,
+[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+:root.dark-theme ::-webkit-scrollbar-thumb,
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+}
+
+:root.dark-theme ::-webkit-scrollbar-thumb:hover,
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: var(--border-light);
+}
+
+/* ===== Selection Styling ===== */
+::selection {
+  background-color: var(--color-burgundy-light);
+  color: var(--color-cream);
+}
+
+::-moz-selection {
+  background-color: var(--color-burgundy-light);
+  color: var(--color-cream);
+}
+
+/* ===== Focus Visible (Accessibility) ===== */
+:focus-visible {
+  outline: 2px solid var(--color-burgundy);
+  outline-offset: 2px;
+}
+
+/* ===== Utility Classes ===== */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 var(--spacing-2xl);
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-burgundy) 0%, var(--color-burgundy-light) 50%, var(--color-terracotta) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ===== CSS Custom Properties (Design Tokens) ===== */
+:root {
+  /* Primary Colors */
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --primary-lighter: #dbeafe;
+
+  /* Secondary Colors */
+  --secondary: #8b5cf6;
+  --secondary-dark: #7c3aed;
+  --secondary-light: #a78bfa;
+
+  /* Success/Error/Warning */
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --error: #ef4444;
+  --error-light: #fee2e2;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --info: #3b82f6;
+  --info-light: #dbeafe;
+
+  /* Neutral Colors */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--gray-50);
+  --bg-tertiary: var(--gray-100);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Text Colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-500);
+  --text-inverse: #ffffff;
+
+  /* Border Colors */
+  --border-light: var(--gray-200);
+  --border-medium: var(--gray-300);
+  --border-dark: var(--gray-400);
+
+  /* Shadow Values */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Spacing Scale */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+  --font-size-4xl: 2.25rem;    /* 36px */
+  --font-size-5xl: 3rem;       /* 48px */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+
+  /* Z-Index Scale */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+}
+
+/* ===== Typography ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* ===== Lists ===== */
+ul, ol {
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-lg);
+}
+
+li {
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-secondary);
+}
+
+/* ===== Images ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== Buttons ===== */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ===== Forms ===== */
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  width: 100%;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-lighter);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--gray-100);
+  cursor: not-allowed;
+}
+
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-400);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+/* ===== Selection Styling ===== */
+::selection {
+  background-color: var(--primary-lighter);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background-color: var(--primary-lighter);
+  color: var(--text-primary);
+}
+
+/* ===== Focus Visible (Accessibility) ===== */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

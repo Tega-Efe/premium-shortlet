@@ -1,0 +1,216 @@
+// ==========================================
+// Design System Variables
+// Shortlet Connect - Modern UI Theme
+// ==========================================
+
+// ===== Color Palette =====
+// Primary Theme Colors
+$color-tan: #D4A574;
+$color-tan-light: #E8C9A0;
+$color-tan-dark: #B8895E;
+$color-tan-darker: #9A7048;
+
+$color-dark-vanilla: #F5E6D3;
+$color-vanilla-light: #FFF8F0;
+$color-vanilla-dark: #E8D5BE;
+
+$color-burgundy: #7D1935;
+$color-burgundy-light: #A42F4F;
+$color-burgundy-dark: #5E1127;
+$color-burgundy-darker: #3D0A18;
+
+// Complementary Colors
+$color-sage: #8B9B7E;
+$color-sage-light: #A8B69B;
+$color-sage-dark: #6E7D63;
+
+$color-terracotta: #C67B5C;
+$color-terracotta-light: #D99A81;
+$color-terracotta-dark: #A35D43;
+
+$color-gold: #C9A961;
+$color-gold-light: #DFC084;
+$color-gold-dark: #B08F45;
+
+// Neutral Colors
+$color-cream: #FAF7F2;
+$color-cream-dark: #EDE7DD;
+$color-beige: #E8DFD4;
+$color-warm-gray: #A69A8E;
+$color-charcoal: #3E3832;
+$color-almost-black: #1F1C18;
+
+// Semantic Colors
+$color-success: #6B9B7E;
+$color-success-light: #D8E8DD;
+$color-error: #C65D4F;
+$color-error-light: #F3DDD9;
+$color-warning: #D4A460;
+$color-warning-light: #F5E8CE;
+$color-info: #7B93A8;
+$color-info-light: #DDE5EB;
+
+// ===== Gradients =====
+$gradient-primary: linear-gradient(135deg, $color-burgundy 0%, $color-burgundy-light 50%, $color-terracotta 100%);
+$gradient-warm: linear-gradient(135deg, $color-tan 0%, $color-gold 50%, $color-terracotta 100%);
+$gradient-elegant: linear-gradient(135deg, $color-dark-vanilla 0%, $color-tan-light 50%, $color-tan 100%);
+$gradient-hero: linear-gradient(135deg, rgba($color-burgundy-darker, 0.95) 0%, rgba($color-burgundy, 0.85) 50%, rgba($color-tan-dark, 0.75) 100%);
+$gradient-overlay: linear-gradient(180deg, transparent 0%, rgba($color-almost-black, 0.7) 100%);
+$gradient-card-hover: linear-gradient(135deg, rgba($color-burgundy, 0.1) 0%, rgba($color-tan, 0.1) 100%);
+
+// ===== Typography =====
+$font-family-primary: 'Inter', 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-heading: 'Playfair Display', 'Georgia', serif;
+$font-family-mono: 'Fira Code', 'Consolas', monospace;
+
+// Font Sizes
+$font-size-xs: 0.75rem;      // 12px
+$font-size-sm: 0.875rem;     // 14px
+$font-size-base: 1rem;       // 16px
+$font-size-md: 1.125rem;     // 18px
+$font-size-lg: 1.25rem;      // 20px
+$font-size-xl: 1.5rem;       // 24px
+$font-size-2xl: 1.875rem;    // 30px
+$font-size-3xl: 2.25rem;     // 36px
+$font-size-4xl: 3rem;        // 48px
+$font-size-5xl: 3.75rem;     // 60px
+$font-size-6xl: 4.5rem;      // 72px
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+
+// Line Heights
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+$line-height-loose: 2;
+
+// ===== Spacing Scale =====
+$spacing-xs: 0.25rem;    // 4px
+$spacing-sm: 0.5rem;     // 8px
+$spacing-md: 1rem;       // 16px
+$spacing-lg: 1.5rem;     // 24px
+$spacing-xl: 2rem;       // 32px
+$spacing-2xl: 3rem;      // 48px
+$spacing-3xl: 4rem;      // 64px
+$spacing-4xl: 6rem;      // 96px
+$spacing-5xl: 8rem;      // 128px
+
+// ===== Border Radius =====
+$radius-xs: 0.125rem;    // 2px
+$radius-sm: 0.25rem;     // 4px
+$radius-md: 0.5rem;      // 8px
+$radius-lg: 0.75rem;     // 12px
+$radius-xl: 1rem;        // 16px
+$radius-2xl: 1.5rem;     // 24px
+$radius-3xl: 2rem;       // 32px
+$radius-full: 9999px;
+
+// ===== Shadows =====
+$shadow-xs: 0 1px 2px 0 rgba($color-almost-black, 0.05);
+$shadow-sm: 0 1px 3px 0 rgba($color-almost-black, 0.1), 0 1px 2px 0 rgba($color-almost-black, 0.06);
+$shadow-md: 0 4px 6px -1px rgba($color-almost-black, 0.1), 0 2px 4px -1px rgba($color-almost-black, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba($color-almost-black, 0.1), 0 4px 6px -2px rgba($color-almost-black, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba($color-almost-black, 0.1), 0 10px 10px -5px rgba($color-almost-black, 0.04);
+$shadow-2xl: 0 25px 50px -12px rgba($color-almost-black, 0.25);
+$shadow-inner: inset 0 2px 4px 0 rgba($color-almost-black, 0.06);
+$shadow-warm: 0 10px 30px -5px rgba($color-burgundy, 0.2);
+$shadow-elegant: 0 10px 30px -5px rgba($color-tan, 0.3);
+
+// ===== Transitions =====
+$transition-fast: 150ms ease-in-out;
+$transition-base: 300ms ease-in-out;
+$transition-slow: 500ms ease-in-out;
+$transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+// Transition Properties
+$transition-all: all $transition-base;
+$transition-colors: color $transition-base, background-color $transition-base, border-color $transition-base;
+$transition-transform: transform $transition-base;
+$transition-opacity: opacity $transition-base;
+
+// ===== Z-Index Scale =====
+$z-base: 1;
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal-backdrop: 1040;
+$z-modal: 1050;
+$z-popover: 1060;
+$z-tooltip: 1070;
+$z-toast: 1080;
+
+// ===== Breakpoints =====
+$breakpoint-xs: 480px;
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// ===== Container Widths =====
+$container-sm: 640px;
+$container-md: 768px;
+$container-lg: 1024px;
+$container-xl: 1280px;
+$container-2xl: 1536px;
+
+// ===== Grid System =====
+$grid-columns: 12;
+$grid-gutter: $spacing-lg;
+
+// ===== Component Specific =====
+// Navbar
+$navbar-height: 70px;
+$navbar-height-mobile: 60px;
+$navbar-bg: rgba($color-cream, 0.98);
+$navbar-bg-scroll: rgba($color-cream, 0.95);
+$navbar-shadow: $shadow-md;
+
+// Footer
+$footer-bg: $color-charcoal;
+$footer-text: $color-cream;
+$footer-link-hover: $color-tan-light;
+
+// Cards
+$card-bg: $color-cream;
+$card-border: $color-beige;
+$card-shadow: $shadow-md;
+$card-shadow-hover: $shadow-xl;
+$card-padding: $spacing-xl;
+
+// Buttons
+$btn-height: 44px;
+$btn-height-sm: 36px;
+$btn-height-lg: 52px;
+$btn-padding: $spacing-md $spacing-xl;
+$btn-padding-sm: $spacing-sm $spacing-lg;
+$btn-padding-lg: $spacing-lg $spacing-2xl;
+$btn-border-radius: $radius-lg;
+
+// Forms
+$input-height: 44px;
+$input-padding: $spacing-sm $spacing-md;
+$input-border: 1px solid $color-beige;
+$input-border-focus: 1px solid $color-burgundy;
+$input-bg: $color-cream;
+$input-bg-disabled: $color-beige;
+$input-shadow-focus: 0 0 0 3px rgba($color-burgundy, 0.1);
+
+// Modals
+$modal-bg: $color-cream;
+$modal-backdrop: rgba($color-almost-black, 0.5);
+$modal-border-radius: $radius-2xl;
+$modal-shadow: $shadow-2xl;
+$modal-max-width: 600px;
+
+// Toast
+$toast-bg: $color-cream;
+$toast-shadow: $shadow-xl;
+$toast-border-radius: $radius-lg;
+$toast-width: 360px;

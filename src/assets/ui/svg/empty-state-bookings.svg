@@ -1,0 +1,47 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Empty state illustration for no bookings -->
+  <defs>
+    <linearGradient id="calendarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4A574;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C67B5C;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="200" cy="150" r="120" fill="#F5E6D3" opacity="0.5"/>
+  
+  <!-- Calendar -->
+  <rect x="130" y="80" width="140" height="160" rx="8" fill="url(#calendarGradient)" opacity="0.2"/>
+  <rect x="130" y="80" width="140" height="40" rx="8" fill="#7D1935" opacity="0.3"/>
+  
+  <!-- Calendar header -->
+  <rect x="145" y="95" width="110" height="3" rx="1.5" fill="#FAF7F2"/>
+  
+  <!-- Calendar grid -->
+  <rect x="145" y="135" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="170" y="135" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="195" y="135" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="220" y="135" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="245" y="135" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  
+  <rect x="145" y="160" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="170" y="160" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="195" y="160" width="15" height="15" rx="2" fill="#7D1935" opacity="0.5"/>
+  <rect x="220" y="160" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="245" y="160" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  
+  <rect x="145" y="185" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="170" y="185" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="195" y="185" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="220" y="185" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="245" y="185" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  
+  <rect x="145" y="210" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="170" y="210" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="195" y="210" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  <rect x="220" y="210" width="15" height="15" rx="2" fill="#A69A8E" opacity="0.3"/>
+  
+  <!-- Empty checkmark overlay -->
+  <circle cx="280" cy="110" r="30" fill="#FAF7F2" stroke="#7D1935" stroke-width="3"/>
+  <path d="M 265 110 L 275 120 L 295 100" stroke="#7D1935" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.5"/>
+</svg>

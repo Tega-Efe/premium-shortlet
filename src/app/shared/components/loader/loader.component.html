@@ -1,0 +1,32 @@
+@if (isVisible()) {
+  <div class="loader-overlay" [@fadeInOut] [class.fullscreen]="fullscreen()" [class.transparent]="transparent()">
+    <div class="loader-container" [class.compact]="size() === 'small'">
+      <!-- Animated Spinner -->
+      <div class="spinner-wrapper">
+        <div class="spinner" [@pulse]>
+          <div class="spinner-ring ring-1"></div>
+          <div class="spinner-ring ring-2"></div>
+          <div class="spinner-ring ring-3"></div>
+          <div class="spinner-core">
+            <i class="fas fa-home"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Message -->
+      @if (message()) {
+        <p class="loader-message">{{ message() }}</p>
+      }
+
+      <!-- Loading Progress (optional) -->
+      @if (showProgress() && progress() !== null) {
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="progress()"></div>
+          </div>
+          <span class="progress-text">{{ progress() }}%</span>
+        </div>
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check file size (in MB)
+    function isValidSize(maxSizeMB) {
+      return request.resource.size < maxSizeMB * 1024 * 1024;
+    }
+    
+    // Helper function to check file type
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    // User profile images - authenticated users can upload their own
+    match /users/{userId}/profile/{fileName} {
+      allow read: if true;
+      allow write: if isAuthenticated() && 
+        request.auth.uid == userId && 
+        isImage() && 
+        isValidSize(5); // 5MB limit
+    }
+    
+    // Public uploads folder - authenticated users can upload
+    match /uploads/{userId}/{fileName} {
+      allow read: if true;
+      allow write: if isAuthenticated() && 
+        request.auth.uid == userId && 
+        isValidSize(10); // 10MB limit
+    }
+    
+    // Default: Deny all access unless explicitly allowed
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -5,12 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDIS034JeQMWf9iT0WuBuVjuVyxc3sDRu4",
+    authDomain: "shortlet-connect.firebaseapp.com",
+    projectId: "shortlet-connect",
+    storageBucket: "shortlet-connect.firebasestorage.app",
+    messagingSenderId: "605241409683",
+    appId: "1:605241409683:web:68fffdf1da9f09b4384d66",
+    measurementId: "G-270LHK7D02"
   }
 };
 

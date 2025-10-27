@@ -1,43 +1,6 @@
-// Example User Profile Interface
-export interface UserProfile {
-  id?: string;
-  uid: string;
-  email: string;
-  displayName?: string;
-  photoURL?: string;
-  phoneNumber?: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Example Post Interface
-export interface Post {
-  id?: string;
-  authorId: string;
-  authorName: string;
-  title: string;
-  content: string;
-  imageUrl?: string;
-  likes: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Example Comment Interface
-export interface Comment {
-  id?: string;
-  postId: string;
-  authorId: string;
-  authorName: string;
-  content: string;
-  createdAt: Date;
-}
-
-// Example Shortlet Listing Interface (for shortlet-connect app)
+// Shortlet Listing Interface
 export interface ShortletListing {
   id?: string;
-  ownerId: string;
-  ownerName: string;
   title: string;
   description: string;
   location: {
@@ -65,31 +28,68 @@ export interface ShortletListing {
   updatedAt: Date;
 }
 
-// Example Booking Interface
+// Booking Interface - Main data captured from booking forms
 export interface Booking {
   id?: string;
-  listingId: string;
-  listingTitle: string;
-  guestId: string;
+  listingId?: string;
+  listingTitle?: string;
+  
+  // Guest information from booking form
   guestName: string;
-  ownerId: string;
+  guestEmail: string;
+  guestPhone: string;
+  
+  // Booking details
   checkIn: Date;
   checkOut: Date;
-  guests: number;
+  numberOfGuests: number;
+  numberOfNights?: number;
+  
+  // Pricing
+  pricePerNight?: number;
   totalPrice: number;
+  currency?: string;
+  
+  // Additional booking information
+  specialRequests?: string;
+  purpose?: string; // e.g., 'vacation', 'business', 'event'
+  
+  // Status tracking
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
+  paymentStatus?: 'pending' | 'paid' | 'refunded';
+  
+  // Timestamps
   createdAt: Date;
   updatedAt: Date;
+  
+  // Optional: Emergency contact
+  emergencyContact?: {
+    name: string;
+    phone: string;
+    relationship: string;
+  };
 }
 
-// Example Review Interface
+// Review Interface - Optional feature for collecting feedback
 export interface Review {
   id?: string;
   listingId: string;
   bookingId: string;
-  reviewerId: string;
   reviewerName: string;
+  reviewerEmail: string;
   rating: number; // 1-5
   comment: string;
+  createdAt: Date;
+}
+
+// Contact/Inquiry Interface - For contact form submissions
+export interface ContactInquiry {
+  id?: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  status: 'new' | 'read' | 'replied' | 'archived';
   createdAt: Date;
 }

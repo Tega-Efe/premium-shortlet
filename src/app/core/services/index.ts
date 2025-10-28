@@ -10,3 +10,4 @@ export * from './theme.service';
 export * from './email-notification.service';
 export * from './simplified-booking.service';
 export * from './apartment.service.firestore';
+export * from './loading.service';

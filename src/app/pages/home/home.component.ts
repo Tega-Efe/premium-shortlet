@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 // import { ApartmentService, NotificationService } from '../../core/services'; // COMMENTED OUT: Using Firestore version
 import { ApartmentServiceFirestore, ApartmentFilter } from '../../core/services/apartment.service.firestore'; // NEW: Firestore-based service
-import { NotificationService } from '../../core/services';
-import { SimplifiedBookingService } from '../../core/services/simplified-booking.service';
+import { NotificationService, LoadingService } from '../../core/services';
+import { SimplifiedBookingServiceNoStorage } from '../../core/services/simplified-booking-no-storage.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { Apartment, Booking } from '../../core/interfaces';
 import { CardComponent } from '../../shared/components/card/card.component';
@@ -706,22 +706,89 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
         gap: 1.5rem;
       }
     }
+
+    /* Unavailable Modal Styles */
+    .unavailable-modal-content {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .unavailable-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .unavailable-icon i {
+      font-size: 2.5rem;
+      color: #ef4444;
+    }
+
+    .unavailable-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 1rem 0;
+    }
+
+    .unavailable-message {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 1rem 0;
+    }
+
+    .unavailable-suggestion {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 2rem 0;
+      font-style: italic;
+    }
+
+    .unavailable-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .unavailable-actions .btn {
+      padding: 0.875rem 2rem;
+      font-size: 1rem;
+    }
   `]
 })
 export class HomeComponent implements OnInit {
   // private apartmentService = inject(ApartmentService); // COMMENTED OUT: Using Firestore version
   private apartmentService = inject(ApartmentServiceFirestore); // NEW: Firestore-based service
-  private simplifiedBookingService = inject(SimplifiedBookingService);
+  private simplifiedBookingService = inject(SimplifiedBookingServiceNoStorage);
   private notificationService = inject(NotificationService);
+  private loadingService = inject(LoadingService);
   private route = inject(ActivatedRoute);
   protected themeService = inject(ThemeService);
 
   @ViewChild('bookingModal') bookingModal!: ModalComponent;
+  @ViewChild('unavailableModal') unavailableModal!: ModalComponent;
 
   // Data signals
   allApartments = signal<Apartment[]>([]);
   filteredApartments = signal<Apartment[]>([]);
   selectedApartment = signal<Apartment | null>(null);
+
+  // Availability signals
+  availableApartments = computed(() => 
+    this.allApartments().filter(apt => apt.availability?.status === 'available')
+  );
+  hasAvailableApartments = computed(() => this.availableApartments().length > 0);
+  showUnavailableModal = signal<boolean>(false);
+
+  // Helper computed properties
+  hasAnyApartments = computed(() => this.allApartments().length > 0);
 
   // UI state signals
   isLoading = signal<boolean>(false);
@@ -845,6 +912,12 @@ export class HomeComponent implements OnInit {
   }
 
   openBookingModal(apartment: Apartment): void {
+    // Check if apartment is available
+    if (apartment.availability?.status !== 'available') {
+      this.openUnavailableModal();
+      return;
+    }
+
     this.selectedApartment.set(apartment);
     this.showBookingModal.set(true);
     if (this.bookingModal) {
@@ -857,6 +930,20 @@ export class HomeComponent implements OnInit {
     this.selectedApartment.set(null);
     // Don't call this.bookingModal.close() here because it creates a recursion loop
     // The modal is already closing (that's why modalClose was emitted)
+  }
+
+  openUnavailableModal(): void {
+    this.showUnavailableModal.set(true);
+    if (this.unavailableModal) {
+      this.unavailableModal.openModal('Apartment Unavailable');
+    }
+  }
+
+  closeUnavailableModal(): void {
+    this.showUnavailableModal.set(false);
+    if (this.unavailableModal) {
+      this.unavailableModal.close();
+    }
   }
 
   onBookingSubmit(event: FormSubmitEvent): void {
@@ -877,19 +964,41 @@ export class HomeComponent implements OnInit {
       bookingOption: formData.bookingOption,
       checkInDate: formData.checkInDate || formData.checkIn,
       checkOutDate: formData.checkOutDate || formData.checkOut,
-      numberOfNights: formData.numberOfNights
+      numberOfNights: formData.numberOfNights,
+      numberOfGuests: formData.numberOfGuests
     };
+
+    this.loadingService.show('Submitting booking request...');
 
     this.simplifiedBookingService.createBooking(bookingFormData).subscribe({
       next: (booking) => {
+        this.loadingService.hide();
         this.notificationService.success('Booking request submitted successfully!');
         this.closeBookingModal();
       },
       error: (error) => {
+        this.loadingService.hide();
         console.error('Booking submission error', error);
         this.notificationService.error('Failed to submit booking. Please try again.');
       }
     });
+  }
+
+  // Helper methods for apartment data
+  getApartmentMaxGuests(apartment: Apartment): number {
+    const specs = apartment.specifications as any;
+    return specs.maxGuestsEntireApartment || specs.maxGuests || 0;
+  }
+
+  getApartmentPrice(apartment: Apartment): string {
+    const pricing = apartment.pricing as any;
+    if (pricing.oneRoomPrice) {
+      return `from ${pricing.currency}${pricing.oneRoomPrice.toLocaleString()}`;
+    }
+    if (pricing.basePrice) {
+      return `${pricing.currency}${pricing.basePrice.toLocaleString()}`;
+    }
+    return 'Price not available';
   }
 }
 

@@ -1,5 +1,5 @@
 export interface Apartment {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   location: Location;
@@ -9,8 +9,9 @@ export interface Apartment {
   specifications: Specifications;
   availability: Availability;
   rating?: Rating;
-  createdAt: Date;
-  updatedAt: Date;
+  featured?: boolean;
+  createdAt?: Date | any;
+  updatedAt?: Date | any;
 }
 
 export interface Location {
@@ -28,10 +29,11 @@ export interface Coordinates {
 }
 
 export interface Pricing {
-  basePrice: number;
+  oneRoomPrice: number;
+  entireApartmentPrice: number;
   currency: string;
-  period: 'night' | 'week' | 'month';
-  discounts?: Discount[];
+  // Legacy field for backward compatibility
+  basePrice?: number;
 }
 
 export interface Discount {
@@ -45,12 +47,16 @@ export interface Discount {
 export interface Specifications {
   bedrooms: number;
   bathrooms: number;
-  maxGuests: number;
+  maxGuestsOneRoom: number;
+  maxGuestsEntireApartment: number;
+  // Legacy field for backward compatibility
+  maxGuests?: number;
   squareMeters?: number;
   floors?: number;
 }
 
 export interface Availability {
+  isAvailable: boolean;
   status: 'available' | 'booked' | 'maintenance';
   bookedDates?: DateRange[];
   blackoutDates?: DateRange[];
@@ -64,7 +70,7 @@ export interface DateRange {
 export interface Rating {
   average: number;
   count: number;
-  breakdown: {
+  breakdown?: {
     cleanliness: number;
     accuracy: number;
     communication: number;

@@ -157,44 +157,47 @@ import { DatePickerComponent } from './date-picker.component';
     }
 
     .required {
-      color: #ef4444;
+      color: var(--error, #ef4444);
       margin-left: 0.25rem;
     }
 
     .form-control {
       width: 100%;
       padding: 0.75rem;
-      border: 1px solid #d1d5db;
+      border: 1px solid var(--border-light, #d1d5db);
       border-radius: 0.375rem;
       font-size: 1rem;
       transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--bg-primary);
+      color: var(--text-primary);
     }
 
     .form-control:focus {
       outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: var(--color-burgundy, #7D1935);
+      box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
     }
 
     .form-control:disabled,
     .form-control:read-only {
-      background-color: #f3f4f6;
+      background-color: var(--bg-secondary);
       cursor: not-allowed;
+      opacity: 0.7;
     }
 
     .has-error .form-control {
-      border-color: #ef4444;
+      border-color: var(--error, #ef4444);
     }
 
     .has-error .form-control:focus {
-      border-color: #ef4444;
+      border-color: var(--error, #ef4444);
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
     }
 
     .form-hint {
       display: block;
       margin-top: 0.25rem;
-      color: #6b7280;
+      color: var(--text-secondary);
       font-size: 0.875rem;
     }
 
@@ -204,7 +207,7 @@ import { DatePickerComponent } from './date-picker.component';
 
     .form-error small {
       display: block;
-      color: #ef4444;
+      color: var(--error, #ef4444);
       font-size: 0.875rem;
     }
 

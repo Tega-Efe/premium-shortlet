@@ -68,8 +68,13 @@ export class SimplifiedBookingServiceNoStorage {
    * Create a new booking WITHOUT file upload
    * This is a temporary solution until Firebase Storage is configured
    */
-  createBooking(formData: BookingFormData): Observable<SimplifiedBooking> {
+  createBooking(formData: BookingFormData, pricePerNight?: number): Observable<SimplifiedBooking> {
     this.isLoading.set(true);
+    
+    // Calculate pricing
+    const calculatedPricePerNight = pricePerNight || 
+      (formData.bookingOption === 'one-room' ? 25000 : 45000);
+    const totalPrice = calculatedPricePerNight * formData.numberOfNights;
     
     const booking: SimplifiedBooking = {
       guestInfo: {
@@ -84,7 +89,12 @@ export class SimplifiedBookingServiceNoStorage {
         bookingOption: formData.bookingOption,
         checkInDate: formData.checkInDate,
         checkOutDate: formData.checkOutDate,
-        numberOfNights: formData.numberOfNights
+        numberOfNights: formData.numberOfNights,
+        numberOfGuests: formData.numberOfGuests
+      },
+      pricing: {
+        pricePerNight: calculatedPricePerNight,
+        totalPrice: totalPrice
       },
       status: 'pending',
       createdAt: new Date().toISOString()
@@ -191,6 +201,7 @@ export class SimplifiedBookingServiceNoStorage {
               booking.bookingDetails.checkInDate,
               booking.bookingDetails.checkOutDate,
               booking.bookingDetails.numberOfNights,
+              booking.bookingDetails.numberOfGuests,
               adminNotes
             ).subscribe();
             
@@ -236,6 +247,7 @@ export class SimplifiedBookingServiceNoStorage {
               booking.bookingDetails.bookingOption,
               booking.bookingDetails.checkInDate,
               booking.bookingDetails.checkOutDate,
+              booking.bookingDetails.numberOfGuests,
               adminNotes
             ).subscribe();
             
@@ -336,6 +348,7 @@ export class SimplifiedBookingServiceNoStorage {
       booking.bookingDetails.checkInDate,
       booking.bookingDetails.checkOutDate,
       booking.bookingDetails.numberOfNights,
+      booking.bookingDetails.numberOfGuests,
       booking.guestInfo.address
     ).subscribe();
   }

@@ -60,7 +60,7 @@ export const simplifiedBookingFormConfig: FormConfig = {
         required: 'Phone number is required',
         phone: 'Please enter a valid phone number'
       },
-      hint: 'Include country code (e.g., +234 for Nigeria)'
+      hint: 'Enter your 10-digit phone number'
     },
     {
       name: 'guestAddress',
@@ -80,17 +80,13 @@ export const simplifiedBookingFormConfig: FormConfig = {
     },
     {
       name: 'idPhoto',
-      label: 'Upload ID Photo',
+      label: 'Upload ID Photo (Optional)',
       type: 'file',
       accept: 'image/jpeg,image/png,image/jpg',
       placeholder: 'Choose a photo of your ID (passport, driver license, etc.)',
-      validators: [
-        Validators.required
-      ],
-      errorMessages: {
-        required: 'Please upload a photo of your ID for verification'
-      },
-      hint: 'Accepted formats: JPG, PNG. Max size: 5MB. For security purposes only.'
+      validators: [],
+      errorMessages: {},
+      hint: 'Optional - Accepted formats: JPG, PNG. Max size: 5MB.'
     },
     
     // Section: Booking Details
@@ -116,6 +112,27 @@ export const simplifiedBookingFormConfig: FormConfig = {
         required: 'Please select a booking option'
       },
       hint: 'Choose whether to book one room or the entire apartment'
+    },
+    {
+      name: 'numberOfGuests',
+      label: 'Number of Guests',
+      type: 'number',
+      min: 1,
+      max: 5,
+      step: 1,
+      value: 4,
+      readonly: true,
+      validators: [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(5)
+      ],
+      errorMessages: {
+        required: 'Number of guests is required',
+        min: 'Minimum 1 guest',
+        max: 'Maximum 5 guests'
+      },
+      hint: 'Auto-filled based on booking option (4 for one room, 5 for entire apartment)'
     },
     {
       name: 'checkInDate',

@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
         (input)="onInput($event)"
         (blur)="onTouched()"
         [disabled]="disabled"
-        maxlength="10"
+        maxlength="12"
       />
     </div>
   `,

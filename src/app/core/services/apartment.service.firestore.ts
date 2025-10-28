@@ -133,15 +133,18 @@ export class ApartmentServiceFirestore {
   getAvailableApartments(checkIn: Date, checkOut: Date, guests?: number): Observable<Apartment[]> {
     try {
       const apartmentsRef = collection(this.firestore, 'apartments');
-      let q = query(apartmentsRef, where('availability', '==', true));
+      let q = query(apartmentsRef, where('availability.isAvailable', '==', true));
 
       return collectionData(q, { idField: 'id' }).pipe(
         map(apartments => {
           let filtered = apartments as Apartment[];
           
-          // Client-side guest filtering
+          // Client-side guest filtering - use maxGuestsOneRoom or legacy maxGuests
           if (guests) {
-            filtered = filtered.filter(apt => (apt.specifications?.maxGuests || 0) >= guests);
+            filtered = filtered.filter(apt => {
+              const maxGuests = apt.specifications?.maxGuestsOneRoom || apt.specifications?.maxGuests || 0;
+              return maxGuests >= guests;
+            });
           }
           
           return filtered;
@@ -167,8 +170,8 @@ export class ApartmentServiceFirestore {
    */
   filterApartments(apartments: Apartment[], filter: ApartmentFilter): Apartment[] {
     return apartments.filter(apt => {
-      // Price filter
-      const price = apt.pricing?.basePrice || 0;
+      // Price filter - use oneRoomPrice as base price
+      const price = apt.pricing?.oneRoomPrice || apt.pricing?.basePrice || 0;
       if (filter.minPrice !== undefined && price < filter.minPrice) {
         return false;
       }
@@ -187,8 +190,8 @@ export class ApartmentServiceFirestore {
         return false;
       }
 
-      // Guests filter
-      const maxGuests = apt.specifications?.maxGuests || 0;
+      // Guests filter - use maxGuestsOneRoom or legacy maxGuests
+      const maxGuests = apt.specifications?.maxGuestsOneRoom || apt.specifications?.maxGuests || 0;
       if (filter.minGuests && maxGuests < filter.minGuests) {
         return false;
       }
@@ -229,15 +232,15 @@ export class ApartmentServiceFirestore {
     switch (sortBy) {
       case 'price-asc':
         return sorted.sort((a, b) => {
-          const priceA = a.pricing?.basePrice || 0;
-          const priceB = b.pricing?.basePrice || 0;
+          const priceA = a.pricing?.oneRoomPrice || a.pricing?.basePrice || 0;
+          const priceB = b.pricing?.oneRoomPrice || b.pricing?.basePrice || 0;
           return priceA - priceB;
         });
         
       case 'price-desc':
         return sorted.sort((a, b) => {
-          const priceA = a.pricing?.basePrice || 0;
-          const priceB = b.pricing?.basePrice || 0;
+          const priceA = a.pricing?.oneRoomPrice || a.pricing?.basePrice || 0;
+          const priceB = b.pricing?.oneRoomPrice || b.pricing?.basePrice || 0;
           return priceB - priceA;
         });
         

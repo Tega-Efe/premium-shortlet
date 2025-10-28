@@ -28,6 +28,13 @@ export interface SimplifiedBooking {
     checkInDate: string;  // ISO date string
     checkOutDate: string;  // ISO date string
     numberOfNights: number;
+    numberOfGuests: number;  // 4 for one-room, 5 for entire-apartment
+  };
+
+  // Pricing Information
+  pricing: {
+    pricePerNight: number;
+    totalPrice: number;
   };
   
   // Status and Approval
@@ -66,6 +73,7 @@ export interface EmailNotificationPayload {
     checkInDate: string;
     checkOutDate: string;
     numberOfNights: number;
+    numberOfGuests: number;
     address?: string;
     adminNotes?: string;
   };
@@ -80,6 +88,7 @@ export interface BookingFormData {
   phone: string;
   address: string;
   numberOfNights: number;
+  numberOfGuests: number;  // 4 for one-room, 5 for entire-apartment
   bookingOption: 'one-room' | 'entire-apartment';
   checkInDate: string;
   checkOutDate: string;

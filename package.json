@@ -12,7 +12,10 @@
     "firebase:login": "firebase login",
     "firebase:deploy": "npm run build:prod && firebase deploy",
     "firebase:deploy:hosting": "npm run build:prod && firebase deploy --only hosting",
-    "firebase:deploy:rules": "firebase deploy --only firestore:rules,storage:rules"
+    "firebase:deploy:rules": "firebase deploy --only firestore:rules,storage:rules",
+    "cleanup:analyze": "ts-node scripts/cleanup-bookings.ts analyze",
+    "cleanup:fix": "ts-node scripts/cleanup-bookings.ts fix",
+    "cleanup:delete": "ts-node scripts/cleanup-bookings.ts delete"
   },
   "prettier": {
     "printWidth": 100,

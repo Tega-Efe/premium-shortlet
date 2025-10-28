@@ -341,6 +341,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         this.updateVisibleFields(value);
         this.calculateNumberOfNights(value);
+        this.updateNumberOfGuests(value);
       });
 
     // Initial visibility check
@@ -418,6 +419,29 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       // Only update if the calculated value is valid (positive)
       if (nights > 0 && nights !== numberOfNightsControl.value) {
         numberOfNightsControl.setValue(nights, { emitEvent: false });
+      }
+    }
+  }
+
+  private updateNumberOfGuests(value: Record<string, any>): void {
+    const bookingOption = value['bookingOption'];
+    const numberOfGuestsControl = this.form.get('numberOfGuests');
+
+    if (bookingOption && numberOfGuestsControl) {
+      let guestCount: number;
+
+      // Auto-fill based on booking option
+      if (bookingOption === 'one-room') {
+        guestCount = 4;
+      } else if (bookingOption === 'entire-apartment') {
+        guestCount = 5;
+      } else {
+        return; // No change if option is not recognized
+      }
+
+      // Only update if the value has changed
+      if (numberOfGuestsControl.value !== guestCount) {
+        numberOfGuestsControl.setValue(guestCount, { emitEvent: false });
       }
     }
   }

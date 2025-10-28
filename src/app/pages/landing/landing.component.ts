@@ -196,7 +196,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .floating-card {
       position: absolute;
-      background: white;
+      background: var(--bg-secondary);
       padding: 1rem 1.5rem;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(125, 25, 53, 0.15);
@@ -205,7 +205,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       gap: 0.75rem;
       font-weight: 600;
       font-size: 0.875rem;
-      color: var(--color-charcoal, #2C2C2C);
+      color: var(--text-primary);
       border: 1px solid rgba(212, 165, 116, 0.2);
       animation: floatCard 4s ease-in-out infinite;
     }
@@ -383,7 +383,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .gallery-nav:hover {
-      background: white;
+      background: var(--bg-secondary);
       transform: translateY(-50%) scale(1.1);
       box-shadow: 0 6px 20px rgba(125, 25, 53, 0.2);
     }
@@ -700,7 +700,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .btn-cta {
-      background: white;
+      background: var(--bg-secondary);
       color: var(--color-burgundy, #7D1935);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       display: inline-flex;
@@ -709,7 +709,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .btn-cta:hover {
-      background: var(--color-cream, #FFF8F0);
+      background: var(--bg-primary);
       transform: translateY(-2px);
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
     }
@@ -773,7 +773,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .btn-secondary {
-      background: white;
+      background: var(--bg-secondary);
       color: var(--color-burgundy, #7D1935);
       border: 2px solid var(--color-burgundy, #7D1935);
       box-shadow: 0 2px 8px rgba(125, 25, 53, 0.1);
@@ -781,7 +781,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .btn-secondary:hover {
       background: var(--color-burgundy, #7D1935);
-      color: white;
+      color: var(--bg-secondary);
       transform: translateY(-2px);
     }
 

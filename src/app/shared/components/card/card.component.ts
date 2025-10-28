@@ -437,10 +437,42 @@ export class CardComponent {
   Math = Math;
 
   getFormattedPrice(): string {
-    return PriceUtils.formatPrice(
-      this.apartment().pricing.basePrice,
-      this.apartment().pricing.currency
-    );
+    const apartment = this.apartment();
+    const pricing = apartment.pricing as any;
+    
+    // Handle new apartment structure with oneRoomPrice and entireApartmentPrice
+    if (pricing && 'oneRoomPrice' in pricing && 'entireApartmentPrice' in pricing) {
+      // Display the lower price (one room) with "from" indicator
+      const price = pricing.oneRoomPrice;
+      return `from ${PriceUtils.formatPrice(price, pricing.currency || '₦')}`;
+    }
+    
+    // Handle legacy structure with basePrice
+    if (pricing && 'basePrice' in pricing) {
+      return PriceUtils.formatPrice(
+        pricing.basePrice,
+        pricing.currency || '₦'
+      );
+    }
+    
+    // Fallback
+    return 'Price not available';
+  }
+
+  getMaxGuests(): number {
+    const specs = this.apartment().specifications as any;
+    
+    // Handle new structure with maxGuestsEntireApartment
+    if ('maxGuestsEntireApartment' in specs) {
+      return specs.maxGuestsEntireApartment;
+    }
+    
+    // Handle legacy structure with maxGuests
+    if ('maxGuests' in specs) {
+      return specs.maxGuests;
+    }
+    
+    return 0;
   }
 
   getDisplayAmenities(): string[] {

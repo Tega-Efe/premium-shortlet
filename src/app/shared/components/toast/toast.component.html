@@ -24,16 +24,6 @@
           </button>
         }
       </div>
-
-      @if (notification.type !== 'loading') {
-        <button 
-          class="toast-close"
-          (click)="dismiss(notification.id!)"
-          aria-label="Close notification"
-        >
-          ✕
-        </button>
-      }
     </div>
   }
 </div>

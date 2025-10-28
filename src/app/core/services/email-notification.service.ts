@@ -11,12 +11,21 @@ import { EmailNotificationPayload } from '../interfaces/simplified-booking.inter
  * This service is independent of Firestore and sends notifications to:
  * - Admin when a new booking is submitted
  * - Guest when booking is approved or rejected
+ * 
+ * CURRENT MODE: DEVELOPMENT (No actual emails sent)
+ * To enable email sending:
+ * 1. Set USE_MOCK_EMAIL to false
+ * 2. Update DJANGO_API_URL with your actual backend URL
+ * 3. Update API_KEY with your actual API key
  */
 @Injectable({
   providedIn: 'root'
 })
 export class EmailNotificationService {
   private http = inject(HttpClient);
+  
+  // Toggle between mock (development) and real email sending
+  private readonly USE_MOCK_EMAIL = true; // Set to false when backend is ready
   
   // TODO: Replace with your actual Django API endpoint
   private readonly DJANGO_API_URL = 'https://your-django-api.com/api/notifications/send';
@@ -34,6 +43,7 @@ export class EmailNotificationService {
     checkInDate: string,
     checkOutDate: string,
     numberOfNights: number,
+    numberOfGuests: number,
     guestAddress: string
   ): Observable<any> {
     const payload: EmailNotificationPayload = {
@@ -46,6 +56,7 @@ export class EmailNotificationService {
         checkInDate: this.formatDate(checkInDate),
         checkOutDate: this.formatDate(checkOutDate),
         numberOfNights,
+        numberOfGuests,
         address: guestAddress
       }
     };
@@ -70,6 +81,7 @@ export class EmailNotificationService {
     checkInDate: string,
     checkOutDate: string,
     numberOfNights: number,
+    numberOfGuests: number,
     adminNotes?: string
   ): Observable<any> {
     const payload: EmailNotificationPayload = {
@@ -82,6 +94,7 @@ export class EmailNotificationService {
         checkInDate: this.formatDate(checkInDate),
         checkOutDate: this.formatDate(checkOutDate),
         numberOfNights,
+        numberOfGuests,
         adminNotes
       }
     };
@@ -104,6 +117,7 @@ export class EmailNotificationService {
     bookingOption: string,
     checkInDate: string,
     checkOutDate: string,
+    numberOfGuests: number,
     adminNotes?: string
   ): Observable<any> {
     const payload: EmailNotificationPayload = {
@@ -116,6 +130,7 @@ export class EmailNotificationService {
         checkInDate: this.formatDate(checkInDate),
         checkOutDate: this.formatDate(checkOutDate),
         numberOfNights: 0,
+        numberOfGuests,
         adminNotes
       }
     };
@@ -131,9 +146,22 @@ export class EmailNotificationService {
 
   /**
    * Core email sending method
-   * Calls the Django API endpoint
+   * Calls the Django API endpoint (or mocks it in development mode)
    */
   private sendEmail(payload: EmailNotificationPayload): Observable<any> {
+    // DEVELOPMENT MODE: Just log the notification instead of making HTTP call
+    if (this.USE_MOCK_EMAIL) {
+      console.log('📧 [MOCK EMAIL] Would send email:', {
+        to: payload.to,
+        subject: payload.subject,
+        template: payload.templateType,
+        data: payload.data
+      });
+      // Return successful mock response
+      return of({ success: true, message: 'Mock email logged' });
+    }
+
+    // PRODUCTION MODE: Make actual HTTP call to Django API
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.API_KEY}`  // If your Django API requires auth

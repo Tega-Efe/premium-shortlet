@@ -24,13 +24,13 @@ import { fadeInOut, slideInRight } from '../../../core/animations';
     }
 
     .toast {
-      background: white;
+      background: var(--bg-secondary);
       border-radius: 0.5rem;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
                   0 4px 6px -2px rgba(0, 0, 0, 0.05);
       padding: 1rem;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 0.75rem;
       min-width: 300px;
       border-left: 4px solid;
@@ -38,29 +38,32 @@ import { fadeInOut, slideInRight } from '../../../core/animations';
     }
 
     .toast-success {
-      border-left-color: #10b981;
+      border-left-color: var(--color-sage, #A8B4A5);
     }
 
     .toast-error {
-      border-left-color: #ef4444;
+      border-left-color: var(--color-terracotta, #C17D5C);
     }
 
     .toast-warning {
-      border-left-color: #f59e0b;
+      border-left-color: var(--color-gold, #D4AF37);
     }
 
     .toast-info {
-      border-left-color: #3b82f6;
+      border-left-color: var(--color-tan, #D4A574);
     }
 
     .toast-loading {
-      border-left-color: #6b7280;
+      border-left-color: var(--color-burgundy, #7D1935);
     }
 
     .toast-icon {
       font-size: 1.5rem;
       flex-shrink: 0;
       line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .toast-content {
@@ -72,7 +75,7 @@ import { fadeInOut, slideInRight } from '../../../core/animations';
 
     .toast-message {
       margin: 0;
-      color: #1f2937;
+      color: var(--text-primary);
       font-size: 0.875rem;
       line-height: 1.5;
     }
@@ -81,7 +84,7 @@ import { fadeInOut, slideInRight } from '../../../core/animations';
       align-self: flex-start;
       background: none;
       border: none;
-      color: #3b82f6;
+      color: var(--color-burgundy, #7D1935);
       font-weight: 600;
       font-size: 0.875rem;
       cursor: pointer;
@@ -90,13 +93,13 @@ import { fadeInOut, slideInRight } from '../../../core/animations';
     }
 
     .toast-action:hover {
-      color: #2563eb;
+      color: var(--color-tan, #D4A574);
     }
 
     .toast-close {
       background: none;
       border: none;
-      color: #6b7280;
+      color: var(--text-secondary);
       cursor: pointer;
       padding: 0;
       font-size: 1.25rem;

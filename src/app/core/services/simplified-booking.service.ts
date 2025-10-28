@@ -79,8 +79,12 @@ export class SimplifiedBookingService {
   /**
    * Create a new booking with ID photo upload
    */
-  createBooking(formData: BookingFormData): Observable<SimplifiedBooking> {
+  createBooking(formData: BookingFormData, pricePerNight?: number): Observable<SimplifiedBooking> {
     this.isLoading.set(true);
+    
+    // Calculate pricing if provided
+    const calculatedPricePerNight = pricePerNight || (formData.bookingOption === 'one-room' ? 25000 : 45000);
+    const totalPrice = calculatedPricePerNight * formData.numberOfNights;
     
     const booking: SimplifiedBooking = {
       guestInfo: {
@@ -93,7 +97,12 @@ export class SimplifiedBookingService {
         bookingOption: formData.bookingOption,
         checkInDate: formData.checkInDate,
         checkOutDate: formData.checkOutDate,
-        numberOfNights: formData.numberOfNights
+        numberOfNights: formData.numberOfNights,
+        numberOfGuests: formData.numberOfGuests
+      },
+      pricing: {
+        pricePerNight: calculatedPricePerNight,
+        totalPrice: totalPrice
       },
       status: 'pending',
       createdAt: new Date().toISOString()
@@ -212,6 +221,7 @@ export class SimplifiedBookingService {
               booking.bookingDetails.checkInDate,
               booking.bookingDetails.checkOutDate,
               booking.bookingDetails.numberOfNights,
+              booking.bookingDetails.numberOfGuests,
               adminNotes
             ).subscribe();
             
@@ -258,6 +268,7 @@ export class SimplifiedBookingService {
               booking.bookingDetails.bookingOption,
               booking.bookingDetails.checkInDate,
               booking.bookingDetails.checkOutDate,
+              booking.bookingDetails.numberOfGuests,
               adminNotes
             ).subscribe();
             
@@ -376,6 +387,7 @@ export class SimplifiedBookingService {
       booking.bookingDetails.checkInDate,
       booking.bookingDetails.checkOutDate,
       booking.bookingDetails.numberOfNights,
+      booking.bookingDetails.numberOfGuests,
       booking.guestInfo.address
     ).subscribe();
   }

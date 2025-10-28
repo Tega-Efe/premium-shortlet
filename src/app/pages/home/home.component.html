@@ -169,10 +169,18 @@
                 </div>
                 <h3 class="empty-title">
                   <i class="fas fa-search"></i>
-                  No Apartments Found
+                  @if (hasAnyApartments()) {
+                    No Apartments Found
+                  } @else {
+                    No Apartments Available
+                  }
                 </h3>
                 <p class="empty-text">
-                  We couldn't find any apartments matching your criteria. Try adjusting your filters or search terms.
+                  @if (hasAnyApartments()) {
+                    We couldn't find any apartments matching your criteria. Try adjusting your filters or search terms.
+                  } @else {
+                    There are currently no apartments available for booking. Please check back later.
+                  }
                 </p>
                 @if (hasActiveFilters()) {
                   <button 
@@ -228,12 +236,12 @@
                   </span>
                   <span class="spec">
                     <i class="fas fa-users"></i>
-                    {{ selectedApartment()!.specifications.maxGuests }} Guests
+                    {{ getApartmentMaxGuests(selectedApartment()!) }} Guests
                   </span>
                 </div>
                 <div class="summary-price-block">
                   <span class="price-amount">
-                    {{ selectedApartment()!.pricing.currency }}{{ selectedApartment()!.pricing.basePrice | number }}
+                    {{ getApartmentPrice(selectedApartment()!) }}
                   </span>
                   <span class="price-period">/night</span>
                 </div>
@@ -255,5 +263,32 @@
             </div>
           </div>
         }
+      </app-modal>
+
+      <!-- Unavailable Modal -->
+      <app-modal
+        #unavailableModal
+        [size]="'md'"
+        (modalClose)="closeUnavailableModal()"
+      >
+        <div class="unavailable-modal-content">
+          <div class="unavailable-icon">
+            <i class="fas fa-calendar-times"></i>
+          </div>
+          <h3 class="unavailable-title">Apartment Currently Unavailable</h3>
+          <p class="unavailable-message">
+            We're sorry, but this apartment is not currently accepting bookings. 
+            This may be due to scheduled maintenance or it being fully booked.
+          </p>
+          <p class="unavailable-suggestion">
+            Please check back later or contact us for more information about availability.
+          </p>
+          <div class="unavailable-actions">
+            <button class="btn btn-primary" (click)="closeUnavailableModal()">
+              <i class="fas fa-check"></i>
+              Understood
+            </button>
+          </div>
+        </div>
       </app-modal>
     </div>

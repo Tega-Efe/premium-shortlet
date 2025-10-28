@@ -74,28 +74,17 @@ Book the entire apartment or just one room - flexible options to suit your needs
   
   // Pricing (nested object matching Apartment interface)
   pricing: {
-    basePrice: 35000, // ₦35,000 per night for entire apartment
-    currency: 'NGN',
-    period: 'night',
-    discounts: [
-      {
-        type: 'extended_stay',
-        percentage: 10,
-        minDays: 7
-      },
-      {
-        type: 'extended_stay',
-        percentage: 25,
-        minDays: 30
-      }
-    ]
+    oneRoomPrice: 25000, // ₦25,000 per night for one room
+    entireApartmentPrice: 45000, // ₦45,000 per night for entire apartment
+    currency: 'NGN'
   },
   
   // Specifications (nested object matching Apartment interface)
   specifications: {
     bedrooms: 2,
     bathrooms: 2,
-    maxGuests: 4,
+    maxGuestsOneRoom: 2,
+    maxGuestsEntireApartment: 4,
     squareMeters: 120,
     floors: 1
   },
@@ -128,7 +117,8 @@ Book the entire apartment or just one room - flexible options to suit your needs
   
   // Availability (nested object matching Apartment interface)
   availability: {
-    status: 'available',
+    isAvailable: true,
+    status: 'available' as const,
     bookedDates: [],
     blackoutDates: []
   },
@@ -284,7 +274,8 @@ async function seedFirestore() {
     await setDoc(apartmentRef, twoBedroomApartment);
     console.log('✅ Apartment created successfully!');
     console.log(`   - Title: ${twoBedroomApartment.title}`);
-    console.log(`   - Price: ₦${twoBedroomApartment.pricing.basePrice.toLocaleString()}/night`);
+    console.log(`   - Price (One Room): ₦${twoBedroomApartment.pricing.oneRoomPrice.toLocaleString()}/night`);
+    console.log(`   - Price (Entire): ₦${twoBedroomApartment.pricing.entireApartmentPrice.toLocaleString()}/night`);
     console.log(`   - Location: ${twoBedroomApartment.location.address}\n`);
 
     // 2. Create Availability Document

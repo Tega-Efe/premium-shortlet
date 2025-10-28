@@ -99,9 +99,18 @@ export const simplifiedBookingFormConfig: FormConfig = {
       label: 'Booking Option',
       type: 'select',
       options: [
-        { label: 'Book One Room', value: 'one-room' },
-        { label: 'Book Entire Apartment (2 Bedrooms)', value: 'entire-apartment' }
+        { 
+          label: 'Book One Room', 
+          value: 'one-room',
+          icon: 'fas fa-door-open'
+        },
+        { 
+          label: 'Book Entire Apartment (2 Bedrooms)', 
+          value: 'entire-apartment',
+          icon: 'fas fa-home'
+        }
       ],
+      placeholder: 'Choose your booking preference',
       validators: [Validators.required],
       errorMessages: {
         required: 'Please select a booking option'

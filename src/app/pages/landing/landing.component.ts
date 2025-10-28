@@ -1,10 +1,9 @@
-import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApartmentServiceFirestore } from '../../core/services/apartment.service.firestore';
 import { ThemeService } from '../../core/services/theme.service';
 import { Apartment } from '../../core/interfaces';
-import { CardComponent } from '../../shared/components/card/card.component';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
 import { HoverEffectDirective } from '../../core/directives/hover-effect.directive';
 import { TypingEffectDirective } from '../../shared/directives/typing-effect.directive';
@@ -12,7 +11,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, CardComponent, AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective],
+  imports: [CommonModule, AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './landing.component.html', styles: [`
     .landing-page {
@@ -294,6 +293,139 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+    }
+
+    /* Gallery Carousel */
+    .gallery-container {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto 3rem;
+      padding: 0 4rem;
+    }
+
+    .gallery-slider {
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 8px 32px rgba(125, 25, 53, 0.12);
+    }
+
+    .gallery-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-slide {
+      min-width: 100%;
+      aspect-ratio: 16/9;
+      flex-shrink: 0;
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, var(--color-tan, #D4A574) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+      opacity: 0.5;
+    }
+
+    .gallery-image i {
+      font-size: clamp(4rem, 10vw, 6rem);
+      color: white;
+      opacity: 0.95;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+      z-index: 1;
+    }
+
+    .gallery-label {
+      color: white;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 700;
+      text-align: center;
+      padding: 0.75rem 2rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(12px);
+      z-index: 1;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      color: var(--color-burgundy, #7D1935);
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-nav:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(125, 25, 53, 0.2);
+    }
+
+    .gallery-nav:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .gallery-nav-prev {
+      left: 0;
+    }
+
+    .gallery-nav-next {
+      right: 0;
+    }
+
+    .gallery-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .gallery-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--color-burgundy, #7D1935);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .gallery-dot:hover {
+      background: rgba(125, 25, 53, 0.3);
+      transform: scale(1.2);
+    }
+
+    .gallery-dot.active {
+      background: var(--color-burgundy, #7D1935);
+      transform: scale(1.3);
     }
 
     .apartments-grid {
@@ -700,6 +832,16 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       .cta-title {
         font-size: 2.25rem;
       }
+
+      .gallery-container {
+        padding: 0 3rem;
+      }
+
+      .gallery-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
     }
 
     @media (max-width: 768px) {
@@ -726,6 +868,25 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       .btn {
         width: 100%;
         justify-content: center;
+      }
+
+      .gallery-container {
+        padding: 0 2.5rem;
+      }
+
+      .gallery-slide {
+        aspect-ratio: 4/3;
+      }
+
+      .gallery-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+      }
+
+      .gallery-dot {
+        width: 10px;
+        height: 10px;
       }
 
       .apartments-grid {
@@ -809,7 +970,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
   `]
 })
-export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit, OnDestroy {
   private apartmentService = inject(ApartmentServiceFirestore);
   private router = inject(Router);
   protected themeService = inject(ThemeService);
@@ -822,8 +983,57 @@ export class LandingComponent implements OnInit {
     cities: 1 // Single location: Lagos
   });
 
+  // Gallery carousel state
+  currentSlide = signal(0);
+  private autoPlayInterval?: number;
+  galleryImages = [
+    { icon: 'fas fa-bed', label: 'Master Bedroom' },
+    { icon: 'fas fa-couch', label: 'Living Room' },
+    { icon: 'fas fa-utensils', label: 'Kitchen' },
+    { icon: 'fas fa-bath', label: 'Bathroom' },
+    { icon: 'fas fa-door-open', label: 'Second Bedroom' },
+    { icon: 'fas fa-building', label: 'Exterior View' }
+  ];
+
   ngOnInit(): void {
     this.loadFeaturedApartments();
+    this.startAutoPlay();
+  }
+
+  ngOnDestroy(): void {
+    this.stopAutoPlay();
+  }
+
+  startAutoPlay(): void {
+    this.autoPlayInterval = window.setInterval(() => {
+      this.nextSlide();
+    }, 4000); // Change slide every 4 seconds
+  }
+
+  stopAutoPlay(): void {
+    if (this.autoPlayInterval) {
+      clearInterval(this.autoPlayInterval);
+    }
+  }
+
+  nextSlide(): void {
+    this.currentSlide.update(current => 
+      current === this.galleryImages.length - 1 ? 0 : current + 1
+    );
+  }
+
+  prevSlide(): void {
+    this.stopAutoPlay(); // Stop auto-play when user manually navigates
+    this.currentSlide.update(current => 
+      current === 0 ? this.galleryImages.length - 1 : current - 1
+    );
+    this.startAutoPlay(); // Restart auto-play
+  }
+
+  goToSlide(index: number): void {
+    this.stopAutoPlay(); // Stop auto-play when user manually navigates
+    this.currentSlide.set(index);
+    this.startAutoPlay(); // Restart auto-play
   }
 
   loadFeaturedApartments(): void {

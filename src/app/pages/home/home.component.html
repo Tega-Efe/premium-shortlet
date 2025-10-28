@@ -248,6 +248,8 @@
               </div>
               <app-dynamic-form
                 [config]="bookingFormConfig"
+                [formId]="'booking-form'"
+                [enableAutoSave]="true"
                 (formSubmit)="onBookingSubmit($event)"
               />
             </div>

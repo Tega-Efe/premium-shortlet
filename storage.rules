@@ -13,6 +13,12 @@ service firebase.storage {
       return request.resource.contentType.matches('image/.*');
     }
     
+    // Booking ID photos - public write, public read
+    match /booking-ids/{fileName} {
+      allow read: if true;
+      allow write: if isImage() && isValidSize(5); // 5MB limit for ID photos
+    }
+    
     // Booking documents and images - public read/write
     match /bookings/{bookingId}/{fileName} {
       allow read: if true;

@@ -41,6 +41,7 @@ export interface FormFieldOption {
   label: string;
   value: any;
   disabled?: boolean;
+  icon?: string; // Font Awesome icon class
 }
 
 export interface FormCondition {

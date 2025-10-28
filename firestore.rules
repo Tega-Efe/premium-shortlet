@@ -3,8 +3,21 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
+    // Simplified Bookings collection - public write, public read for now
+    match /simplified-bookings/{bookingId} {
+      allow read: if true;
+      allow create: if true; // Allow anyone to create a booking
+      allow update: if true; // For status updates (should be restricted to admin in production)
+      allow delete: if false; // Prevent deletion
+    }
+    
+    // Apartment Availability collection - public read, restricted write
+    match /apartment-availability/{availabilityId} {
+      allow read: if true; // Anyone can check availability
+      allow write: if true; // For now, allow writes (should be restricted to admin in production)
+    }
+    
     // Bookings collection - public read/write for now
-    // You can customize these rules based on your needs
     match /bookings/{bookingId} {
       allow read, write: if true;
     }

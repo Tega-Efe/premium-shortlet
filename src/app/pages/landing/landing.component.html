@@ -131,49 +131,54 @@
         </div>
       </section>
 
-      <!-- Featured Apartments Section -->
+      <!-- Featured Apartments Section - Updated to Gallery -->
       <section class="featured-section" id="featured">
         <div class="section-container">
           <div class="section-header" appAnimateOnScroll="slide-up">
             <div class="section-tag">
-              <i class="fas fa-certificate"></i>
-              <span>Our Property</span>
+              <i class="fas fa-images"></i>
+              <span>Apartment Gallery</span>
             </div>
-            <h2 class="section-title">Luxury Two-Bedroom Apartment</h2>
+            <h2 class="section-title">Victoria Island Luxury</h2>
             <p class="section-subtitle">
-              A carefully maintained property offering the best experience and value in Victoria Island
+              Take a visual tour of our beautiful two-bedroom apartment
             </p>
           </div>
 
-          @if (isLoading()) {
-            <div class="loading-state">
-              <div class="spinner">
-                <i class="fas fa-circle-notch fa-spin"></i>
+          <div class="gallery-container">
+            <button class="gallery-nav gallery-nav-prev" (click)="prevSlide()" aria-label="Previous slide">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <div class="gallery-slider">
+              <div class="gallery-track" [style.transform]="'translateX(-' + (currentSlide() * 100) + '%)'">
+                @for (image of galleryImages; track $index) {
+                  <div class="gallery-slide">
+                    <div class="gallery-image">
+                      <i [class]="image.icon"></i>
+                      <span class="gallery-label">{{ image.label }}</span>
+                    </div>
+                  </div>
+                }
               </div>
-              <p>Loading apartment details...</p>
             </div>
-          } @else if (featuredApartments().length > 0) {
-            <div class="apartments-grid">
-              @for (apartment of featuredApartments(); track apartment.id; let i = $index) {
-                <div appAnimateOnScroll="fade-in" [delay]="i * 100">
-                  <app-card
-                    [apartment]="apartment"
-                    [showBookButton]="true"
-                    [showViewButton]="false"
-                    (book)="onBookApartment($event)"
-                  />
-                </div>
+
+            <button class="gallery-nav gallery-nav-next" (click)="nextSlide()" aria-label="Next slide">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div class="gallery-dots">
+              @for (image of galleryImages; track $index) {
+                <button 
+                  class="gallery-dot" 
+                  [class.active]="currentSlide() === $index"
+                  (click)="goToSlide($index)"
+                  [attr.aria-label]="'Go to slide ' + ($index + 1)"
+                >
+                </button>
               }
             </div>
-          } @else {
-            <div class="empty-state" appAnimateOnScroll="fade-in">
-              <div class="empty-icon">
-                <i class="fas fa-home"></i>
-              </div>
-              <h3>Coming Soon</h3>
-              <p>Our beautiful apartment listing will be available shortly.</p>
-            </div>
-          }
+          </div>
 
           <div class="section-footer" appAnimateOnScroll="slide-up">
             <button 
@@ -181,7 +186,7 @@
               (click)="navigateToBrowse()"
               appHoverEffect="glow"
             >
-              <span>View Full Details</span>
+              <span>View Full Details & Book</span>
               <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -246,7 +251,8 @@
         </div>
       </section>
 
-      <!-- Testimonials Section -->
+      <!-- Testimonials Section - COMMENTED OUT: Requires complete review cycle implementation -->
+      <!-- TODO: Implement full guest review service with booking integration
       <section class="testimonials-section">
         <div class="section-container">
           <div class="section-header" appAnimateOnScroll="slide-up">
@@ -329,6 +335,7 @@
           </div>
         </div>
       </section>
+      -->
 
       <!-- CTA Section -->
       <section class="cta-section">

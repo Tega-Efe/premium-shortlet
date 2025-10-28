@@ -2,11 +2,15 @@ import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormFieldConfig } from '../form-field.config';
+import { PhoneInputComponent } from './phone-input.component';
+import { FileUploadComponent } from './file-upload.component';
+import { CustomSelectComponent } from './custom-select.component';
+import { DatePickerComponent } from './date-picker.component';
 
 @Component({
   selector: 'app-form-field',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PhoneInputComponent, FileUploadComponent, CustomSelectComponent, DatePickerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="'form-field ' + (config.containerClass || '')" 
@@ -20,6 +24,35 @@ import { FormFieldConfig } from '../form-field.config';
       </label>
 
       @switch (config.type) {
+        @case ('tel') {
+          <app-phone-input
+            [formControl]="control"
+            [placeholder]="config.placeholder || '800 123 4567'"
+          />
+        }
+        @case ('file') {
+          <app-file-upload
+            [formControl]="control"
+            [accept]="config.accept || 'image/jpeg,image/png,image/jpg'"
+            [placeholder]="config.placeholder || 'Click to upload'"
+            [hint]="config.hint || 'JPG, PNG up to 5MB'"
+          />
+        }
+        @case ('date') {
+          <app-date-picker
+            [formControl]="control"
+            [placeholder]="config.placeholder || 'Select date'"
+            [minDate]="config.min?.toString()"
+            [maxDate]="config.max?.toString()"
+          />
+        }
+        @case ('select') {
+          <app-custom-select
+            [formControl]="control"
+            [options]="config.options || []"
+            [placeholder]="config.placeholder || 'Select...'"
+          />
+        }
         @case ('textarea') {
           <textarea
             [id]="config.name"

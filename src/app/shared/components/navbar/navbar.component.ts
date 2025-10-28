@@ -13,18 +13,20 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
   styles: [`
     /* ===== Navbar Container ===== */
     .navbar {
-      background: var(--bg-primary);
+      background: rgba(var(--bg-primary-rgb, 250, 247, 242), 0.95);
       backdrop-filter: blur(10px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      position: sticky;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.15);
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: var(--z-sticky);
       transition: all var(--transition-base);
       border-bottom: 1px solid var(--border-light);
     }
 
     .navbar.scrolled {
-      background: var(--bg-primary);
+      background: rgba(var(--bg-primary-rgb, 250, 247, 242), 0.98);
       backdrop-filter: blur(12px);
       box-shadow: var(--shadow-lg);
       border-bottom-color: var(--border-medium);
@@ -33,10 +35,11 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
     .navbar-container {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 1rem var(--spacing-xl);
+      padding: 0.75rem var(--spacing-lg);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      min-height: 56px;
     }
 
     /* ===== Logo & Branding ===== */
@@ -174,31 +177,69 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
       font-size: var(--font-size-base);
     }
 
-    /* ===== Mobile Menu Toggle ===== */
-    .mobile-menu-toggle {
+    /* ===== Mobile Menu Toggle & Hamburger ===== */
+    .mobile-controls {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      background: var(--bg-secondary);
-      border: 2px solid var(--border-medium);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      color: var(--color-burgundy);
-      font-size: var(--font-size-xl);
-      transition: all var(--transition-base);
+      gap: var(--spacing-sm);
       z-index: 2;
     }
 
-    .mobile-menu-toggle:hover {
-      background: var(--bg-primary);
-      border-color: var(--color-burgundy);
-      transform: scale(1.05);
+    .mobile-theme-toggle {
+      display: block;
     }
 
-    .mobile-menu-toggle:active {
-      transform: scale(0.95);
+    .hamburger {
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      outline: none !important;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hamburger:focus {
+      outline: none !important;
+    }
+
+    .hamburger input {
+      display: none;
+    }
+
+    .hamburger svg {
+      height: 2em;
+      transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hamburger input:checked + svg {
+      transform: rotate(-45deg);
+    }
+
+    .line {
+      fill: none;
+      stroke: var(--color-burgundy);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2.5;
+      transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+                  stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .line-top-bottom {
+      stroke-dasharray: 12 63;
+    }
+
+    .hamburger input:checked + svg .line-top-bottom {
+      stroke-dasharray: 20 300;
+      stroke-dashoffset: -32.42;
+    }
+
+    .mobile-menu-toggle {
+      display: flex;
     }
 
     /* ===== Mobile Navigation ===== */
@@ -206,10 +247,13 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
       display: flex;
       flex-direction: column;
       padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-2xl);
-      background: var(--bg-secondary);
+      background: rgba(var(--bg-secondary-rgb, 255, 248, 240), 0.98);
+      backdrop-filter: blur(10px);
       border-top: 1px solid var(--border-light);
+      border-radius: 0 0 15px 15px;
       gap: var(--spacing-xs);
       box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.05);
+      margin-top: 0.5rem;
     }
 
     .mobile-menu .nav-link {
@@ -226,12 +270,6 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
     .mobile-menu .nav-link.active {
       background: var(--bg-primary);
       border-left: 4px solid var(--color-burgundy);
-    }
-
-    .mobile-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, var(--border-light) 50%, transparent 100%);
-      margin: var(--spacing-sm) 0;
     }
 
     /* ===== Mobile Backdrop ===== */
@@ -259,30 +297,48 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
         display: flex;
       }
 
-      .mobile-menu-toggle {
+      .mobile-controls {
         display: none;
       }
 
       .nav-link.active::after {
         bottom: var(--spacing-xs);
       }
+
+      .navbar-container {
+        padding: 0.75rem var(--spacing-xl);
+        min-height: 60px;
+      }
     }
 
     @media (max-width: 767px) {
       .navbar-container {
-        padding: var(--spacing-md) var(--spacing-lg);
+        padding: 0.6rem var(--spacing-md);
+        min-height: 52px;
       }
 
       .logo {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-base);
       }
 
       .logo-icon {
-        font-size: var(--font-size-xl);
+        font-size: var(--font-size-lg);
       }
 
       .logo-text {
         display: none;
+      }
+
+      .desktop-menu {
+        display: none;
+      }
+
+      .mobile-controls {
+        display: flex;
+      }
+
+      .hamburger svg {
+        height: 1.8em;
       }
     }
 
@@ -290,11 +346,16 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
       .logo-text {
         display: inline;
       }
+      
+      .logo {
+        font-size: var(--font-size-lg);
+      }
     }
 
     @media (min-width: 1024px) {
       .navbar-container {
-        padding: 1.25rem var(--spacing-2xl);
+        padding: 0.75rem var(--spacing-2xl);
+        min-height: 64px;
       }
 
       .navbar-menu {

@@ -65,14 +65,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .header-icon {
-      width: 70px;
-      height: 70px;
+      width: clamp(60px, 10vw, 70px); /* Responsive icon container */
+      height: clamp(60px, 10vw, 70px);
       background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 3vw, 2rem); /* Responsive icon */
       margin: 0 auto 1.5rem;
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.3);
@@ -86,14 +86,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .page-title {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
+      font-size: clamp(2rem, 4.5vw, 2.75rem); /* Responsive title */
       font-weight: 700;
       margin: 0 0 1rem 0;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .page-subtitle {
-      font-size: 1.25rem;
+      font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive subtitle */
       margin: 0;
       opacity: 0.95;
       max-width: 600px;
@@ -160,11 +160,11 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .results-count-badge i {
-      font-size: 1.25rem;
+      font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive icon */
     }
 
     .count-number {
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive number */
       font-weight: 700;
       line-height: 1;
     }
@@ -177,7 +177,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .results-count {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive count text */
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
@@ -193,7 +193,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       align-items: center;
       gap: 0.375rem;
-      font-size: 0.9375rem;
+      font-size: clamp(0.875rem, 1.6vw, 0.9375rem); /* Responsive button text */
       transition: all 0.2s ease;
     }
 
@@ -361,7 +361,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .empty-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.75rem;
+      font-size: clamp(1.375rem, 3vw, 1.75rem); /* Responsive title */
       font-weight: 700;
       color: var(--text-primary);
       margin: 0 0 1rem 0;
@@ -378,7 +378,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .empty-text {
       color: var(--text-secondary);
       margin: 0 0 2.5rem 0;
-      font-size: 1.0625rem;
+      font-size: clamp(0.9375rem, 1.8vw, 1.0625rem); /* Responsive text */
       line-height: 1.6;
       max-width: 500px;
       margin-left: auto;
@@ -386,7 +386,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .btn {
-      padding: 0.875rem 1.75rem;
+      padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1.5rem, 3vw, 1.75rem); /* Responsive padding */
       border: none;
       border-radius: 0.5rem;
       font-weight: 600;
@@ -396,10 +396,11 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       align-items: center;
       gap: 0.625rem;
       font-family: inherit;
+      font-size: clamp(0.875rem, 1.8vw, 1rem); /* Responsive font size */
     }
 
     .btn i {
-      font-size: 1.125rem;
+      font-size: clamp(1rem, 2vw, 1.125rem); /* Responsive icon */
     }
 
     .btn-primary {
@@ -513,7 +514,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .price-amount {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 3vw, 2rem); /* Responsive price */
       font-weight: 700;
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, var(--color-tan, #D4A574) 100%);
       -webkit-background-clip: text;
@@ -523,7 +524,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .price-period {
       color: var(--color-warm-gray, #6B6B6B);
-      font-size: 1rem;
+      font-size: clamp(0.875rem, 1.6vw, 1rem); /* Responsive period text */
       margin-left: 0.375rem;
     }
 
@@ -541,13 +542,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .form-header i {
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive icon */
       color: var(--color-burgundy, #7D1935);
     }
 
     .form-heading {
       font-family: 'Playfair Display', serif;
-      font-size: 1.375rem;
+      font-size: clamp(1.125rem, 2.2vw, 1.375rem); /* Responsive heading */
       font-weight: 700;
       color: var(--color-charcoal, #2C2C2C);
       margin: 0;

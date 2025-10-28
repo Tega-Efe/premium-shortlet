@@ -34,13 +34,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .page-title {
-      font-size: 2.5rem;
+      font-size: clamp(1.875rem, 4vw, 2.5rem); /* Responsive title */
       font-weight: 700;
       margin: 0 0 0.5rem 0;
     }
 
     .page-subtitle {
-      font-size: 1.125rem;
+      font-size: clamp(0.95rem, 1.8vw, 1.125rem); /* Responsive subtitle */
       margin: 0;
       opacity: 0.9;
     }
@@ -65,13 +65,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .stat-icon {
-      width: 60px;
-      height: 60px;
+      width: clamp(50px, 10vw, 60px); /* Responsive icon */
+      height: clamp(50px, 10vw, 60px);
       border-radius: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive icon size */
     }
 
     .stat-content {
@@ -81,12 +81,12 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .stat-label {
       margin: 0 0 0.25rem 0;
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: clamp(0.8125rem, 1.5vw, 0.875rem); /* Responsive label */
     }
 
     .stat-value {
       margin: 0;
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 3vw, 2rem); /* Responsive stat value */
       font-weight: 700;
       color: var(--text-primary);
     }
@@ -116,7 +116,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .availability-title {
-      font-size: 1.5rem;
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive title */
       font-weight: 700;
       color: var(--text-primary);
       margin: 0 0 0.5rem 0;
@@ -407,13 +407,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .activity-icon {
-      width: 40px;
-      height: 40px;
+      width: clamp(36px, 7vw, 40px); /* Responsive icon */
+      height: clamp(36px, 7vw, 40px);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
+      font-size: clamp(1.125rem, 2vw, 1.25rem); /* Responsive icon size */
       flex-shrink: 0;
     }
 
@@ -441,7 +441,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .activity-meta {
       margin: 0;
-      font-size: 0.875rem;
+      font-size: clamp(0.8125rem, 1.5vw, 0.875rem); /* Responsive meta text */
       color: #6b7280;
       display: flex;
       gap: 0.5rem;

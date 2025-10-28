@@ -25,9 +25,29 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Responsive Base Font Size */
+@media (max-width: 767px) {
+  html {
+    font-size: 14px; /* Smaller base for mobile */
+  }
+}
+
+@media (min-width: 1400px) {
+  html {
+    font-size: 15px; /* Slightly smaller base for large screens */
+  }
+}
+
+@media (min-width: 1920px) {
+  html {
+    font-size: 16px; /* Standard for very large screens */
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
+  padding-top: 56px; /* Space for fixed navbar - mobile default */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -78,6 +98,10 @@ body {
   --bg-primary: var(--color-cream);
   --bg-secondary: var(--color-vanilla-light);
   --bg-overlay: rgba(31, 28, 24, 0.5);
+  
+  /* RGB values for rgba() usage */
+  --bg-primary-rgb: 250, 247, 242;
+  --bg-secondary-rgb: 255, 248, 240;
 
   /* Text Colors */
   --text-primary: var(--color-charcoal);
@@ -112,15 +136,15 @@ body {
   --radius-full: 9999px;
 
   /* Typography */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  --font-size-5xl: 3rem;
+  --font-size-xs: 0.75rem;    /* 12px on mobile (14px base), 10.5px on desktop (15px base) */
+  --font-size-sm: 0.875rem;   /* 12.25px on mobile, 13.125px on desktop */
+  --font-size-base: 1rem;     /* 14px on mobile, 15px on desktop */
+  --font-size-lg: 1.125rem;   /* 15.75px on mobile, 16.875px on desktop */
+  --font-size-xl: 1.25rem;    /* 17.5px on mobile, 18.75px on desktop */
+  --font-size-2xl: 1.5rem;    /* 21px on mobile, 22.5px on desktop */
+  --font-size-3xl: 1.875rem;  /* 26.25px on mobile, 28.125px on desktop */
+  --font-size-4xl: 2.25rem;   /* 31.5px on mobile, 33.75px on desktop */
+  --font-size-5xl: 3rem;      /* 42px on mobile, 45px on desktop */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -180,6 +204,10 @@ body {
   --bg-primary: #1A1816;
   --bg-secondary: #2C2922;
   --bg-overlay: rgba(250, 247, 242, 0.08);
+  
+  /* RGB values for rgba() usage */
+  --bg-primary-rgb: 26, 24, 22;
+  --bg-secondary-rgb: 44, 41, 34;
 
   /* Text Colors - Improved readability */
   --text-primary: #E5DFD6;
@@ -247,6 +275,10 @@ body {
     --bg-primary: #1A1816;
     --bg-secondary: #2C2922;
     --bg-overlay: rgba(250, 247, 242, 0.08);
+    
+    /* RGB values for rgba() usage */
+    --bg-primary-rgb: 26, 24, 22;
+    --bg-secondary-rgb: 44, 41, 34;
 
     /* Text Colors - Improved readability */
     --text-primary: #E5DFD6;
@@ -276,10 +308,12 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: var(--font-size-4xl);
+  line-height: 1.1;
 }
 
 h2 {
   font-size: var(--font-size-3xl);
+  line-height: 1.2;
 }
 
 h3 {
@@ -296,6 +330,32 @@ h5 {
 
 h6 {
   font-size: var(--font-size-base);
+}
+
+/* Responsive Typography Adjustments */
+@media (max-width: 767px) {
+  h1 {
+    font-size: 2rem; /* Smaller on mobile */
+    line-height: 1.15;
+  }
+  
+  h2 {
+    font-size: 1.625rem;
+  }
+  
+  h3 {
+    font-size: 1.375rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  h1 {
+    font-size: 2.5rem; /* More controlled on large screens */
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
 }
 
 p {
@@ -793,4 +853,40 @@ label {
 :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+/* ===== Responsive Body Padding ===== */
+@media (min-width: 768px) {
+  body {
+    padding-top: 64px; /* Tablet/Desktop navbar */
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-top: 68px; /* Large screens navbar */
+  }
+}
+
+/* ===== Page Content Spacing (Prevents navbar overlap) ===== */
+.container,
+.page-container,
+main,
+[class*="content"] {
+  margin-top: var(--spacing-md);
+}
+
+/* First section after navbar - extra spacing */
+section:first-of-type,
+.hero-section,
+.landing-section {
+  padding-top: var(--spacing-lg);
+}
+
+@media (max-width: 767px) {
+  section:first-of-type,
+  .hero-section,
+  .landing-section {
+    padding-top: var(--spacing-md);
+  }
 }

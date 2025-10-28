@@ -77,7 +77,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: 3.75rem;
+      font-size: clamp(2rem, 4vw, 3.25rem); /* Responsive: 2rem mobile, scales to 3.25rem desktop */
       font-weight: 700;
       line-height: 1.1;
       color: var(--color-charcoal, #2C2C2C);
@@ -94,9 +94,9 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .hero-subtitle {
-      font-size: 1.25rem;
+      font-size: clamp(0.95rem, 1.8vw, 1.125rem); /* Responsive subtitle */
       color: var(--color-warm-gray, #6B6B6B);
-      line-height: 1.8;
+      line-height: 1.75;
       margin: 0;
       max-width: 600px;
     }
@@ -142,7 +142,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .stat-value {
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 3vw, 1.875rem); /* Responsive stat values */
       font-weight: 700;
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, var(--color-tan, #D4A574) 100%);
       -webkit-background-clip: text;
@@ -175,14 +175,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .main-illustration {
-      width: 280px;
-      height: 280px;
+      width: clamp(180px, 35vw, 260px); /* Responsive illustration */
+      height: clamp(180px, 35vw, 260px);
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, var(--color-terracotta, #C17D5C) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 8rem;
+      font-size: clamp(4.5rem, 12vw, 7rem); /* Responsive icon size */
       color: white;
       box-shadow: 0 20px 60px rgba(125, 25, 53, 0.25);
       position: relative;
@@ -281,14 +281,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .section-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.75rem;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem); /* Responsive section titles */
       font-weight: 700;
       color: var(--color-charcoal, #2C2C2C);
       margin: 0 0 1rem 0;
     }
 
     .section-subtitle {
-      font-size: 1.125rem;
+      font-size: clamp(0.95rem, 1.8vw, 1.0625rem); /* Responsive subtitle */
       color: var(--color-warm-gray, #6B6B6B);
       margin: 0;
       max-width: 600px;
@@ -385,14 +385,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .feature-icon {
-      width: 80px;
-      height: 80px;
+      width: clamp(60px, 12vw, 80px); /* Responsive icon container */
+      height: clamp(60px, 12vw, 80px);
       margin: 0 auto 1.5rem;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: clamp(1.5rem, 4vw, 2rem); /* Responsive icon */
       color: white;
       position: relative;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -416,7 +416,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .feature-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.375rem;
+      font-size: clamp(1.125rem, 2.2vw, 1.375rem); /* Responsive feature title */
       font-weight: 700;
       color: var(--text-primary);
       margin: 0 0 1rem 0;
@@ -426,7 +426,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       color: var(--text-secondary);
       line-height: 1.7;
       margin: 0;
-      font-size: 1rem;
+      font-size: clamp(0.875rem, 1.6vw, 1rem); /* Responsive description */
     }
 
     /* Testimonials */
@@ -554,14 +554,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .cta-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2.75rem;
+      font-size: clamp(1.875rem, 4vw, 2.5rem); /* Responsive CTA title */
       font-weight: 700;
       margin: 0 0 1rem 0;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .cta-subtitle {
-      font-size: 1.25rem;
+      font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive subtitle */
       margin: 0 0 2.5rem 0;
       opacity: 0.95;
       line-height: 1.6;
@@ -606,10 +606,10 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     /* Buttons */
     .btn {
-      padding: 0.875rem 1.75rem;
+      padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1.5rem, 3vw, 1.75rem); /* Responsive padding */
       border: none;
       border-radius: 0.5rem;
-      font-size: 1rem;
+      font-size: clamp(0.875rem, 1.8vw, 1rem); /* Responsive font size */
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -621,12 +621,12 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .btn i {
-      font-size: 1.125rem;
+      font-size: clamp(1rem, 2vw, 1.125rem); /* Responsive icon */
     }
 
     .btn-lg {
-      padding: 1.125rem 2.25rem;
-      font-size: 1.0625rem;
+      padding: clamp(0.875rem, 2.2vw, 1.125rem) clamp(1.75rem, 3.5vw, 2.25rem); /* Responsive large button */
+      font-size: clamp(0.9375rem, 1.9vw, 1.0625rem);
     }
 
     .btn-primary {

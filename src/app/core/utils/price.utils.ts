@@ -91,9 +91,12 @@ export class PriceUtils {
    * Format price with currency
    */
   static formatPrice(amount: number, currency: string = 'NGN'): string {
+    // Convert ₦ symbol to proper ISO currency code
+    const currencyCode = currency === '₦' ? 'NGN' : currency;
+    
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
-      currency: currency
+      currency: currencyCode
     }).format(amount);
   }
 

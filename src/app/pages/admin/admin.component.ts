@@ -1793,7 +1793,7 @@ export class AdminComponent implements OnInit {
     pricing: {
       oneRoomPrice: 25000,
       entireApartmentPrice: 45000,
-      currency: '₦'
+      currency: 'NGN'
     },
     specifications: {
       bedrooms: 1,
@@ -1802,7 +1802,14 @@ export class AdminComponent implements OnInit {
       maxGuestsEntireApartment: 5
     },
     amenities: [],
-    images: [],
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
+      'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+      'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800',
+      'https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=800'
+    ],
     availability: {
       isAvailable: true,
       status: 'available'
@@ -2213,7 +2220,7 @@ export class AdminComponent implements OnInit {
         pricing: {
           oneRoomPrice: Math.round(Number(this.listingData.pricing?.oneRoomPrice) || 25000),
           entireApartmentPrice: Math.round(Number(this.listingData.pricing?.entireApartmentPrice) || 45000),
-          currency: this.listingData.pricing?.currency || '₦'
+          currency: this.listingData.pricing?.currency || 'NGN'
         },
         specifications: {
           bedrooms: Math.round(Number(this.listingData.specifications?.bedrooms) || 1),

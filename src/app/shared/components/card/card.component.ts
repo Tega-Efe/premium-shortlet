@@ -444,14 +444,16 @@ export class CardComponent {
     if (pricing && 'oneRoomPrice' in pricing && 'entireApartmentPrice' in pricing) {
       // Display the lower price (one room) with "from" indicator
       const price = pricing.oneRoomPrice;
-      return `from ${PriceUtils.formatPrice(price, pricing.currency || '₦')}`;
+      const currency = pricing.currency || 'NGN';
+      return `from ${PriceUtils.formatPrice(price, currency)}`;
     }
     
     // Handle legacy structure with basePrice
     if (pricing && 'basePrice' in pricing) {
+      const currency = pricing.currency || 'NGN';
       return PriceUtils.formatPrice(
         pricing.basePrice,
-        pricing.currency || '₦'
+        currency
       );
     }
     

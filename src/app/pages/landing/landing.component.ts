@@ -1051,7 +1051,9 @@ export class LandingComponent implements OnInit, OnDestroy {
   }
 
   navigateToBrowse(): void {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home']).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   scrollToFeatured(): void {

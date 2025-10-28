@@ -52,3 +52,8 @@ ui-debug.log
 # Uncomment these if you want to keep credentials out of git
 # /src/environments/environment.ts
 # /src/environments/environment.prod.ts
+
+# Sensitive documentation with tokens
+FIREBASE-TOKEN-SECRET.md
+*-SECRET.md
+*-TOKEN.md

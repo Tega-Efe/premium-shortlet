@@ -25,33 +25,39 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Responsive Base Font Size */
+/* Responsive Base Font Size - Smaller for space optimization */
 @media (max-width: 767px) {
   html {
-    font-size: 14px; /* Smaller base for mobile */
+    font-size: 13px; /* Smaller base for mobile - reduced from 14px */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1399px) {
+  html {
+    font-size: 14px; /* Tablet sizes */
   }
 }
 
 @media (min-width: 1400px) {
   html {
-    font-size: 15px; /* Slightly smaller base for large screens */
+    font-size: 15px; /* Desktop - slightly smaller */
   }
 }
 
 @media (min-width: 1920px) {
   html {
-    font-size: 16px; /* Standard for very large screens */
+    font-size: 15.5px; /* Very large screens - slightly reduced */
   }
 }
 
 body {
   margin: 0;
   padding: 0;
-  padding-top: 56px; /* Space for fixed navbar - mobile default */
+  padding-top: 72px; /* Space for fixed navbar - mobile default - increased for maximum breathing room */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  line-height: 1.6;
+  line-height: 1.5; /* Slightly reduced from 1.6 for more compact text */
   color: var(--text-primary);
   background-color: var(--bg-primary);
   overflow-x: hidden;
@@ -118,14 +124,14 @@ body {
   --shadow-lg: 0 10px 15px -3px rgba(31, 28, 24, 0.1), 0 4px 6px -2px rgba(31, 28, 24, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(31, 28, 24, 0.1), 0 10px 10px -5px rgba(31, 28, 24, 0.04);
 
-  /* Spacing Scale */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
+  /* Spacing Scale - Reduced for better space utilization */
+  --spacing-xs: 0.25rem;    /* 3.25px on mobile, 3.75px on desktop */
+  --spacing-sm: 0.5rem;     /* 6.5px on mobile, 7.5px on desktop */
+  --spacing-md: 0.875rem;   /* 11.375px on mobile, 13.125px on desktop - reduced from 1rem */
+  --spacing-lg: 1.25rem;    /* 16.25px on mobile, 18.75px on desktop - reduced from 1.5rem */
+  --spacing-xl: 1.75rem;    /* 22.75px on mobile, 26.25px on desktop - reduced from 2rem */
+  --spacing-2xl: 2.5rem;    /* 32.5px on mobile, 37.5px on desktop - reduced from 3rem */
+  --spacing-3xl: 3.5rem;    /* 45.5px on mobile, 52.5px on desktop - reduced from 4rem */
 
   /* Border Radius */
   --radius-sm: 0.25rem;
@@ -135,16 +141,16 @@ body {
   --radius-2xl: 1.5rem;
   --radius-full: 9999px;
 
-  /* Typography */
-  --font-size-xs: 0.75rem;    /* 12px on mobile (14px base), 10.5px on desktop (15px base) */
-  --font-size-sm: 0.875rem;   /* 12.25px on mobile, 13.125px on desktop */
-  --font-size-base: 1rem;     /* 14px on mobile, 15px on desktop */
-  --font-size-lg: 1.125rem;   /* 15.75px on mobile, 16.875px on desktop */
-  --font-size-xl: 1.25rem;    /* 17.5px on mobile, 18.75px on desktop */
-  --font-size-2xl: 1.5rem;    /* 21px on mobile, 22.5px on desktop */
-  --font-size-3xl: 1.875rem;  /* 26.25px on mobile, 28.125px on desktop */
-  --font-size-4xl: 2.25rem;   /* 31.5px on mobile, 33.75px on desktop */
-  --font-size-5xl: 3rem;      /* 42px on mobile, 45px on desktop */
+  /* Typography - Optimized for compact layouts */
+  --font-size-xs: 0.6875rem;  /* 8.9375px on mobile (13px base), smaller for denser layouts */
+  --font-size-sm: 0.8125rem;  /* 10.5625px on mobile */
+  --font-size-base: 0.9375rem; /* 12.1875px on mobile - reduced from 1rem */
+  --font-size-lg: 1.0625rem;  /* 13.8125px on mobile - reduced from 1.125rem */
+  --font-size-xl: 1.1875rem;  /* 15.4375px on mobile - reduced from 1.25rem */
+  --font-size-2xl: 1.375rem;  /* 17.875px on mobile - reduced from 1.5rem */
+  --font-size-3xl: 1.75rem;   /* 22.75px on mobile - reduced from 1.875rem */
+  --font-size-4xl: 2rem;      /* 26px on mobile - reduced from 2.25rem */
+  --font-size-5xl: 2.625rem;  /* 34.125px on mobile - reduced from 3rem */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -332,29 +338,29 @@ h6 {
   font-size: var(--font-size-base);
 }
 
-/* Responsive Typography Adjustments */
+/* Responsive Typography Adjustments - More compact */
 @media (max-width: 767px) {
   h1 {
-    font-size: 2rem; /* Smaller on mobile */
-    line-height: 1.15;
+    font-size: 1.75rem; /* Smaller on mobile - reduced from 2rem */
+    line-height: 1.2;
   }
   
   h2 {
-    font-size: 1.625rem;
+    font-size: 1.5rem; /* Reduced from 1.625rem */
   }
   
   h3 {
-    font-size: 1.375rem;
+    font-size: 1.25rem; /* Reduced from 1.375rem */
   }
 }
 
 @media (min-width: 1400px) {
   h1 {
-    font-size: 2.5rem; /* More controlled on large screens */
+    font-size: 2.25rem; /* More controlled on large screens - reduced from 2.5rem */
   }
   
   h2 {
-    font-size: 2rem;
+    font-size: 1.875rem; /* Reduced from 2rem */
   }
 }
 
@@ -858,13 +864,13 @@ label {
 /* ===== Responsive Body Padding ===== */
 @media (min-width: 768px) {
   body {
-    padding-top: 64px; /* Tablet/Desktop navbar */
+    padding-top: 58px; /* Tablet/Desktop navbar - reduced from 64px */
   }
 }
 
 @media (min-width: 1024px) {
   body {
-    padding-top: 68px; /* Large screens navbar */
+    padding-top: 62px; /* Large screens navbar - reduced from 68px */
   }
 }
 
@@ -873,20 +879,36 @@ label {
 .page-container,
 main,
 [class*="content"] {
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-md); /* Additional spacing after navbar */
 }
 
-/* First section after navbar - extra spacing */
+/* First section after navbar - extra spacing on mobile */
 section:first-of-type,
 .hero-section,
 .landing-section {
-  padding-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg); /* Extra breathing room on mobile */
+}
+
+/* Reduce spacing on larger screens */
+@media (min-width: 768px) {
+  .container,
+  .page-container,
+  main,
+  [class*="content"] {
+    margin-top: var(--spacing-sm);
+  }
+
+  section:first-of-type,
+  .hero-section,
+  .landing-section {
+    padding-top: var(--spacing-md);
+  }
 }
 
 @media (max-width: 767px) {
   section:first-of-type,
   .hero-section,
   .landing-section {
-    padding-top: var(--spacing-md);
+    padding-top: var(--spacing-sm); /* Reduced from var(--spacing-md) */
   }
 }

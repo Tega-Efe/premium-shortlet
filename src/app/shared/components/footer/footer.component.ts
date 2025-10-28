@@ -14,7 +14,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
     .footer {
       background: linear-gradient(180deg, var(--color-charcoal) 0%, var(--color-almost-black) 100%);
       color: var(--color-beige);
-      padding: 0 0 2rem;
+      padding: 0 0 1.5rem;
       margin-top: auto;
       position: relative;
       overflow: hidden;
@@ -25,7 +25,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       top: 0;
       left: 0;
       width: 100%;
-      height: 120px;
+      height: 100px;
       pointer-events: none;
     }
 
@@ -38,7 +38,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
     .footer-container {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 5rem var(--spacing-2xl) 0;
+      padding: 4rem var(--spacing-xl) 0;
       position: relative;
       z-index: 1;
     }
@@ -47,34 +47,34 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
     .footer-content {
       display: grid;
       grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-      gap: var(--spacing-3xl);
-      margin-bottom: var(--spacing-3xl);
+      gap: var(--spacing-2xl);
+      margin-bottom: var(--spacing-2xl);
     }
 
     .footer-section {
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-md);
+      gap: var(--spacing-sm);
     }
 
     /* ===== Brand Section ===== */
     .brand-section {
-      gap: var(--spacing-lg);
+      gap: var(--spacing-md);
     }
 
     .footer-brand {
       display: flex;
       align-items: center;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-xs);
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: var(--font-size-2xl);
+      font-size: var(--font-size-xl);
       font-weight: var(--font-weight-bold);
       color: var(--color-dark-vanilla);
       margin: 0;
     }
 
     .brand-icon {
-      font-size: var(--font-size-3xl);
+      font-size: var(--font-size-2xl);
       color: var(--color-tan);
       transition: transform var(--transition-base);
     }
@@ -102,16 +102,16 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       display: flex;
       align-items: center;
       gap: var(--spacing-xs);
-      font-size: var(--font-size-lg);
+      font-size: var(--font-size-base);
       font-weight: var(--font-weight-semibold);
       color: var(--color-dark-vanilla);
-      margin: 0 0 var(--spacing-sm) 0;
+      margin: 0 0 var(--spacing-xs) 0;
       font-family: 'Playfair Display', Georgia, serif;
     }
 
     .footer-heading i {
       color: var(--color-tan);
-      font-size: var(--font-size-base);
+      font-size: 0.875rem;
     }
 
     /* ===== Footer Links ===== */
@@ -121,7 +121,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-xs);
     }
 
     .footer-links a {
@@ -130,9 +130,9 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       gap: var(--spacing-xs);
       color: var(--color-warm-gray);
       text-decoration: none;
-      font-size: var(--font-size-sm);
+      font-size: 0.8125rem;
       transition: all var(--transition-fast);
-      padding: var(--spacing-xs) 0;
+      padding: 0.25rem 0;
     }
 
     .footer-links a i {
@@ -157,21 +157,21 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
     /* ===== Social Links ===== */
     .social-links {
       display: flex;
-      gap: var(--spacing-md);
-      margin-top: var(--spacing-sm);
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-xs);
     }
 
     .social-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       background: rgba(212, 165, 116, 0.1);
       border: 2px solid rgba(212, 165, 116, 0.3);
       border-radius: var(--radius-md);
       color: var(--color-tan);
-      font-size: var(--font-size-lg);
+      font-size: var(--font-size-base);
       text-decoration: none;
       transition: all var(--transition-base);
     }
@@ -187,15 +187,15 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
     /* ===== Newsletter Section ===== */
     .newsletter-description {
       color: var(--color-warm-gray);
-      font-size: var(--font-size-sm);
-      line-height: 1.6;
+      font-size: 0.8125rem;
+      line-height: 1.5;
       margin: 0;
     }
 
     .newsletter-form {
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-xs);
       margin-top: var(--spacing-xs);
     }
 
@@ -207,20 +207,20 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
 
     .input-icon {
       position: absolute;
-      left: var(--spacing-md);
+      left: var(--spacing-sm);
       color: var(--color-warm-gray);
-      font-size: var(--font-size-sm);
+      font-size: 0.8125rem;
       pointer-events: none;
     }
 
     .newsletter-input {
       width: 100%;
-      padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-3xl);
+      padding: 0.625rem var(--spacing-sm) 0.625rem var(--spacing-2xl);
       background: rgba(250, 247, 242, 0.05);
       border: 1.5px solid rgba(212, 165, 116, 0.3);
       border-radius: var(--radius-md);
       color: var(--color-cream);
-      font-size: var(--font-size-sm);
+      font-size: 0.8125rem;
       transition: all var(--transition-base);
     }
 
@@ -240,11 +240,11 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       align-items: center;
       justify-content: center;
       gap: var(--spacing-xs);
-      padding: var(--spacing-sm) var(--spacing-lg);
+      padding: 0.625rem var(--spacing-md);
       background: linear-gradient(135deg, var(--color-tan) 0%, var(--color-gold) 100%);
       color: var(--color-charcoal);
       font-weight: var(--font-weight-semibold);
-      font-size: var(--font-size-sm);
+      font-size: 0.8125rem;
       border: none;
       border-radius: var(--radius-md);
       cursor: pointer;
@@ -276,10 +276,10 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: var(--spacing-2xl);
+      padding-top: var(--spacing-xl);
       border-top: 1px solid rgba(212, 165, 116, 0.2);
       flex-wrap: wrap;
-      gap: var(--spacing-lg);
+      gap: var(--spacing-md);
     }
 
     .copyright {
@@ -287,18 +287,18 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       align-items: center;
       gap: var(--spacing-xs);
       color: var(--color-warm-gray);
-      font-size: var(--font-size-sm);
+      font-size: 0.8125rem;
       margin: 0;
     }
 
     .copyright i {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
     }
 
     .footer-legal {
       display: flex;
       align-items: center;
-      gap: var(--spacing-md);
+      gap: var(--spacing-sm);
       flex-wrap: wrap;
     }
 
@@ -308,7 +308,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       gap: var(--spacing-xs);
       color: var(--color-warm-gray);
       text-decoration: none;
-      font-size: var(--font-size-sm);
+      font-size: 0.8125rem;
       transition: color var(--transition-fast);
     }
 
@@ -329,7 +329,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
     @media (max-width: 1024px) {
       .footer-content {
         grid-template-columns: 1fr 1fr;
-        gap: var(--spacing-2xl);
+        gap: var(--spacing-xl);
       }
 
       .brand-section {
@@ -339,16 +339,16 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
 
     @media (max-width: 768px) {
       .footer {
-        padding: 0 0 1.5rem;
+        padding: 0 0 1.25rem;
       }
 
       .footer-container {
-        padding: 4rem var(--spacing-lg) 0;
+        padding: 3rem var(--spacing-md) 0;
       }
 
       .footer-content {
         grid-template-columns: 1fr;
-        gap: var(--spacing-2xl);
+        gap: var(--spacing-lg);
       }
 
       .brand-section {
@@ -358,31 +358,87 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       .footer-bottom {
         flex-direction: column;
         text-align: center;
-        gap: var(--spacing-md);
+        gap: var(--spacing-sm);
+        padding-top: var(--spacing-lg);
       }
 
       .footer-legal {
         justify-content: center;
+        gap: var(--spacing-xs);
       }
 
       .social-links {
         justify-content: center;
       }
+
+      .footer-brand {
+        font-size: var(--font-size-lg);
+      }
+
+      .brand-icon {
+        font-size: var(--font-size-xl);
+      }
     }
 
     @media (max-width: 480px) {
       .footer-wave {
-        height: 80px;
+        height: 60px;
+      }
+
+      .footer-container {
+        padding: 2.5rem var(--spacing-sm) 0;
+      }
+
+      .footer {
+        padding: 0 0 1rem;
+      }
+
+      .footer-content {
+        gap: var(--spacing-md);
       }
 
       .footer-brand {
-        font-size: var(--font-size-xl);
+        font-size: var(--font-size-base);
+      }
+
+      .brand-icon {
+        font-size: var(--font-size-lg);
+      }
+
+      .footer-heading {
+        font-size: 0.875rem;
+      }
+
+      .footer-links a {
+        font-size: 0.75rem;
       }
 
       .social-link {
-        width: 40px;
-        height: 40px;
-        font-size: var(--font-size-base);
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
+      }
+
+      .social-links {
+        gap: 0.5rem;
+      }
+
+      .newsletter-description {
+        font-size: 0.75rem;
+      }
+
+      .newsletter-input,
+      .newsletter-btn {
+        font-size: 0.75rem;
+      }
+
+      .copyright,
+      .legal-link {
+        font-size: 0.75rem;
+      }
+
+      .footer-bottom {
+        gap: 0.625rem;
       }
     }
   `]

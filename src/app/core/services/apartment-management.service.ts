@@ -6,14 +6,15 @@ import {
   addDoc, 
   updateDoc, 
   deleteDoc, 
-  getDocs, 
+  getDocs,
+  getDoc, 
   query, 
   where,
   Timestamp,
   writeBatch
 } from '@angular/fire/firestore';
-import { Observable, from, map, catchError, of } from 'rxjs';
-import { Apartment } from '../interfaces';
+import { Observable, from, map, catchError, of, switchMap } from 'rxjs';
+import { Apartment, DateRange } from '../interfaces';
 
 /**
  * Apartment Management Service
@@ -187,5 +188,175 @@ export class ApartmentManagementService {
         throw error;
       })
     );
+  }
+
+  /**
+   * Add blocked dates to apartment (for offline bookings or maintenance)
+   */
+  addBlockedDates(
+    apartmentId: string,
+    startDate: Date,
+    endDate: Date,
+    type: 'booking' | 'maintenance' = 'maintenance'
+  ): Observable<void> {
+    const apartmentDoc = doc(this.firestore, 'apartments', apartmentId);
+    
+    return from(getDoc(apartmentDoc)).pipe(
+      switchMap(docSnap => {
+        if (!docSnap.exists()) {
+          throw new Error('Apartment not found');
+        }
+        
+        const apartment = docSnap.data() as Apartment;
+        const newDateRange: DateRange = { start: startDate, end: endDate };
+        
+        if (type === 'booking') {
+          const bookedDates = apartment.availability.bookedDates || [];
+          bookedDates.push(newDateRange);
+          
+          return this.updateApartment(apartmentId, {
+            availability: {
+              ...apartment.availability,
+              bookedDates
+            }
+          });
+        } else {
+          const blackoutDates = apartment.availability.blackoutDates || [];
+          blackoutDates.push(newDateRange);
+          
+          return this.updateApartment(apartmentId, {
+            availability: {
+              ...apartment.availability,
+              blackoutDates
+            }
+          });
+        }
+      }),
+      catchError(error => {
+        console.error('Error adding blocked dates:', error);
+        throw error;
+      })
+    );
+  }
+
+  /**
+   * Remove blocked dates from apartment
+   */
+  removeBlockedDates(
+    apartmentId: string,
+    startDate: Date,
+    endDate: Date,
+    type: 'booking' | 'maintenance' = 'maintenance'
+  ): Observable<void> {
+    const apartmentDoc = doc(this.firestore, 'apartments', apartmentId);
+    
+    return from(getDoc(apartmentDoc)).pipe(
+      switchMap(docSnap => {
+        if (!docSnap.exists()) {
+          throw new Error('Apartment not found');
+        }
+        
+        const apartment = docSnap.data() as Apartment;
+        const targetStart = startDate.getTime();
+        const targetEnd = endDate.getTime();
+        
+        if (type === 'booking') {
+          const bookedDates = (apartment.availability.bookedDates || []).filter(range => {
+            const rangeStart = new Date(range.start).getTime();
+            const rangeEnd = new Date(range.end).getTime();
+            return !(rangeStart === targetStart && rangeEnd === targetEnd);
+          });
+          
+          return this.updateApartment(apartmentId, {
+            availability: {
+              ...apartment.availability,
+              bookedDates
+            }
+          });
+        } else {
+          const blackoutDates = (apartment.availability.blackoutDates || []).filter(range => {
+            const rangeStart = new Date(range.start).getTime();
+            const rangeEnd = new Date(range.end).getTime();
+            return !(rangeStart === targetStart && rangeEnd === targetEnd);
+          });
+          
+          return this.updateApartment(apartmentId, {
+            availability: {
+              ...apartment.availability,
+              blackoutDates
+            }
+          });
+        }
+      }),
+      catchError(error => {
+        console.error('Error removing blocked dates:', error);
+        throw error;
+      })
+    );
+  }
+
+  /**
+   * Get all blocked dates for an apartment
+   */
+  getBlockedDates(apartmentId: string): Observable<{
+    bookedDates: DateRange[];
+    blackoutDates: DateRange[];
+  }> {
+    return this.getApartmentById(apartmentId).pipe(
+      map(apartment => {
+        if (!apartment) {
+          return { bookedDates: [], blackoutDates: [] };
+        }
+        
+        return {
+          bookedDates: apartment.availability.bookedDates || [],
+          blackoutDates: apartment.availability.blackoutDates || []
+        };
+      })
+    );
+  }
+
+  /**
+   * Check if apartment is available for specific dates
+   */
+  checkAvailability(
+    apartmentId: string,
+    checkInDate: Date,
+    checkOutDate: Date
+  ): Observable<boolean> {
+    return this.getApartmentById(apartmentId).pipe(
+      map(apartment => {
+        if (!apartment || !apartment.availability.isAvailable) {
+          return false;
+        }
+        
+        // Check against booked dates
+        if (apartment.availability.bookedDates) {
+          for (const range of apartment.availability.bookedDates) {
+            if (this.datesOverlap(checkInDate, checkOutDate, new Date(range.start), new Date(range.end))) {
+              return false;
+            }
+          }
+        }
+        
+        // Check against blackout dates
+        if (apartment.availability.blackoutDates) {
+          for (const range of apartment.availability.blackoutDates) {
+            if (this.datesOverlap(checkInDate, checkOutDate, new Date(range.start), new Date(range.end))) {
+              return false;
+            }
+          }
+        }
+        
+        return true;
+      })
+    );
+  }
+
+  /**
+   * Helper: Check if two date ranges overlap
+   */
+  private datesOverlap(start1: Date, end1: Date, start2: Date, end2: Date): boolean {
+    return start1 < end2 && end1 > start2;
   }
 }

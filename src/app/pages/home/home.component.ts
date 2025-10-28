@@ -40,7 +40,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       position: relative;
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, #9B2447 50%, var(--color-terracotta, #C17D5C) 100%);
       color: white;
-      padding: 4rem 0 5rem;
+      padding: 3rem 0 3.5rem;
       overflow: hidden;
     }
 
@@ -65,15 +65,15 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .header-icon {
-      width: clamp(60px, 10vw, 70px); /* Responsive icon container */
-      height: clamp(60px, 10vw, 70px);
+      width: clamp(52px, 10vw, 60px);
+      height: clamp(52px, 10vw, 60px);
       background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(1.5rem, 3vw, 2rem); /* Responsive icon */
-      margin: 0 auto 1.5rem;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      margin: 0 auto 1rem;
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.3);
     }
@@ -81,19 +81,19 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 1.5rem;
     }
 
     .page-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4.5vw, 2.75rem); /* Responsive title */
+      font-size: clamp(1.75rem, 4.5vw, 2.375rem);
       font-weight: 700;
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.75rem 0;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .page-subtitle {
-      font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive subtitle */
+      font-size: clamp(0.9375rem, 2vw, 1.125rem);
       margin: 0;
       opacity: 0.95;
       max-width: 600px;
@@ -105,8 +105,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .content-grid {
       display: grid;
       grid-template-columns: 1fr;  /* Changed from 320px 1fr - no sidebar */
-      gap: 2.5rem;
-      margin-top: -2rem;
+      gap: 1.75rem;
+      margin-top: -1.5rem;
       position: relative;
       z-index: 10;
     }
@@ -129,42 +129,42 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2.5rem;
-      padding: 2rem;
+      margin-bottom: 1.75rem;
+      padding: 1.5rem;
       background: var(--bg-secondary);
-      border-radius: 1rem;
+      border-radius: 0.875rem;
       box-shadow: 0 2px 12px rgba(125, 25, 53, 0.08);
       border: 1px solid var(--border-color);
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .results-info {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .results-count-badge {
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       background: linear-gradient(135deg, var(--color-tan, #D4A574) 0%, var(--color-terracotta, #C17D5C) 100%);
-      border-radius: 1rem;
+      border-radius: 0.875rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.25rem;
+      gap: 0.2rem;
       color: white;
       box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
     }
 
     .results-count-badge i {
-      font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive icon */
+      font-size: clamp(0.9375rem, 2vw, 1.125rem);
     }
 
     .count-number {
-      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive number */
+      font-size: clamp(1.125rem, 2.5vw, 1.375rem);
       font-weight: 700;
       line-height: 1;
     }
@@ -172,12 +172,12 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .results-text {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.35rem;
     }
 
     .results-count {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive count text */
+      font-size: clamp(1.125rem, 2.5vw, 1.375rem);
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
@@ -192,8 +192,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       padding: 0;
       display: flex;
       align-items: center;
-      gap: 0.375rem;
-      font-size: clamp(0.875rem, 1.6vw, 0.9375rem); /* Responsive button text */
+      gap: 0.3rem;
+      font-size: clamp(0.8125rem, 1.6vw, 0.875rem);
       transition: all 0.2s ease;
     }
 
@@ -252,18 +252,18 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 500px;
+      min-height: 400px;
       background: var(--bg-secondary);
-      border-radius: 1rem;
+      border-radius: 0.875rem;
       box-shadow: 0 2px 12px rgba(125, 25, 53, 0.08);
     }
 
     /* Apartments Grid */
     .apartments-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
     }
 
     /* Pagination */
@@ -271,13 +271,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
-      margin-top: 4rem;
-      padding: 2rem 0;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+      padding: 1.5rem 0;
     }
 
     .pagination-btn {
-      padding: 0.875rem 1.75rem;
+      padding: 0.75rem 1.5rem;
       border: 2px solid var(--border-color);
       border-radius: 0.5rem;
       background: var(--bg-secondary);
@@ -287,8 +287,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       font-family: inherit;
+      font-size: 0.875rem;
     }
 
     .pagination-btn:hover:not(:disabled) {
@@ -306,14 +307,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .pagination-pages {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
       flex-wrap: wrap;
       justify-content: center;
     }
 
     .pagination-page {
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       border: 2px solid var(--border-color);
       border-radius: 0.5rem;
       background: var(--bg-secondary);
@@ -322,6 +323,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       cursor: pointer;
       transition: all 0.3s ease;
       font-family: inherit;
+      font-size: 0.875rem;
     }
 
     .pagination-page:hover {
@@ -340,9 +342,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     /* Empty State */
     .empty-state {
       text-align: center;
-      padding: 5rem 2rem;
+      padding: 3.5rem 1.5rem;
       background: var(--bg-secondary);
-      border-radius: 1rem;
+      border-radius: 0.875rem;
       box-shadow: 0 4px 20px rgba(125, 25, 53, 0.08);
       border: 1px solid var(--border-color);
     }
@@ -664,12 +666,30 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     @media (max-width: 480px) {
+      .header-icon {
+        margin-top: 1.5rem; /* Add more space before icon on mobile */
+      }
+
+      .page-header {
+        padding: 2rem 0 2.5rem; /* Reduced padding to minimize top margin */
+      }
+
       .container {
         padding: 0 0.625rem;
       }
 
       .page-title {
         font-size: 1.875rem;
+      }
+
+      .results-header {
+        padding: 1rem; /* Reduced from 1.5rem */
+        gap: 0.75rem; /* Reduced from 1rem */
+        margin-bottom: 1.25rem; /* Reduced from 1.75rem */
+      }
+
+      .results-info {
+        gap: 0.75rem; /* Reduced from 1rem */
       }
 
       .results-count-badge {
@@ -970,7 +990,21 @@ export class HomeComponent implements OnInit {
 
     this.loadingService.show('Submitting booking request...');
 
-    this.simplifiedBookingService.createBooking(bookingFormData).subscribe({
+    // Get the selected apartment ID
+    const apartmentId = this.selectedApartment()?.id;
+    if (!apartmentId) {
+      this.loadingService.hide();
+      this.notificationService.error('Apartment not found. Please try again.');
+      return;
+    }
+
+    // Get the price per night based on booking option
+    const apartment = this.selectedApartment()!;
+    const pricePerNight = bookingFormData.bookingOption === 'one-room' 
+      ? apartment.pricing.oneRoomPrice 
+      : apartment.pricing.entireApartmentPrice;
+
+    this.simplifiedBookingService.createBooking(bookingFormData, apartmentId, pricePerNight).subscribe({
       next: (booking) => {
         this.loadingService.hide();
         this.notificationService.success('Booking request submitted successfully!');
@@ -979,7 +1013,13 @@ export class HomeComponent implements OnInit {
       error: (error) => {
         this.loadingService.hide();
         console.error('Booking submission error', error);
-        this.notificationService.error('Failed to submit booking. Please try again.');
+        
+        // Check for specific error messages
+        if (error.message && error.message.includes('not available')) {
+          this.notificationService.error('Sorry, this apartment is not available for the selected dates. Please choose different dates.');
+        } else {
+          this.notificationService.error('Failed to submit booking. Please try again.');
+        }
       }
     });
   }

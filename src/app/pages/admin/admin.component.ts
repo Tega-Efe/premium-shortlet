@@ -24,29 +24,30 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .admin-page {
       min-height: 100vh;
       background: var(--bg-primary);
-      padding-bottom: 3rem;
+      padding-bottom: 2rem;
     }
 
     .admin-header {
       background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
       color: white;
-      padding: 3rem 0;
+      padding: 2rem 0;
     }
 
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 1.25rem;
     }
 
     .page-title {
-      font-size: clamp(1.875rem, 4vw, 2.5rem); /* Responsive title */
+      font-size: clamp(1.5rem, 4vw, 2.125rem);
       font-weight: 700;
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.375rem 0;
+      color: white;
     }
 
     .page-subtitle {
-      font-size: clamp(0.95rem, 1.8vw, 1.125rem); /* Responsive subtitle */
+      font-size: clamp(0.8125rem, 1.8vw, 1rem);
       margin: 0;
       opacity: 0.9;
     }
@@ -55,19 +56,19 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      margin: -2rem 0 2rem;
+      gap: 1rem;
+      margin: -1.5rem 0 1.5rem;
     }
 
     .stat-card {
       background: var(--bg-secondary);
-      padding: 1.5rem;
-      border-radius: 0.75rem;
+      padding: 1rem;
+      border-radius: 0.625rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
       transition: all 0.3s ease;
       cursor: pointer;
       position: relative;
@@ -97,13 +98,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .stat-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 0.75rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       flex-shrink: 0;
       position: relative;
       z-index: 1;
@@ -117,9 +118,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .stat-label {
-      margin: 0 0 0.375rem 0;
+      margin: 0 0 0.25rem 0;
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
       white-space: nowrap;
       overflow: hidden;
@@ -127,8 +128,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .stat-value {
-      margin: 0 0 0.25rem 0;
-      font-size: 1.875rem;
+      margin: 0 0 0.125rem 0;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1;
@@ -137,14 +138,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .stat-trend {
       display: flex;
       align-items: center;
-      gap: 0.375rem;
-      font-size: 0.75rem;
+      gap: 0.25rem;
+      font-size: 0.6875rem;
       color: var(--text-secondary);
-      margin-top: 0.375rem;
+      margin-top: 0.25rem;
     }
 
     .stat-trend i {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
     }
 
     .stat-trend.positive {
@@ -158,20 +159,20 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     /* NEW: Availability Control Card */
     .availability-control-card {
       background: var(--bg-secondary);
-      padding: 2rem;
-      border-radius: 0.75rem;
+      padding: 1.25rem;
+      border-radius: 0.625rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       border: 1px solid var(--border-color);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .availability-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 2rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
       border-bottom: 2px solid var(--border-color);
     }
 
@@ -180,13 +181,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .availability-title {
-      font-size: clamp(1.25rem, 2.5vw, 1.5rem); /* Responsive title */
+      font-size: clamp(1.125rem, 2.5vw, 1.375rem);
       font-weight: 700;
       color: var(--text-primary);
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.375rem 0;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.625rem;
     }
 
     .availability-title i {
@@ -196,24 +197,25 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .availability-description {
       margin: 0;
       color: var(--text-secondary);
-      font-size: 0.9375rem;
-      line-height: 1.6;
+      font-size: 0.875rem;
+      line-height: 1.5;
     }
 
     .availability-status {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1.5rem;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
       border-radius: 2rem;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.875rem;
       white-space: nowrap;
     }
 
     .availability-status.available {
-      background: #d1fae5;
-      color: #065f46;
+      background: rgba(168, 180, 165, 0.2); /* Sage color theme */
+      color: var(--color-sage, #8B9B7E);
+      border: 1px solid rgba(168, 180, 165, 0.3);
     }
 
     .availability-status.unavailable {
@@ -244,28 +246,28 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .availability-actions {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .btn-toggle-availability {
-      padding: 0.875rem 2rem;
+      padding: 0.625rem 1.5rem;
       border: none;
       border-radius: 0.5rem;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
       align-items: center;
-      gap: 0.625rem;
+      gap: 0.5rem;
     }
 
     .btn-manage-availability {
-      padding: 0.875rem 2rem;
+      padding: 0.625rem 1.5rem;
       border: none;
       border-radius: 0.5rem;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
@@ -320,10 +322,10 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .availability-hint {
       margin: 0;
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.375rem;
     }
 
     .availability-hint i {
@@ -333,13 +335,21 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     /* Tabs */
     .tabs {
       display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
+      gap: 0.375rem;
+      margin-bottom: 1.5rem;
       border-bottom: 2px solid var(--border-color);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
     }
 
     .tab {
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1.125rem;
       background: none;
       border: none;
       border-bottom: 3px solid transparent;
@@ -350,12 +360,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       margin-bottom: -2px;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.375rem;
+      font-size: 0.875rem;
     }
 
     .tab i {
-      font-size: 1rem;
-      width: 1.125rem;
+      font-size: 0.875rem;
+      width: 1rem;
       text-align: center;
     }
 
@@ -386,6 +397,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       border: 1px solid var(--border-color);
       min-height: 400px;
       animation: fadeIn 0.3s ease-out;
+      overflow: visible;
     }
 
     .loading-container {
@@ -400,9 +412,77 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     /* Table */
-    .table-container {
-      overflow-x: auto;
+    .table-wrapper {
       animation: fadeIn 0.4s ease-out;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 0;
+    }
+
+    .table-header {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .table-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.375rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .table-title i {
+      color: var(--color-burgundy);
+      font-size: 1rem;
+    }
+
+    .table-subtitle {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .table-container {
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      background: white;
+      animation: fadeIn 0.4s ease-out;
+      flex-shrink: 0;
+    }
+
+    .table-scroll {
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(125, 25, 53, 0.3) transparent;
+    }
+
+    .table-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .table-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .table-scroll::-webkit-scrollbar-thumb {
+      background-color: rgba(125, 25, 53, 0.3);
+      border-radius: 3px;
+    }
+
+    .table-scroll::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(125, 25, 53, 0.5);
     }
 
     @keyframes fadeIn {
@@ -418,28 +498,40 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .bookings-table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .bookings-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg-primary);
     }
 
     .bookings-table th,
     .bookings-table td {
-      padding: 1rem;
+      padding: 0.625rem 0.5rem;
       text-align: left;
       border-bottom: 1px solid var(--border-color);
+      font-size: 0.8125rem;
+      background: white;
     }
 
     .bookings-table th {
       background-color: var(--bg-primary);
       font-weight: 600;
       color: var(--text-primary);
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
+      border-bottom: 2px solid var(--border-color);
     }
 
     .bookings-table th i {
       vertical-align: middle;
-      margin-right: 0.375rem;
+      margin-right: 0.1875rem;
       color: var(--text-secondary);
+      font-size: 0.6875rem;
     }
 
     /* Alternating row colors */
@@ -459,24 +551,25 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .action-buttons {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.25rem;
+      flex-wrap: nowrap;
     }
 
     .status-badge {
-      padding: 0.25rem 0.75rem;
+      padding: 0.1875rem 0.625rem;
       border-radius: 0.375rem;
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
       font-weight: 600;
       text-transform: capitalize;
       display: inline-flex;
       align-items: center;
-      gap: 0.375rem;
+      gap: 0.25rem;
       transition: all 0.2s ease;
     }
 
     .status-badge i {
       vertical-align: middle;
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
     }
 
     .status-badge:hover {
@@ -490,8 +583,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .status-confirmed,
     .status-approved {
-      background-color: #dcfce7;
-      color: #166534;
+      background-color: rgba(168, 180, 165, 0.2);
+      color: var(--color-sage, #6B7A68);
+      border: 1px solid rgba(168, 180, 165, 0.3);
     }
 
     .status-rejected,
@@ -564,8 +658,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     /* Icon-only Action Buttons */
     .btn-icon {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       padding: 0;
       border: none;
       border-radius: 0.375rem;
@@ -573,7 +667,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       transition: all 0.2s ease;
     }
 
@@ -612,8 +706,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .nights-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.375rem;
-      padding: 0.375rem 0.75rem;
+      gap: 0.25rem;
+      padding: 0.25rem 0.625rem;
       background: rgba(125, 25, 53, 0.1);
       color: var(--color-burgundy);
       border-radius: 0.375rem;
@@ -628,7 +722,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .nights-badge i {
-      vertical-align: middle;
+      display: none; /* Hide icon in badge since it's already in column header */
     }
 
     .booking-option-badge {
@@ -664,42 +758,51 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .guest-cell {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.375rem;
+      min-width: 0;
     }
 
     .guest-avatar {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--color-burgundy), var(--color-gold));
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.25rem;
+      font-size: 1rem;
       flex-shrink: 0;
     }
 
     .guest-info {
       display: flex;
       flex-direction: column;
-      gap: 0.125rem;
+      gap: 0.0625rem;
+      min-width: 0;
     }
 
     .guest-name {
       font-weight: 600;
       color: var(--text-primary);
+      font-size: 0.875rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .guest-email {
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .price-cell {
       font-weight: 600;
       color: var(--color-burgundy);
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
     }
 
     /* Activity List */
@@ -776,13 +879,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     /* Empty State */
     .empty-state {
-      padding: 4rem 2rem;
+      padding: 3rem 1.5rem;
       text-align: center;
     }
 
     .empty-icon {
-      font-size: 4rem;
-      margin-bottom: 1rem;
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
     }
 
     .empty-icon.success {
@@ -798,7 +901,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .empty-state-box {
-      padding: 4rem 2rem;
+      padding: 3rem 1.5rem;
       text-align: center;
       background: var(--bg-secondary);
       border-radius: 0.75rem;
@@ -811,60 +914,58 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .empty-state-box .empty-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin: 1rem 0 0.5rem 0;
+      margin: 0.75rem 0 0.375rem 0;
     }
 
     .empty-state-box .empty-message {
       color: var(--text-secondary);
-      font-size: 1rem;
-      margin: 0 0 1.5rem 0;
+      font-size: 0.875rem;
+      margin: 0 0 1.25rem 0;
     }
 
     .empty-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.375rem 0;
     }
 
     .empty-text {
       color: #6b7280;
-      font-size: 1.125rem;
+      font-size: 0.9375rem;
       margin: 0;
     }
 
     /* Listings Management */
     .listings-wrapper {
-      padding: 1.5rem;
+      padding: 1.25rem;
       animation: fadeIn 0.4s ease-out;
     }
 
     .listings-header {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
     .listings-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.375rem 0;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.625rem;
     }
 
     .listings-subtitle {
       color: var(--text-secondary);
-      font-size: 0.9375rem;
+      font-size: 0.8125rem;
       margin: 0;
     }
 
     .add-apartment-section {
-      margin-bottom: 2rem;
-      padding-bottom: 2rem;
       border-bottom: 2px solid var(--border-color);
     }
 
@@ -872,8 +973,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .apartments-list-section {
       background: var(--bg-primary);
       border-radius: 0.75rem;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
       border: 1px solid var(--border-color);
     }
 
@@ -881,22 +982,22 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.875rem;
       border-bottom: 2px solid var(--border-color);
     }
 
     .apartments-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
     .apartment-card {
       background: var(--bg-secondary);
       border: 2px solid var(--border-color);
       border-radius: 0.75rem;
-      padding: 1.5rem;
+      padding: 1.25rem;
       transition: all 0.3s ease;
     }
 
@@ -915,12 +1016,12 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 0.875rem;
+      margin-bottom: 0.875rem;
     }
 
     .apartment-title {
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
@@ -931,17 +1032,18 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .apartment-status-badge {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.375rem 0.75rem;
+      gap: 0.375rem;
+      padding: 0.25rem 0.625rem;
       border-radius: 1rem;
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
       font-weight: 600;
       white-space: nowrap;
     }
 
     .apartment-status-badge.available {
-      background: #d1fae5;
-      color: #065f46;
+      background: rgba(168, 180, 165, 0.2); /* Sage color theme */
+      color: var(--color-sage, #8B9B7E);
+      border: 1px solid rgba(168, 180, 165, 0.3);
     }
 
     .apartment-status-badge.unavailable {
@@ -952,10 +1054,10 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .apartment-location {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.375rem;
       color: var(--text-secondary);
-      font-size: 0.875rem;
-      margin-bottom: 1rem;
+      font-size: 0.8125rem;
+      margin-bottom: 0.875rem;
     }
 
     .apartment-location i {
@@ -965,11 +1067,11 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .apartment-pricing {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.375rem;
       background: var(--bg-primary);
-      padding: 1rem;
+      padding: 0.875rem;
       border-radius: 0.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.875rem;
     }
 
     .price-item {
@@ -980,31 +1082,31 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .price-label {
       color: var(--text-secondary);
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       font-weight: 500;
     }
 
     .price-value {
       color: var(--color-burgundy);
       font-weight: 700;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
     }
 
     .apartment-specs {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
-      padding-bottom: 1rem;
+      margin-bottom: 0.875rem;
+      padding-bottom: 0.875rem;
       border-bottom: 1px solid var(--border-color);
     }
 
     .spec-item {
       display: flex;
       align-items: center;
-      gap: 0.375rem;
+      gap: 0.25rem;
       color: var(--text-secondary);
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
     }
 
     .spec-item i {
@@ -1013,7 +1115,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .apartment-actions {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.375rem;
       flex-wrap: wrap;
     }
 
@@ -1021,7 +1123,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .listing-form-container {
       background: var(--bg-secondary);
       border-radius: 1rem;
-      padding: 2rem;
+      padding: 1.5rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       border: 1px solid var(--border-color);
     }
@@ -1030,19 +1132,19 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.875rem;
       border-bottom: 2px solid var(--border-color);
     }
 
     .form-title {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.375rem;
     }
 
     .form-title i {
@@ -1052,14 +1154,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .listing-form {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .form-section {
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
-      padding-bottom: 2rem;
+      gap: 1rem;
+      padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -1069,43 +1171,44 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .section-title {
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
       margin: 0;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.375rem;
     }
 
     .section-title i {
       color: var(--color-burgundy);
+      font-size: 0.875rem;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.375rem;
     }
 
     .form-row {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
     .form-label {
       font-weight: 600;
       color: var(--text-primary);
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
     }
 
     .form-input,
     .form-textarea {
-      padding: 0.75rem 1rem;
+      padding: 0.625rem 0.875rem;
       border: 1px solid var(--border-color);
       border-radius: 0.5rem;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       transition: all 0.2s ease;
       font-family: inherit;
       background: var(--bg-primary);
@@ -1121,7 +1224,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .form-textarea {
       resize: vertical;
-      min-height: 100px;
+      min-height: 90px;
     }
 
     .input-group {
@@ -1158,8 +1261,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .btn-save {
       background: linear-gradient(135deg, var(--color-burgundy), #9d2449);
       color: white;
-      padding: 0.875rem 2rem;
-      font-size: 1rem;
+      padding: 0.75rem 1.75rem;
+      font-size: 0.875rem;
       font-weight: 600;
       border: none;
       border-radius: 0.5rem;
@@ -1167,7 +1270,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 0.625rem;
+      gap: 0.5rem;
     }
 
     .btn-save:hover:not(:disabled) {
@@ -1183,7 +1286,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .save-success {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.375rem;
       color: var(--color-sage, #A8B4A5);
       font-weight: 600;
       animation: slideInRight 0.3s ease-out;
@@ -1227,7 +1330,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .detail-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.75rem 0;
+      padding: 0.625rem 0;
       border-bottom: 1px solid #e5e7eb;
     }
 
@@ -1238,32 +1341,36 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .detail-label {
       color: var(--text-secondary);
       font-weight: 500;
+      font-size: 0.8125rem;
     }
 
     .detail-value {
       color: var(--text-primary);
       font-weight: 600;
+      font-size: 0.8125rem;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.375rem;
     }
 
     .form-label {
       font-weight: 600;
       color: #374151;
+      font-size: 0.8125rem;
     }
 
     .form-control {
-      padding: 0.75rem;
+      padding: 0.625rem;
       border: 1px solid var(--border-light, #d1d5db);
       border-radius: 0.375rem;
       font-family: inherit;
       resize: vertical;
       background: var(--bg-primary);
       color: var(--text-primary);
+      font-size: 0.875rem;
     }
 
     .form-control:focus {
@@ -1275,11 +1382,11 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .details-content {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .details-heading {
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
@@ -1344,35 +1451,38 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 1.5rem;
-      padding: 1rem 0;
-      border-top: 1px solid var(--border-color);
+      margin-top: 1.25rem;
+      padding: 0.875rem 1rem;
+      border-top: 2px solid var(--border-color);
+      background: var(--bg-primary);
+      flex-shrink: 0;
     }
 
     .pagination-info {
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
     }
 
     .pagination-controls {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.375rem;
       align-items: center;
     }
 
     .pagination-btn {
-      padding: 0.5rem 1rem;
+      padding: 0.4375rem 0.875rem;
       border: 1px solid var(--border-color);
-      background: var(--bg-secondary);
+      background: white;
       color: var(--text-primary);
       border-radius: 0.375rem;
       cursor: pointer;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 500;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 0.375rem;
+      gap: 0.25rem;
     }
 
     .pagination-btn:hover:not(:disabled) {
@@ -1380,27 +1490,29 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       color: white;
       border-color: var(--color-burgundy);
       transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(125, 25, 53, 0.2);
     }
 
     .pagination-btn:disabled {
       opacity: 0.4;
       cursor: not-allowed;
+      background: var(--bg-secondary);
     }
 
     .pagination-pages {
       display: flex;
-      gap: 0.375rem;
+      gap: 0.25rem;
     }
 
     .pagination-page {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       border: 1px solid var(--border-color);
-      background: var(--bg-secondary);
+      background: white;
       color: var(--text-primary);
       border-radius: 0.375rem;
       cursor: pointer;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 500;
       transition: all 0.2s ease;
       display: flex;
@@ -1411,19 +1523,21 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .pagination-page:hover:not(.active) {
       background: rgba(125, 25, 53, 0.1);
       border-color: var(--color-burgundy);
+      color: var(--color-burgundy);
     }
 
     .pagination-page.active {
       background: var(--color-burgundy);
       color: white;
       border-color: var(--color-burgundy);
+      box-shadow: 0 2px 4px rgba(125, 25, 53, 0.3);
     }
 
     /* Responsive */
     @media (max-width: 1024px) {
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 0.875rem;
       }
 
       .availability-header {
@@ -1442,77 +1556,85 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     @media (max-width: 768px) {
       .container {
-        padding: 0 1rem;
+        padding: 0 0.875rem;
       }
 
       .admin-header {
-        padding: 2rem 0;
+        padding: 1.5rem 0;
       }
 
       .page-title {
-        font-size: 1.875rem;
+        font-size: 1.5rem;
       }
 
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.875rem;
-        margin: -1.5rem 0 1.5rem;
+        gap: 0.75rem;
+        margin: -1.25rem 0 1.25rem;
       }
 
       .stat-card {
-        padding: 1rem;
+        padding: 0.875rem;
       }
 
       .stat-icon {
-        width: 48px;
-        height: 48px;
-        font-size: 1.25rem;
-      }
-
-      .stat-label {
-        font-size: 0.8125rem;
-      }
-
-      .stat-value {
-        font-size: 1.5rem;
-      }
-
-      .stat-trend {
-        font-size: 0.6875rem;
-      }
-
-      .availability-control-card {
-        padding: 1.25rem;
-      }
-
-      .availability-title {
+        width: 40px;
+        height: 40px;
         font-size: 1.125rem;
       }
 
+      .stat-label {
+        font-size: 0.6875rem;
+      }
+
+      .stat-value {
+        font-size: 1.25rem;
+      }
+
+      .stat-trend {
+        font-size: 0.625rem;
+      }
+
+      .availability-control-card {
+        padding: 1rem;
+      }
+
+      .availability-title {
+        font-size: 1rem;
+      }
+
       .availability-description {
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
       }
 
       .availability-actions {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem;
       }
 
-      .btn-toggle-availability {
+      .btn-toggle-availability,
+      .btn-manage-availability {
         width: 100%;
         justify-content: center;
+        padding: 0.625rem 1.25rem;
+        font-size: 0.8125rem;
       }
 
       .tabs {
         overflow-x: auto;
+        gap: 0.25rem;
+        margin-bottom: 1.25rem;
       }
 
       .tab {
         white-space: nowrap;
+        padding: 0.625rem 1rem;
+        font-size: 0.8125rem;
       }
 
       .table-container {
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
         overflow-x: auto;
       }
 
@@ -1522,12 +1644,28 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
       .bookings-table th,
       .bookings-table td {
-        padding: 0.75rem 0.5rem;
+        padding: 0.625rem 0.375rem;
+        font-size: 0.75rem;
       }
 
       .action-buttons {
-        flex-direction: column;
-        gap: 0.5rem;
+        flex-direction: row;
+        gap: 0.25rem;
+        flex-wrap: nowrap;
+      }
+
+      .guest-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.875rem;
+      }
+
+      .guest-name {
+        font-size: 0.8125rem;
+      }
+
+      .guest-email {
+        font-size: 0.6875rem;
       }
 
       .details-grid {
@@ -1555,25 +1693,26 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     @media (max-width: 480px) {
       .stats-grid {
-        gap: 0.75rem;
+        grid-template-columns: 1fr;
+        gap: 0.625rem;
       }
 
       .stat-card {
-        padding: 0.875rem;
+        padding: 0.75rem;
       }
 
       .stat-icon {
-        width: 44px;
-        height: 44px;
-        font-size: 1.125rem;
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
       }
 
       .stat-label {
-        font-size: 0.75rem;
+        font-size: 0.6875rem;
       }
 
       .stat-value {
-        font-size: 1.375rem;
+        font-size: 1.125rem;
       }
 
       .stat-trend {
@@ -1581,11 +1720,248 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       }
 
       .availability-control-card {
-        padding: 1rem;
+        padding: 0.875rem;
       }
 
       .availability-hint {
+        font-size: 0.75rem;
+      }
+
+      .container {
+        padding: 0 0.75rem;
+      }
+
+      .admin-header {
+        padding: 1.25rem 0;
+      }
+
+      .page-title {
+        font-size: 1.375rem;
+      }
+
+      .page-subtitle {
+        font-size: 0.75rem;
+      }
+
+      .tabs {
+        gap: 0.125rem;
+      }
+
+      .tab {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+      }
+
+      .empty-state,
+      .empty-state-box {
+        padding: 2rem 1rem;
+      }
+
+      .empty-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .empty-title,
+      .empty-state-box .empty-title {
+        font-size: 1rem;
+        margin: 0.5rem 0 0.25rem 0;
+      }
+
+      .empty-text,
+      .empty-state-box .empty-message {
         font-size: 0.8125rem;
+      }
+
+      .listings-wrapper {
+        padding: 1rem;
+      }
+
+      .listings-header {
+        margin-bottom: 1rem;
+      }
+
+      .table-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+      }
+
+      .table-title {
+        font-size: 1rem;
+        gap: 0.375rem;
+      }
+
+      .table-title i {
+        font-size: 0.875rem;
+      }
+
+      .table-subtitle {
+        font-size: 0.75rem;
+      }
+
+      .table-container {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+      }
+
+      .table-scroll {
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+      }
+
+      .table-scroll::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+
+      .table-scroll::-webkit-scrollbar-thumb {
+        background-color: rgba(125, 25, 53, 0.3);
+        border-radius: 2px;
+      }
+
+      .bookings-table th,
+      .bookings-table td {
+        padding: 0.625rem 0.375rem;
+        font-size: 0.75rem;
+      }
+
+      .pagination-container {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        margin-top: 0.75rem;
+      }
+
+      .pagination-info {
+        font-size: 0.75rem;
+        text-align: center;
+      }
+
+      .pagination-controls {
+        width: 100%;
+        justify-content: center;
+        gap: 0.25rem;
+      }
+
+      .pagination-btn {
+        padding: 0.375rem 0.625rem;
+        font-size: 0.75rem;
+        gap: 0.1875rem;
+      }
+
+      .pagination-btn span {
+        display: none;
+      }
+
+      .pagination-pages {
+        gap: 0.1875rem;
+      }
+
+      .pagination-page {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+      }
+
+      .listing-form-container {
+        padding: 1rem;
+      }
+
+      .form-header {
+        margin-bottom: 1rem;
+        padding-bottom: 0.625rem;
+      }
+
+      .form-title {
+        font-size: 1rem;
+        gap: 0.25rem;
+      }
+
+      .listing-form {
+        gap: 1rem;
+      }
+
+      .form-section {
+        gap: 0.75rem;
+        padding-bottom: 1rem;
+      }
+
+      .section-title {
+        font-size: 0.9375rem;
+      }
+
+      .form-row {
+        gap: 0.875rem;
+      }
+
+      .form-group {
+        gap: 0.25rem;
+      }
+
+      .form-label {
+        font-size: 0.75rem;
+      }
+
+      .form-input,
+      .form-textarea,
+      .form-control {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8125rem;
+      }
+
+      .detail-row {
+        padding: 0.5rem 0;
+      }
+
+      .detail-label,
+      .detail-value {
+        font-size: 0.75rem;
+      }
+
+      .details-content {
+        gap: 1rem;
+      }
+
+      .details-heading {
+        font-size: 0.9375rem;
+      }
+
+      .apartment-card {
+        padding: 1rem;
+      }
+
+      .apartment-location {
+        font-size: 0.75rem;
+        margin-bottom: 0.625rem;
+      }
+
+      .apartment-pricing {
+        padding: 0.75rem;
+        margin-bottom: 0.625rem;
+      }
+
+      .price-label {
+        font-size: 0.6875rem;
+      }
+
+      .price-value {
+        font-size: 0.8125rem;
+      }
+
+      .apartment-specs {
+        gap: 0.5rem;
+        margin-bottom: 0.625rem;
+        padding-bottom: 0.625rem;
+      }
+
+      .spec-item {
+        font-size: 0.6875rem;
       }
     }
 
@@ -1664,8 +2040,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .availability-badge.badge-available {
-      background: #d1fae5;
-      color: #065f46;
+      background: rgba(168, 180, 165, 0.2); /* Sage color theme */
+      color: var(--color-sage, #8B9B7E);
+      border: 1px solid rgba(168, 180, 165, 0.3);
     }
 
     .availability-badge.badge-unavailable {
@@ -1699,12 +2076,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .btn-toggle.btn-make-available {
-      background: #d1fae5;
-      color: #065f46;
+      background: rgba(168, 180, 165, 0.2); /* Sage color theme */
+      color: var(--color-sage, #8B9B7E);
+      border: 1px solid rgba(168, 180, 165, 0.3);
     }
 
     .btn-toggle.btn-make-available:hover:not(:disabled) {
-      background: #a7f3d0;
+      background: rgba(168, 180, 165, 0.3);
       transform: translateY(-1px);
       box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
     }

@@ -22,12 +22,12 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     /* Hero Section */
     .hero {
       position: relative;
-      min-height: 90vh;
+      min-height: 85vh;
       display: grid;
       grid-template-columns: 1.2fr 1fr;
-      gap: 4rem;
+      gap: 2.5rem;
       align-items: center;
-      padding: 6rem 2rem 4rem;
+      padding: 4rem 1.5rem 3rem;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -51,34 +51,35 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     .hero-content {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       background: var(--bg-secondary);
       color: var(--color-burgundy, #7D1935);
-      padding: 0.5rem 1.25rem;
+      padding: 0.4rem 1rem;
       border-radius: 2rem;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       border: 1px solid var(--border-color);
       width: fit-content;
       box-shadow: 0 2px 8px rgba(125, 25, 53, 0.1);
+      margin-bottom: 1rem; /* Add space between badge and title */
     }
 
     .hero-badge i {
       color: var(--color-gold, #D4AF37);
-      font-size: 1rem;
+      font-size: 0.875rem;
     }
 
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3.25rem); /* Responsive: 2rem mobile, scales to 3.25rem desktop */
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
       font-weight: 700;
-      line-height: 1.1;
+      line-height: 1.15;
       color: var(--color-charcoal, #2C2C2C);
       margin: 0;
     }
@@ -89,32 +90,32 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-top: 0.25rem;
+      margin-top: 0.2rem;
     }
 
     .hero-subtitle {
-      font-size: clamp(0.95rem, 1.8vw, 1.125rem); /* Responsive subtitle */
+      font-size: clamp(0.875rem, 1.8vw, 1rem);
       color: var(--color-warm-gray, #6B6B6B);
-      line-height: 1.75;
+      line-height: 1.6;
       margin: 0;
       max-width: 600px;
     }
 
     .hero-actions {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
-      margin-top: 1rem;
+      margin-top: 0.75rem;
     }
 
     .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 2rem;
-      margin-top: 3rem;
-      padding: 2rem;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
       background: var(--bg-secondary);
-      border-radius: 1rem;
+      border-radius: 0.75rem;
       box-shadow: 0 4px 20px rgba(125, 25, 53, 0.08);
       border: 1px solid var(--border-color);
     }
@@ -123,25 +124,25 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.35rem;
       text-align: center;
     }
 
     .stat-icon {
-      width: 48px;
-      height: 48px;
+      width: 36px;
+      height: 36px;
       background: linear-gradient(135deg, var(--color-tan, #D4A574) 0%, var(--color-terracotta, #C17D5C) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.25rem;
-      margin-bottom: 0.25rem;
+      font-size: 1rem;
+      margin-bottom: 0.15rem;
     }
 
     .stat-value {
-      font-size: clamp(1.5rem, 3vw, 1.875rem); /* Responsive stat values */
+      font-size: clamp(1.25rem, 3vw, 1.5rem);
       font-weight: 700;
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, var(--color-tan, #D4A574) 100%);
       -webkit-background-clip: text;
@@ -150,7 +151,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .stat-label {
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       color: var(--color-warm-gray, #6B6B6B);
       font-weight: 500;
     }
@@ -174,14 +175,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .main-illustration {
-      width: clamp(180px, 35vw, 260px); /* Responsive illustration */
-      height: clamp(180px, 35vw, 260px);
+      width: clamp(150px, 35vw, 220px);
+      height: clamp(150px, 35vw, 220px);
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, var(--color-terracotta, #C17D5C) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(4.5rem, 12vw, 7rem); /* Responsive icon size */
+      font-size: clamp(4rem, 12vw, 6rem);
       color: white;
       box-shadow: 0 20px 60px rgba(125, 25, 53, 0.25);
       position: relative;
@@ -197,21 +198,21 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     .floating-card {
       position: absolute;
       background: var(--bg-secondary);
-      padding: 1rem 1.5rem;
-      border-radius: 1rem;
+      padding: 0.75rem 1.125rem;
+      border-radius: 0.75rem;
       box-shadow: 0 10px 30px rgba(125, 25, 53, 0.15);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
       font-weight: 600;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       color: var(--text-primary);
       border: 1px solid rgba(212, 165, 116, 0.2);
       animation: floatCard 4s ease-in-out infinite;
     }
 
     .floating-card i {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       color: var(--color-burgundy, #7D1935);
     }
 
@@ -242,7 +243,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     .featured-section,
     .features-section,
     .testimonials-section {
-      padding: 5rem 2rem;
+      padding: 3.5rem 1.5rem;
       background-color: var(--color-cream, #FFF8F0);
     }
 
@@ -257,21 +258,21 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .section-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 2.5rem;
     }
 
     .section-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       background: var(--bg-secondary);
       color: var(--color-burgundy, #7D1935);
-      padding: 0.5rem 1.25rem;
+      padding: 0.4rem 1rem;
       border-radius: 2rem;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       border: 1px solid var(--border-color);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .section-tag i {
@@ -280,14 +281,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .section-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.75rem, 3.5vw, 2.5rem); /* Responsive section titles */
+      font-size: clamp(1.5rem, 3.5vw, 2.125rem);
       font-weight: 700;
       color: var(--color-charcoal, #2C2C2C);
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.75rem 0;
     }
 
     .section-subtitle {
-      font-size: clamp(0.95rem, 1.8vw, 1.0625rem); /* Responsive subtitle */
+      font-size: clamp(0.875rem, 1.8vw, 0.9375rem);
       color: var(--color-warm-gray, #6B6B6B);
       margin: 0;
       max-width: 600px;
@@ -299,8 +300,8 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     .gallery-container {
       position: relative;
       max-width: 1000px;
-      margin: 0 auto 3rem;
-      padding: 0 4rem;
+      margin: 0 auto 2rem;
+      padding: 0 3rem;
     }
 
     .gallery-slider {
@@ -328,7 +329,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1rem;
       position: relative;
       overflow: hidden;
     }
@@ -342,7 +343,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .gallery-image i {
-      font-size: clamp(4rem, 10vw, 6rem);
+      font-size: clamp(3.5rem, 10vw, 5rem);
       color: white;
       opacity: 0.95;
       filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
@@ -351,10 +352,10 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .gallery-label {
       color: white;
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-size: clamp(1rem, 3vw, 1.375rem);
       font-weight: 700;
       text-align: center;
-      padding: 0.75rem 2rem;
+      padding: 0.5rem 1.5rem;
       background: rgba(0, 0, 0, 0.3);
       border-radius: var(--radius-md);
       backdrop-filter: blur(12px);
@@ -366,13 +367,13 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.95);
       border: none;
       color: var(--color-burgundy, #7D1935);
-      font-size: 1.25rem;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
       z-index: 10;
@@ -403,13 +404,13 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     .gallery-dots {
       display: flex;
       justify-content: center;
-      gap: 0.75rem;
-      margin-top: 2rem;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
     }
 
     .gallery-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       border: 2px solid var(--color-burgundy, #7D1935);
       background: transparent;
@@ -430,40 +431,40 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .apartments-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
     }
 
     .loading-state {
       text-align: center;
-      padding: 5rem 2rem;
+      padding: 3rem 1.5rem;
       color: var(--color-warm-gray, #6B6B6B);
     }
 
     .spinner {
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: var(--color-burgundy, #7D1935);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .empty-state {
       text-align: center;
-      padding: 5rem 2rem;
+      padding: 3rem 1.5rem;
     }
 
     .empty-icon {
-      font-size: 5rem;
+      font-size: 4rem;
       color: var(--color-tan, #D4A574);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       opacity: 0.5;
     }
 
     .empty-state h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       color: var(--color-charcoal, #2C2C2C);
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.75rem 0;
     }
 
     .empty-state p {
@@ -473,20 +474,20 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .section-footer {
       text-align: center;
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
 
     /* Features Grid */
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.25rem;
     }
 
     .feature-card {
       background: var(--bg-secondary);
-      padding: 2.5rem;
-      border-radius: 1rem;
+      padding: 1.75rem;
+      border-radius: 0.875rem;
       box-shadow: 0 4px 20px rgba(125, 25, 53, 0.06);
       text-align: center;
       transition: all 0.3s ease;
@@ -517,14 +518,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .feature-icon {
-      width: clamp(60px, 12vw, 80px); /* Responsive icon container */
-      height: clamp(60px, 12vw, 80px);
-      margin: 0 auto 1.5rem;
+      width: clamp(52px, 12vw, 64px);
+      height: clamp(52px, 12vw, 64px);
+      margin: 0 auto 1rem;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(1.5rem, 4vw, 2rem); /* Responsive icon */
+      font-size: clamp(1.25rem, 4vw, 1.625rem);
       color: white;
       position: relative;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -548,35 +549,35 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .feature-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.125rem, 2.2vw, 1.375rem); /* Responsive feature title */
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
       font-weight: 700;
       color: var(--text-primary);
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.75rem 0;
     }
 
     .feature-description {
       color: var(--text-secondary);
-      line-height: 1.7;
+      line-height: 1.6;
       margin: 0;
-      font-size: clamp(0.875rem, 1.6vw, 1rem); /* Responsive description */
+      font-size: clamp(0.8125rem, 1.6vw, 0.9375rem);
     }
 
     /* Testimonials */
     .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
     }
 
     .testimonial-card {
       background: var(--bg-secondary);
-      padding: 2.5rem;
-      border-radius: 1rem;
+      padding: 1.75rem;
+      border-radius: 0.875rem;
       box-shadow: 0 4px 20px rgba(125, 25, 53, 0.06);
       border: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
       transition: all 0.3s ease;
     }
 
@@ -587,14 +588,14 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
 
     .testimonial-rating {
       display: flex;
-      gap: 0.25rem;
+      gap: 0.2rem;
       color: var(--color-gold, #D4AF37);
-      font-size: 1.125rem;
+      font-size: 1rem;
     }
 
     .testimonial-text {
-      font-size: 1.0625rem;
-      line-height: 1.8;
+      font-size: 0.9375rem;
+      line-height: 1.7;
       color: var(--text-primary);
       font-style: italic;
       margin: 0;
@@ -643,7 +644,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     .cta-section {
       position: relative;
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, #9B2447 50%, var(--color-terracotta, #C17D5C) 100%);
-      padding: 6rem 2rem;
+      padding: 4rem 1.5rem;
       overflow: hidden;
     }
 
@@ -671,32 +672,32 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     }
 
     .cta-icon {
-      width: 80px;
-      height: 80px;
+      width: 64px;
+      height: 64px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5rem;
-      margin: 0 auto 2rem;
+      font-size: 2rem;
+      margin: 0 auto 1.5rem;
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
     .cta-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.875rem, 4vw, 2.5rem); /* Responsive CTA title */
+      font-size: clamp(1.625rem, 4vw, 2.125rem);
       font-weight: 700;
-      margin: 0 0 1rem 0;
+      margin: 0 0 0.75rem 0;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
     .cta-subtitle {
-      font-size: clamp(1rem, 2vw, 1.25rem); /* Responsive subtitle */
-      margin: 0 0 2.5rem 0;
+      font-size: clamp(0.9375rem, 2vw, 1.125rem);
+      margin: 0 0 2rem 0;
       opacity: 0.95;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .btn-cta {
@@ -705,7 +706,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
     }
 
     .btn-cta:hover {
@@ -717,48 +718,48 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
     .cta-features {
       display: flex;
       justify-content: center;
-      gap: 2rem;
-      margin-top: 3rem;
+      gap: 1.5rem;
+      margin-top: 2rem;
       flex-wrap: wrap;
     }
 
     .cta-feature {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9375rem;
+      gap: 0.4rem;
+      font-size: 0.875rem;
       font-weight: 500;
       opacity: 0.95;
     }
 
     .cta-feature i {
-      font-size: 1.125rem;
+      font-size: 1rem;
       color: var(--color-gold, #D4AF37);
     }
 
     /* Buttons */
     .btn {
-      padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1.5rem, 3vw, 1.75rem); /* Responsive padding */
+      padding: clamp(0.625rem, 2vw, 0.75rem) clamp(1.25rem, 3vw, 1.5rem);
       border: none;
       border-radius: 0.5rem;
-      font-size: clamp(0.875rem, 1.8vw, 1rem); /* Responsive font size */
+      font-size: clamp(0.8125rem, 1.8vw, 0.9375rem);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.625rem;
+      gap: 0.5rem;
       font-family: inherit;
     }
 
     .btn i {
-      font-size: clamp(1rem, 2vw, 1.125rem); /* Responsive icon */
+      font-size: clamp(0.9375rem, 2vw, 1rem);
     }
 
     .btn-lg {
-      padding: clamp(0.875rem, 2.2vw, 1.125rem) clamp(1.75rem, 3.5vw, 2.25rem); /* Responsive large button */
-      font-size: clamp(0.9375rem, 1.9vw, 1.0625rem);
+      padding: clamp(0.75rem, 2.2vw, 1rem) clamp(1.5rem, 3.5vw, 2rem);
+      font-size: clamp(0.875rem, 1.9vw, 1rem);
     }
 
     .btn-primary {
@@ -803,62 +804,65 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       .hero {
         grid-template-columns: 1fr;
         min-height: auto;
-        padding: 4rem 1.5rem 3rem;
-        gap: 3rem;
+        padding: 3rem 1.25rem 2.5rem;
+        gap: 2rem;
       }
 
       .hero-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
       }
 
       .image-container {
-        max-width: 400px;
+        max-width: 360px;
       }
 
       .main-illustration {
-        width: 220px;
-        height: 220px;
-        font-size: 6rem;
+        width: 180px;
+        height: 180px;
+        font-size: 5rem;
       }
 
       .stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.625rem;
+        padding: 0.875rem;
       }
 
       .section-title {
-        font-size: 2.25rem;
+        font-size: 2rem;
       }
 
       .cta-title {
-        font-size: 2.25rem;
+        font-size: 2rem;
       }
 
       .gallery-container {
-        padding: 0 3rem;
+        padding: 0 2.5rem;
       }
 
       .gallery-nav {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+        width: 36px;
+        height: 36px;
+        font-size: 0.875rem;
       }
     }
 
     @media (max-width: 768px) {
       .hero {
-        padding: 3rem 1rem 2rem;
+        padding: 2.5rem 1rem 2rem;
+        gap: 1.5rem;
       }
 
       .hero-title {
-        font-size: 2.25rem;
+        font-size: 2rem;
       }
 
       .section-title {
-        font-size: 1.875rem;
+        font-size: 1.75rem;
       }
 
       .cta-title {
-        font-size: 1.875rem;
+        font-size: 1.75rem;
       }
 
       .hero-actions {
@@ -871,7 +875,7 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       }
 
       .gallery-container {
-        padding: 0 2.5rem;
+        padding: 0 2rem;
       }
 
       .gallery-slide {
@@ -879,43 +883,48 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       }
 
       .gallery-nav {
-        width: 36px;
-        height: 36px;
-        font-size: 0.875rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
       }
 
       .gallery-dot {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
       }
 
       .apartments-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
       }
 
       .stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        padding: 1.5rem;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.625rem;
+        padding: 0.875rem;
       }
 
       .stat-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
       }
 
       .stat-value {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
       }
 
       .floating-card {
-        font-size: 0.75rem;
-        padding: 0.75rem 1rem;
+        font-size: 0.6875rem;
+        padding: 0.625rem 0.875rem;
       }
 
       .floating-card i {
-        font-size: 1.125rem;
+        font-size: 1rem;
       }
 
       .card-1, .card-2, .card-3 {
@@ -923,49 +932,74 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       }
 
       .main-illustration {
-        width: 200px;
-        height: 200px;
-        font-size: 5rem;
+        width: 160px;
+        height: 160px;
+        font-size: 4.5rem;
       }
 
       .featured-section,
       .features-section,
       .testimonials-section {
-        padding: 3rem 1rem;
+        padding: 2.5rem 1rem;
       }
 
       .section-header {
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.75rem;
       }
 
       .feature-card,
       .testimonial-card {
-        padding: 2rem;
+        padding: 1.5rem;
       }
 
       .cta-section {
-        padding: 4rem 1rem;
+        padding: 3rem 1rem;
       }
 
       .cta-features {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.75rem;
       }
     }
 
     @media (max-width: 480px) {
+      .hero-badge {
+        margin-top: 1rem; /* Add space before badge on mobile */
+      }
+
       .hero-title {
-        font-size: 1.875rem;
+        font-size: 1.625rem;
       }
 
       .stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0.75rem;
+      }
+
+      .stat-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+      }
+
+      .stat-value {
+        font-size: 1.125rem;
+      }
+
+      .stat-label {
+        font-size: 0.6875rem;
       }
 
       .apartments-grid,
       .features-grid,
       .testimonials-grid {
         grid-template-columns: 1fr;
+      }
+
+      .feature-card,
+      .testimonial-card {
+        padding: 1.25rem;
       }
     }
   `]

@@ -12,6 +12,10 @@
 export interface SimplifiedBooking {
   id?: string;
   
+  // Apartment Reference
+  apartmentId: string;  // Links booking to specific apartment
+  apartmentTitle?: string;  // For display purposes
+  
   // Guest Information
   guestInfo: {
     name: string;

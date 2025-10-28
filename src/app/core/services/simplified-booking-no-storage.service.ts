@@ -68,7 +68,7 @@ export class SimplifiedBookingServiceNoStorage {
    * Create a new booking WITHOUT file upload
    * This is a temporary solution until Firebase Storage is configured
    */
-  createBooking(formData: BookingFormData, pricePerNight?: number): Observable<SimplifiedBooking> {
+  createBooking(formData: BookingFormData, apartmentId: string, pricePerNight?: number): Observable<SimplifiedBooking> {
     this.isLoading.set(true);
     
     // Calculate pricing
@@ -77,6 +77,7 @@ export class SimplifiedBookingServiceNoStorage {
     const totalPrice = calculatedPricePerNight * formData.numberOfNights;
     
     const booking: SimplifiedBooking = {
+      apartmentId: apartmentId,  // Link to specific apartment
       guestInfo: {
         name: formData.name,
         email: formData.email,

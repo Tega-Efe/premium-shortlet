@@ -299,16 +299,29 @@ import { fadeInOut, scaleIn } from '../../../core/animations';
     }
 
     @media (max-width: 480px) {
+      .modal-overlay {
+        padding: 0.5rem;
+      }
+
       .modal-header {
-        padding: var(--spacing-md) var(--spacing-lg);
+        padding: 0.75rem 1rem;
       }
 
       .modal-body {
-        padding: var(--spacing-lg);
+        padding: 0.75rem;
       }
 
       .modal-footer {
-        padding: var(--spacing-md) var(--spacing-lg);
+        padding: 0.75rem 1rem;
+      }
+
+      .modal-title {
+        font-size: 1.125rem;
+      }
+
+      .modal-icon {
+        width: 36px;
+        height: 36px;
       }
     }
   `]

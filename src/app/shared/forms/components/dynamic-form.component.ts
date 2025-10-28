@@ -232,9 +232,24 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     }
 
     @media (max-width: 640px) {
+      .form-fields {
+        margin-bottom: 1rem;
+      }
+
       .restore-notice {
         flex-direction: column;
         align-items: flex-start;
+        padding: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .restore-content {
+        gap: 0.5rem;
+        font-size: 0.9375rem;
+      }
+
+      .restore-content i {
+        font-size: 1.125rem;
       }
 
       .restore-actions {
@@ -243,11 +258,29 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
 
       .btn-restore {
         flex: 1;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.8125rem;
+      }
+
+      .btn-dismiss {
+        padding: 0.625rem;
       }
 
       .form-actions {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        padding: 0.625rem 1rem;
+        font-size: 0.9375rem;
+      }
+
+      .auto-save-indicator {
+        text-align: center;
+        margin-left: 0;
+        font-size: 0.8125rem;
       }
 
       .auto-save-indicator {

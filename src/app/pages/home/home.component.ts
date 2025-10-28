@@ -619,11 +619,24 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
       .apartment-summary {
         grid-template-columns: 1fr;
+        padding: 1.25rem;
       }
 
       .summary-image {
         width: 100%;
         height: 220px;
+      }
+
+      .summary-info {
+        gap: 0.75rem;
+      }
+
+      .summary-title {
+        font-size: 1.25rem;
+      }
+
+      .summary-location {
+        font-size: 0.9375rem;
       }
 
       .pagination {
@@ -651,6 +664,10 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     @media (max-width: 480px) {
+      .container {
+        padding: 0 0.625rem;
+      }
+
       .page-title {
         font-size: 1.875rem;
       }
@@ -666,6 +683,27 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
       .results-count {
         font-size: 1.25rem;
+      }
+
+      .apartment-summary {
+        padding: 1rem;
+        gap: 1.25rem;
+      }
+
+      .summary-info {
+        gap: 0.625rem;
+      }
+
+      .summary-title {
+        font-size: 1.125rem;
+      }
+
+      .summary-location {
+        font-size: 0.875rem;
+      }
+
+      .booking-modal-content {
+        gap: 1.5rem;
       }
     }
   `]
@@ -817,9 +855,8 @@ export class HomeComponent implements OnInit {
   closeBookingModal(): void {
     this.showBookingModal.set(false);
     this.selectedApartment.set(null);
-    if (this.bookingModal) {
-      this.bookingModal.close();
-    }
+    // Don't call this.bookingModal.close() here because it creates a recursion loop
+    // The modal is already closing (that's why modalClose was emitted)
   }
 
   onBookingSubmit(event: FormSubmitEvent): void {

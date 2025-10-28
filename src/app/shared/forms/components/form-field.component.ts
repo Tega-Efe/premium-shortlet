@@ -232,6 +232,40 @@ import { DatePickerComponent } from './date-picker.component';
       resize: vertical;
       min-height: 80px;
     }
+
+    @media (max-width: 640px) {
+      .form-field {
+        margin-bottom: 1rem;
+      }
+
+      .form-label {
+        margin-bottom: 0.375rem;
+        font-size: 0.9375rem;
+      }
+
+      .form-control {
+        padding: 0.625rem;
+        font-size: 0.9375rem;
+      }
+
+      textarea.form-control {
+        padding: 0.625rem;
+        min-height: 70px;
+      }
+
+      .form-hint {
+        margin-top: 0.1875rem;
+        font-size: 0.8125rem;
+      }
+
+      .form-error small {
+        font-size: 0.8125rem;
+      }
+
+      .form-check {
+        margin-bottom: 0.375rem;
+      }
+    }
   `]
 })
 export class FormFieldComponent {

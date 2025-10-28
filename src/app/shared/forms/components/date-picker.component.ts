@@ -335,11 +335,55 @@ import { CommonModule } from '@angular/common';
       .calendar-dropdown {
         left: 50%;
         transform: translateX(-50%);
-        min-width: 280px;
+        min-width: 300px;
+        padding: 0.75rem;
       }
 
       .date-trigger {
-        padding: 0.675rem 0.75rem;
+        padding: 0.625rem 0.75rem;
+        font-size: 0.9375rem;
+      }
+
+      .date-icon {
+        font-size: 1rem;
+      }
+
+      .date-arrow {
+        font-size: 0.75rem;
+      }
+
+      .calendar-header {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.625rem;
+      }
+
+      .current-month {
+        font-size: 0.9375rem;
+      }
+
+      .nav-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.875rem;
+      }
+
+      .weekday {
+        font-size: 0.6875rem;
+        padding: 0.1875rem;
+      }
+
+      .day-cell {
+        font-size: 0.8125rem;
+      }
+
+      .calendar-footer {
+        padding-top: 0.625rem;
+      }
+
+      .btn-today,
+      .btn-clear {
+        padding: 0.4375rem;
+        font-size: 0.8125rem;
       }
     }
   `]

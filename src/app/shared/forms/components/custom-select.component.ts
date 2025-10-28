@@ -283,15 +283,37 @@ interface SelectOption {
 
     @media (max-width: 640px) {
       .select-trigger {
-        padding: 0.75rem 0.875rem;
+        padding: 0.625rem 0.75rem;
+        font-size: 0.9375rem;
+      }
+
+      .select-trigger i {
+        font-size: 1rem;
+      }
+
+      .select-arrow {
+        font-size: 0.75rem;
+      }
+
+      .select-dropdown {
+        max-height: 280px;
+      }
+
+      .option-content {
+        gap: 0.625rem;
+        font-size: 0.9375rem;
       }
 
       .option-content i {
-        font-size: 1.125rem;
+        font-size: 1.0625rem;
       }
 
       .dropdown-option {
-        padding: 0.75rem;
+        padding: 0.625rem 0.75rem;
+      }
+
+      .option-check {
+        font-size: 0.9375rem;
       }
     }
   `]

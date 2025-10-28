@@ -77,6 +77,18 @@ import { CommonModule } from '@angular/common';
     .phone-input-wrapper:has(.phone-input:disabled) {
       background-color: #f3f4f6;
     }
+
+    @media (max-width: 640px) {
+      .phone-prefix {
+        padding: 0.625rem 0 0.625rem 0.625rem;
+        font-size: 0.9375rem;
+      }
+
+      .phone-input {
+        padding: 0.625rem;
+        font-size: 0.9375rem;
+      }
+    }
   `]
 })
 export class PhoneInputComponent implements ControlValueAccessor {

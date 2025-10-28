@@ -233,13 +233,13 @@ import { CommonModule } from '@angular/common';
 
     @media (max-width: 640px) {
       .upload-content {
-        padding: 1.5rem 1rem;
+        padding: 1.25rem 0.75rem;
       }
 
       .upload-icon {
-        width: 52px;
-        height: 52px;
-        font-size: 1.5rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.375rem;
       }
 
       .upload-title {
@@ -248,6 +248,34 @@ import { CommonModule } from '@angular/common';
 
       .upload-hint {
         font-size: 0.75rem;
+      }
+
+      .file-preview {
+        padding: 0.75rem;
+      }
+
+      .file-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.125rem;
+      }
+
+      .file-name {
+        font-size: 0.875rem;
+      }
+
+      .file-size {
+        font-size: 0.75rem;
+      }
+
+      .file-remove {
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
+      }
+
+      .upload-error small {
+        font-size: 0.8125rem;
       }
     }
   `]

@@ -97,8 +97,8 @@ body {
   --error-light: #F3DDD9;
   --warning: #D4A460;
   --warning-light: #F5E8CE;
-  --info: #7B93A8;
-  --info-light: #DDE5EB;
+  --info: #8B7355;
+  --info-light: #E8E0D5;
 
   /* Background Colors */
   --bg-primary: var(--color-cream);
@@ -203,8 +203,8 @@ body {
   --error-light: #3F2C29;
   --warning: #E0B570;
   --warning-light: #3D3428;
-  --info: #8BA3B8;
-  --info-light: #2B3440;
+  --info: #A89078;
+  --info-light: #332D26;
 
   /* Background Colors - Softer dark backgrounds */
   --bg-primary: #1A1816;
@@ -274,8 +274,8 @@ body {
     --error-light: #3F2C29;
     --warning: #E0B570;
     --warning-light: #3D3428;
-    --info: #8BA3B8;
-    --info-light: #2B3440;
+    --info: #A89078;
+    --info-light: #332D26;
 
     /* Background Colors - Softer dark backgrounds */
     --bg-primary: #1A1816;
@@ -413,58 +413,145 @@ button:disabled {
 }
 
 /* ===== Forms ===== */
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Input Fields with Gradient Borders */
 input,
 textarea,
-select {
+select,
+.form-control {
   font-family: inherit;
   font-size: var(--font-size-base);
   line-height: 1.5;
   color: var(--text-primary);
-  border: 1px solid var(--border-light);
+  background: var(--bg-primary);
+  border: 2px solid transparent;
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-md);
   width: 100%;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-  background: var(--bg-primary);
+  transition: all var(--transition-fast);
+  position: relative;
+  background-clip: padding-box;
+  
+  /* Beautiful gradient border for light mode */
+  background-image: 
+    linear-gradient(var(--bg-primary), var(--bg-primary)),
+    linear-gradient(135deg, 
+      var(--color-burgundy) 0%, 
+      var(--color-tan) 50%, 
+      var(--color-sage) 100%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 
 input:focus,
 textarea:focus,
-select:focus {
+select:focus,
+.form-control:focus {
   outline: none;
-  border-color: var(--color-burgundy);
-  box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
+  border-color: transparent;
+  box-shadow: 0 0 0 4px rgba(125, 25, 53, 0.1);
+  
+  /* Enhanced gradient on focus */
+  background-image: 
+    linear-gradient(var(--bg-primary), var(--bg-primary)),
+    linear-gradient(135deg, 
+      var(--color-burgundy) 0%, 
+      var(--color-tan) 30%,
+      var(--color-sage) 60%,
+      var(--color-burgundy) 100%
+    );
 }
 
 input:disabled,
 textarea:disabled,
-select:disabled {
+select:disabled,
+.form-control:disabled {
   background-color: var(--color-beige);
   cursor: not-allowed;
   opacity: 0.6;
+  background-image: none;
+  border: 2px solid var(--border-light);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.01em;
+}
+
+/* Small helper text */
+.form-text,
+small {
+  display: block;
+  margin-top: 0.375rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
 }
 
 /* Dark mode specific input styling */
 :root.dark-theme input,
 :root.dark-theme textarea,
 :root.dark-theme select,
+:root.dark-theme .form-control,
 [data-theme='dark'] input,
 [data-theme='dark'] textarea,
-[data-theme='dark'] select {
+[data-theme='dark'] select,
+[data-theme='dark'] .form-control {
   background-color: var(--bg-secondary);
-  border-color: var(--border-medium);
   color: var(--text-primary);
+  
+  /* Dark mode gradient border */
+  background-image: 
+    linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+    linear-gradient(135deg, 
+      #B84D66 0%,
+      #E8C4A0 50%,
+      #C9D4C7 100%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 
 :root.dark-theme input:focus,
 :root.dark-theme textarea:focus,
 :root.dark-theme select:focus,
+:root.dark-theme .form-control:focus,
 [data-theme='dark'] input:focus,
 [data-theme='dark'] textarea:focus,
-[data-theme='dark'] select:focus {
+[data-theme='dark'] select:focus,
+[data-theme='dark'] .form-control:focus {
   background-color: var(--bg-secondary);
-  border-color: var(--color-burgundy-light);
-  box-shadow: 0 0 0 3px rgba(184, 77, 102, 0.2);
+  box-shadow: 0 0 0 4px rgba(184, 77, 102, 0.15);
+  
+  /* Enhanced dark mode gradient on focus */
+  background-image: 
+    linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+    linear-gradient(135deg, 
+      #B84D66 0%,
+      #E8C4A0 30%,
+      #C9D4C7 60%,
+      #B84D66 100%
+    );
 }
 
 :root.dark-theme input::placeholder,
@@ -475,12 +562,17 @@ select:disabled {
   opacity: 0.6;
 }
 
-label {
-  display: block;
-  margin-bottom: var(--spacing-xs);
-  font-weight: var(--font-weight-medium);
+:root.dark-theme label,
+[data-theme='dark'] label {
   color: var(--text-primary);
-  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+:root.dark-theme .form-text,
+:root.dark-theme small,
+[data-theme='dark'] .form-text,
+[data-theme='dark'] small {
+  color: var(--text-secondary);
 }
 
 /* ===== Scrollbar Styling ===== */
@@ -608,8 +700,8 @@ body {
   --error-light: #fee2e2;
   --warning: #f59e0b;
   --warning-light: #fef3c7;
-  --info: #3b82f6;
-  --info-light: #dbeafe;
+  --info: #8B7355;
+  --info-light: #E8E0D5;
 
   /* Neutral Colors */
   --gray-50: #f9fafb;

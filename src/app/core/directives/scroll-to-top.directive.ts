@@ -108,6 +108,9 @@ export class ScrollToTopDirective implements OnInit, OnDestroy {
       this.renderer.setStyle(this.button, property, value);
     });
 
+    // Apply mobile-specific styles
+    this.applyMobileStyles();
+
     // Add hover effect via event listeners
     this.renderer.listen(this.button, 'mouseenter', () => {
       this.renderer.setStyle(this.button, 'transform', 'translateY(-4px) scale(1.05)');
@@ -117,6 +120,37 @@ export class ScrollToTopDirective implements OnInit, OnDestroy {
     this.renderer.listen(this.button, 'mouseleave', () => {
       this.renderer.setStyle(this.button, 'transform', 'translateY(0) scale(1)');
       this.renderer.setStyle(this.button, 'box-shadow', '0 4px 20px rgba(125, 25, 53, 0.3)');
+    });
+  }
+
+  private applyMobileStyles(): void {
+    if (!this.button || !this.isBrowser) return;
+
+    // Check if mobile screen
+    const checkAndApplyMobileStyles = () => {
+      const isMobile = window.innerWidth <= 768;
+      
+      if (isMobile) {
+        this.renderer.setStyle(this.button, 'width', '40px');
+        this.renderer.setStyle(this.button, 'height', '40px');
+        this.renderer.setStyle(this.button, 'font-size', '1rem');
+        this.renderer.setStyle(this.button, 'bottom', '1.5rem');
+        this.renderer.setStyle(this.button, 'left', '1.5rem');
+      } else {
+        this.renderer.setStyle(this.button, 'width', '50px');
+        this.renderer.setStyle(this.button, 'height', '50px');
+        this.renderer.setStyle(this.button, 'font-size', '1.25rem');
+        this.renderer.setStyle(this.button, 'bottom', '2rem');
+        this.renderer.setStyle(this.button, 'left', '2rem');
+      }
+    };
+
+    // Apply on load
+    checkAndApplyMobileStyles();
+
+    // Reapply on resize
+    this.renderer.listen('window', 'resize', () => {
+      checkAndApplyMobileStyles();
     });
   }
 

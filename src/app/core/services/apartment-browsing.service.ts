@@ -1,18 +1,31 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { map, tap, catchError, shareReplay } from 'rxjs/operators';
-import { Apartment, BookingFilter, DateRange } from '../interfaces';
+import { Apartment, DateRange } from '../interfaces';
 import { DateUtils } from '../utils';
 import { Firestore, collection, collectionData, doc, docData, query, where, orderBy, limit as firestoreLimit } from '@angular/fire/firestore';
 
 /**
- * Firestore-based Apartment Service
- * This service replaces the HTTP API calls with direct Firestore queries
+ * Apartment Browsing Service
+ * 
+ * PUBLIC-FACING SERVICE for apartment browsing, filtering, and searching.
+ * This service provides READ-ONLY operations for public users.
+ * 
+ * Use Cases:
+ * - Browsing apartments on home page
+ * - Filtering by location, price, amenities
+ * - Searching apartments
+ * - Sorting apartment listings
+ * - Viewing featured apartments
+ * 
+ * For ADMIN operations (CRUD, availability management), use ApartmentManagementService instead.
+ * 
+ * @see ApartmentManagementService for admin operations
  */
 @Injectable({
   providedIn: 'root'
 })
-export class ApartmentServiceFirestore {
+export class ApartmentBrowsingService {
   private firestore = inject(Firestore);
 
   // State management
@@ -28,7 +41,7 @@ export class ApartmentServiceFirestore {
 
   /**
    * Get all apartments with optional filters
-   * FIRESTORE VERSION
+   * PUBLIC METHOD - For browsing and filtering
    */
   getApartments(filters?: ApartmentFilter): Observable<Apartment[]> {
     this.isLoading.set(true);

@@ -30,28 +30,44 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
   styles: [`
+    /* Inherits gradient border from global styles.css */
     .phone-input-wrapper {
       display: flex;
       align-items: center;
-      border: 1px solid #d1d5db;
-      border-radius: 0.375rem;
+      border-radius: var(--border-radius, 0.5rem);
       overflow: hidden;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      background: var(--bg-primary, white);
+      border: 2px solid transparent;
+      background-image: 
+        linear-gradient(var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, 
+          var(--color-burgundy) 0%, 
+          var(--color-tan) 50%, 
+          var(--color-sage) 100%
+        );
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      transition: all 0.3s ease;
     }
 
     .phone-input-wrapper:focus-within {
-      border-color: var(--color-burgundy, #7D1935);
+      background-image: 
+        linear-gradient(var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, 
+          var(--color-burgundy) 0%, 
+          var(--color-tan) 30%,
+          var(--color-sage) 60%,
+          var(--color-burgundy) 100%
+        );
       box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
     }
 
     .phone-prefix {
       padding: 0.75rem 0 0.75rem 0.75rem;
-      background: var(--bg-primary, white);
-      color: var(--text-primary, #374151);
-      font-weight: 600;
+      background: transparent;
+      color: var(--text-primary);
+      font-weight: var(--font-semibold, 600);
       font-size: 1rem;
-      border-right: 1px solid #e5e7eb;
+      border-right: 1px solid var(--border-light);
       user-select: none;
     }
 
@@ -61,21 +77,49 @@ import { CommonModule } from '@angular/common';
       border: none;
       font-size: 1rem;
       outline: none;
-      background: var(--bg-primary, white);
+      background: transparent;
+      color: var(--text-primary);
     }
 
     .phone-input::placeholder {
-      color: #9ca3af;
+      color: var(--text-tertiary);
+      opacity: 0.7;
     }
 
     .phone-input:disabled {
-      background-color: #f3f4f6;
       cursor: not-allowed;
-      color: #6b7280;
+      opacity: 0.6;
     }
 
     .phone-input-wrapper:has(.phone-input:disabled) {
-      background-color: #f3f4f6;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Dark mode - ensure consistent background */
+    :root.dark-theme .phone-input-wrapper,
+    [data-theme='dark'] .phone-input-wrapper {
+      background-color: var(--bg-secondary);
+      background-image: 
+        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+        linear-gradient(135deg, 
+          #B84D66 0%,
+          #E8C4A0 50%,
+          #C9D4C7 100%
+        );
+    }
+
+    :root.dark-theme .phone-input-wrapper:focus-within,
+    [data-theme='dark'] .phone-input-wrapper:focus-within {
+      background-color: var(--bg-secondary);
+      background-image: 
+        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+        linear-gradient(135deg, 
+          #B84D66 0%,
+          #E8C4A0 30%,
+          #C9D4C7 60%,
+          #B84D66 100%
+        );
     }
 
     @media (max-width: 640px) {

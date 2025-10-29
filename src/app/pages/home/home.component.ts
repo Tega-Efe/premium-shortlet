@@ -1,12 +1,12 @@
 import { Component, OnInit, inject, signal, computed, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-// import { ApartmentService, NotificationService } from '../../core/services'; // COMMENTED OUT: Using Firestore version
-import { ApartmentServiceFirestore, ApartmentFilter } from '../../core/services/apartment.service.firestore'; // NEW: Firestore-based service
+// import { ApartmentService, NotificationService } from '../../core/services'; // REMOVED: Old HTTP API version
+import { ApartmentBrowsingService, ApartmentFilter } from '../../core/services/apartment-browsing.service'; // PUBLIC: Read-only browsing
 import { NotificationService, LoadingService } from '../../core/services';
-import { SimplifiedBookingServiceNoStorage } from '../../core/services/simplified-booking-no-storage.service';
+import { SimplifiedBookingService } from '../../core/services/simplified-booking.service';
 import { ThemeService } from '../../core/services/theme.service';
-import { Apartment, Booking } from '../../core/interfaces';
+import { Apartment } from '../../core/interfaces';
 import { CardComponent } from '../../shared/components/card/card.component';
 // import { FilterComponent } from '../../shared/components/filter/filter.component'; // COMMENTED OUT: Not used in single-apartment mode
 import { ModalComponent } from '../../shared/components/modal/modal.component';
@@ -617,6 +617,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
       .apartments-grid {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
       }
 
       .apartment-summary {
@@ -705,6 +707,11 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
         font-size: 1.25rem;
       }
 
+      .apartments-grid {
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
       .apartment-summary {
         padding: 1rem;
         gap: 1.25rem;
@@ -781,12 +788,327 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       padding: 0.875rem 2rem;
       font-size: 1rem;
     }
+
+    /* Booking Confirmation Modal Styles */
+    .confirmation-modal-content {
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .confirmation-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(168, 180, 165, 0.2), rgba(139, 155, 126, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: scaleIn 0.5s ease-out;
+    }
+
+    .confirmation-icon i {
+      font-size: 3rem;
+      color: var(--color-sage);
+    }
+
+    .confirmation-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem 0;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .confirmation-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin: 0 0 2rem 0;
+    }
+
+    .booking-summary-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .summary-heading {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .summary-heading i {
+      color: var(--color-burgundy);
+    }
+
+    .summary-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .detail-value {
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .total-row {
+      margin-top: 0.5rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--border-color);
+    }
+
+    .total-amount {
+      font-size: 1.25rem;
+      color: var(--color-burgundy);
+      font-weight: 700;
+    }
+
+    .payment-instructions {
+      background: rgba(168, 180, 165, 0.1);
+      border: 1px solid rgba(168, 180, 165, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .payment-heading {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 0.75rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .payment-heading i {
+      color: var(--color-sage);
+    }
+
+    .payment-intro {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin: 0 0 1.25rem 0;
+      line-height: 1.6;
+    }
+
+    .bank-details {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    :host-context(.dark-theme) .bank-details {
+      background: var(--bg-primary);
+    }
+
+    .bank-detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.625rem 0;
+      border-bottom: 1px dashed var(--border-color);
+      position: relative;
+    }
+
+    .bank-detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .bank-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .bank-value {
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-family: 'Courier New', monospace;
+    }
+
+    .amount-highlight {
+      font-size: 1.125rem;
+      color: var(--color-burgundy);
+    }
+
+    .copy-value {
+      padding-right: 2.5rem;
+    }
+
+    .btn-copy {
+      position: absolute;
+      right: 0;
+      background: var(--color-sage);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0.375rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.875rem;
+    }
+
+    .btn-copy:hover {
+      background: var(--color-burgundy);
+      transform: translateY(-1px);
+    }
+
+    .payment-note {
+      display: flex;
+      gap: 0.75rem;
+      background: rgba(251, 191, 36, 0.1);
+      border-left: 3px solid #fbbf24;
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      margin-top: 1rem;
+    }
+
+    .payment-note i {
+      color: #fbbf24;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .payment-note p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .reference-code {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+      color: var(--color-burgundy);
+    }
+
+    .notification-info {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .notification-item {
+      display: flex;
+      gap: 0.875rem;
+      align-items: flex-start;
+      padding: 0.75rem 0;
+    }
+
+    .notification-item:not(:last-child) {
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 0.75rem;
+    }
+
+    .notification-item i {
+      color: var(--color-sage);
+      font-size: 1.125rem;
+      margin-top: 0.125rem;
+      flex-shrink: 0;
+    }
+
+    .notification-item p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .notification-item strong {
+      color: var(--text-primary);
+    }
+
+    .confirmation-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .confirmation-actions .btn {
+      padding: 0.875rem 2.5rem;
+      font-size: 1rem;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .confirmation-modal-content {
+        padding: 1.5rem 1rem;
+      }
+
+      .confirmation-title {
+        font-size: 1.5rem;
+      }
+
+      .bank-details {
+        padding: 1rem;
+      }
+
+      .bank-detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+      }
+
+      .btn-copy {
+        position: static;
+        margin-top: 0.5rem;
+      }
+    }
   `]
 })
 export class HomeComponent implements OnInit {
-  // private apartmentService = inject(ApartmentService); // COMMENTED OUT: Using Firestore version
-  private apartmentService = inject(ApartmentServiceFirestore); // NEW: Firestore-based service
-  private simplifiedBookingService = inject(SimplifiedBookingServiceNoStorage);
+  // private apartmentService = inject(ApartmentService); // REMOVED: Old HTTP API version
+  private apartmentService = inject(ApartmentBrowsingService); // PUBLIC: Read-only browsing service
+  private simplifiedBookingService = inject(SimplifiedBookingService);
   private notificationService = inject(NotificationService);
   private loadingService = inject(LoadingService);
   private route = inject(ActivatedRoute);
@@ -794,6 +1116,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('bookingModal') bookingModal!: ModalComponent;
   @ViewChild('unavailableModal') unavailableModal!: ModalComponent;
+  @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
 
   // Data signals
   allApartments = signal<Apartment[]>([]);
@@ -801,8 +1124,10 @@ export class HomeComponent implements OnInit {
   selectedApartment = signal<Apartment | null>(null);
 
   // Availability signals
+  // Note: allApartments already filtered by isAvailable in loadApartments
+  // This computed is here for backward compatibility and additional filtering if needed
   availableApartments = computed(() => 
-    this.allApartments().filter(apt => apt.availability?.status === 'available')
+    this.allApartments().filter(apt => apt.availability?.isAvailable === true)
   );
   hasAvailableApartments = computed(() => this.availableApartments().length > 0);
   showUnavailableModal = signal<boolean>(false);
@@ -813,6 +1138,8 @@ export class HomeComponent implements OnInit {
   // UI state signals
   isLoading = signal<boolean>(false);
   showBookingModal = signal<boolean>(false);
+  showConfirmationModal = signal<boolean>(false);
+  bookingConfirmationData = signal<any>(null);
   currentFilter = signal<ApartmentFilter>({});
   currentSort = signal<string>('price-asc');
   currentPage = signal<number>(1);
@@ -870,10 +1197,33 @@ export class HomeComponent implements OnInit {
     this.isLoading.set(true);
     this.apartmentService.getApartments().subscribe({
       next: (apartments) => {
-        // Scale down: keep only the first apartment (main two-bedroom unit)
-        const main = apartments && apartments.length > 0 ? apartments[0] : null;
-        this.allApartments.set(main ? [main] : []);
-        this.filteredApartments.set(main ? [main] : []);
+        // Filter apartments by isAvailable (manual admin toggle) and hiddenUntil date
+        // This ensures only apartments that admin has marked as available are shown
+        // Also checks if the hide duration has expired
+        const now = new Date();
+        const availableApartments = (apartments || []).filter(apt => {
+          // Check manual toggle
+          if (!apt.availability?.isAvailable) {
+            return false;
+          }
+          
+          // Check if apartment is hidden temporarily
+          if (apt.availability?.hiddenUntil) {
+            const hiddenUntilDate = apt.availability.hiddenUntil instanceof Date 
+              ? apt.availability.hiddenUntil 
+              : apt.availability.hiddenUntil.toDate();
+            
+            // If hiddenUntil is in the future, apartment is still hidden
+            if (hiddenUntilDate > now) {
+              return false;
+            }
+          }
+          
+          return true;
+        });
+        
+        this.allApartments.set(availableApartments);
+        this.filteredApartments.set(availableApartments);
         this.isLoading.set(false);
       },
       error: (error) => {
@@ -932,8 +1282,10 @@ export class HomeComponent implements OnInit {
   }
 
   openBookingModal(apartment: Apartment): void {
-    // Check if apartment is available
-    if (apartment.availability?.status !== 'available') {
+    // Check if apartment is manually set as available (admin toggle)
+    // Note: We check isAvailable, not status, because status changes when there are bookings
+    // Users can still book for other available dates even if some dates are booked
+    if (!apartment.availability?.isAvailable) {
       this.openUnavailableModal();
       return;
     }
@@ -948,8 +1300,17 @@ export class HomeComponent implements OnInit {
   closeBookingModal(): void {
     this.showBookingModal.set(false);
     this.selectedApartment.set(null);
-    // Don't call this.bookingModal.close() here because it creates a recursion loop
-    // The modal is already closing (that's why modalClose was emitted)
+    // Don't call this.bookingModal.close() here - it creates a recursion loop
+    // when called from (modalClose) event
+  }
+
+  // Close booking modal programmatically (e.g., after successful submission)
+  private closeBookingModalProgrammatically(): void {
+    this.showBookingModal.set(false);
+    this.selectedApartment.set(null);
+    if (this.bookingModal) {
+      this.bookingModal.close();
+    }
   }
 
   openUnavailableModal(): void {
@@ -1007,8 +1368,23 @@ export class HomeComponent implements OnInit {
     this.simplifiedBookingService.createBooking(bookingFormData, apartmentId, pricePerNight).subscribe({
       next: (booking) => {
         this.loadingService.hide();
-        this.notificationService.success('Booking request submitted successfully!');
-        this.closeBookingModal();
+        this.closeBookingModalProgrammatically();
+        
+        // Prepare confirmation data
+        this.bookingConfirmationData.set({
+          bookingId: booking.id,
+          apartmentTitle: apartment.title,
+          guestName: bookingFormData.name,
+          guestEmail: bookingFormData.email,
+          checkInDate: bookingFormData.checkInDate,
+          checkOutDate: bookingFormData.checkOutDate,
+          numberOfNights: bookingFormData.numberOfNights,
+          totalPrice: pricePerNight * bookingFormData.numberOfNights,
+          bookingOption: bookingFormData.bookingOption
+        });
+        
+        // Show confirmation modal with payment instructions
+        this.openConfirmationModal();
       },
       error: (error) => {
         this.loadingService.hide();
@@ -1039,6 +1415,54 @@ export class HomeComponent implements OnInit {
       return `${pricing.currency}${pricing.basePrice.toLocaleString()}`;
     }
     return 'Price not available';
+  }
+
+  // Confirmation modal methods
+  openConfirmationModal(): void {
+    this.showConfirmationModal.set(true);
+    if (this.confirmationModal) {
+      this.confirmationModal.openModal('Booking Confirmation');
+    }
+  }
+
+  closeConfirmationModal(): void {
+    this.showConfirmationModal.set(false);
+    this.bookingConfirmationData.set(null);
+  }
+
+  // Copy account number to clipboard
+  copyAccountNumber(): void {
+    const accountNumber = '0123456789';
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(accountNumber).then(
+        () => {
+          this.notificationService.success('Account number copied to clipboard!');
+        },
+        (err) => {
+          console.error('Failed to copy account number:', err);
+          this.notificationService.error('Failed to copy account number. Please copy manually.');
+        }
+      );
+    } else {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = accountNumber;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        this.notificationService.success('Account number copied to clipboard!');
+      } catch (err) {
+        console.error('Failed to copy account number:', err);
+        this.notificationService.error('Failed to copy account number. Please copy manually.');
+      }
+      
+      document.body.removeChild(textArea);
+    }
   }
 }
 

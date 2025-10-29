@@ -145,40 +145,51 @@
             </p>
           </div>
 
-          <div class="gallery-container">
-            <button class="gallery-nav gallery-nav-prev" (click)="prevSlide()" aria-label="Previous slide">
-              <i class="fas fa-chevron-left"></i>
-            </button>
+          @if (isGalleryLoading()) {
+            <div class="gallery-loading">
+              <div class="gallery-loading-spinner"></div>
+              <p class="gallery-loading-text">Loading gallery...</p>
+            </div>
+          } @else if (galleryImages.length > 0) {
+            <div class="gallery-container">
+              <button class="gallery-nav gallery-nav-prev" (click)="prevSlide()" aria-label="Previous slide">
+                <i class="fas fa-chevron-left"></i>
+              </button>
 
-            <div class="gallery-slider">
-              <div class="gallery-track" [style.transform]="'translateX(-' + (currentSlide() * 100) + '%)'">
-                @for (image of galleryImages; track $index) {
-                  <div class="gallery-slide">
-                    <div class="gallery-image">
-                      <i [class]="image.icon"></i>
-                      <span class="gallery-label">{{ image.label }}</span>
+              <div class="gallery-slider">
+                <div class="gallery-track" [style.transform]="'translateX(-' + (currentSlide() * 100) + '%)'">
+                  @for (image of galleryImages; track $index) {
+                    <div class="gallery-slide">
+                      <div class="gallery-image">
+                        @if (image.url) {
+                          <img [src]="image.url" [alt]="image.label" class="gallery-actual-image">
+                        } @else {
+                          <i [class]="image.icon"></i>
+                        }
+                        <span class="gallery-label">{{ image.label }}</span>
+                      </div>
                     </div>
-                  </div>
+                  }
+                </div>
+              </div>
+
+              <button class="gallery-nav gallery-nav-next" (click)="nextSlide()" aria-label="Next slide">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+
+              <div class="gallery-dots">
+                @for (image of galleryImages; track $index) {
+                  <button 
+                    class="gallery-dot" 
+                    [class.active]="currentSlide() === $index"
+                    (click)="goToSlide($index)"
+                    [attr.aria-label]="'Go to slide ' + ($index + 1)"
+                  >
+                  </button>
                 }
               </div>
             </div>
-
-            <button class="gallery-nav gallery-nav-next" (click)="nextSlide()" aria-label="Next slide">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-
-            <div class="gallery-dots">
-              @for (image of galleryImages; track $index) {
-                <button 
-                  class="gallery-dot" 
-                  [class.active]="currentSlide() === $index"
-                  (click)="goToSlide($index)"
-                  [attr.aria-label]="'Go to slide ' + ($index + 1)"
-                >
-                </button>
-              }
-            </div>
-          </div>
+          }
 
           <div class="section-footer" appAnimateOnScroll="slide-up">
             <button 

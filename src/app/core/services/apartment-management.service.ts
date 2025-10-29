@@ -13,7 +13,7 @@ import {
   Timestamp,
   writeBatch
 } from '@angular/fire/firestore';
-import { Observable, from, map, catchError, of, switchMap } from 'rxjs';
+import { Observable, from, map, catchError, of, switchMap, tap } from 'rxjs';
 import { Apartment, DateRange } from '../interfaces';
 
 /**
@@ -157,12 +157,61 @@ export class ApartmentManagementService {
    * Toggle apartment availability
    */
   toggleAvailability(apartmentId: string, isAvailable: boolean): Observable<void> {
-    return this.updateApartment(apartmentId, {
-      availability: {
-        isAvailable,
-        status: isAvailable ? 'available' : 'maintenance'
-      }
-    });
+    const apartmentDoc = doc(this.firestore, 'apartments', apartmentId);
+    
+    // Use field path updates to preserve bookedDates and blackoutDates
+    const updates = {
+      'availability.isAvailable': isAvailable,
+      'availability.status': isAvailable ? 'available' : 'maintenance',
+      'availability.hiddenUntil': null,
+      'availability.hideReason': null,
+      updatedAt: Timestamp.now()
+    };
+
+    return from(updateDoc(apartmentDoc, updates)).pipe(
+      tap(() => {
+        console.log('✅ Apartment availability toggled:', { apartmentId, isAvailable });
+        // Refresh the apartments list
+        this.getAllApartments().subscribe();
+      }),
+      map(() => undefined),
+      catchError(error => {
+        console.error('❌ Error toggling apartment availability:', error);
+        throw error;
+      })
+    );
+  }
+
+  /**
+   * Hide apartment for a specific duration
+   */
+  hideApartmentForDuration(apartmentId: string, hiddenUntil: Date, reason?: string): Observable<void> {
+    const apartmentDoc = doc(this.firestore, 'apartments', apartmentId);
+    
+    // Use field path updates to preserve bookedDates and blackoutDates
+    const updates: any = {
+      'availability.isAvailable': false,
+      'availability.status': 'maintenance',
+      'availability.hiddenUntil': Timestamp.fromDate(hiddenUntil),
+      updatedAt: Timestamp.now()
+    };
+    
+    if (reason) {
+      updates['availability.hideReason'] = reason;
+    }
+
+    return from(updateDoc(apartmentDoc, updates)).pipe(
+      tap(() => {
+        console.log('✅ Apartment hidden for duration:', { apartmentId, hiddenUntil, reason });
+        // Refresh the apartments list
+        this.getAllApartments().subscribe();
+      }),
+      map(() => undefined),
+      catchError(error => {
+        console.error('❌ Error hiding apartment for duration:', error);
+        throw error;
+      })
+    );
   }
 
   /**

@@ -291,4 +291,123 @@
           </div>
         </div>
       </app-modal>
+
+      <!-- Booking Confirmation Modal -->
+      <app-modal
+        #confirmationModal
+        [size]="'md'"
+        [showFooter]="false"
+        (modalClose)="closeConfirmationModal()"
+      >
+        @if (bookingConfirmationData()) {
+          <div class="confirmation-modal-content">
+            <!-- Success Icon -->
+            <div class="confirmation-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+
+            <!-- Title -->
+            <h2 class="confirmation-title">Reservation Confirmed!</h2>
+            <p class="confirmation-subtitle">
+              Thank you, {{ bookingConfirmationData().guestName }}! Your reservation request has been received.
+            </p>
+
+            <!-- Booking Summary -->
+            <div class="booking-summary-box">
+              <h3 class="summary-heading">
+                <i class="fas fa-info-circle"></i>
+                Booking Details
+              </h3>
+              <div class="summary-details">
+                <div class="detail-row">
+                  <span class="detail-label">Property:</span>
+                  <span class="detail-value">{{ bookingConfirmationData().apartmentTitle }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Check-in:</span>
+                  <span class="detail-value">{{ bookingConfirmationData().checkInDate }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Check-out:</span>
+                  <span class="detail-value">{{ bookingConfirmationData().checkOutDate }}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Duration:</span>
+                  <span class="detail-value">{{ bookingConfirmationData().numberOfNights }} night(s)</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Booking Type:</span>
+                  <span class="detail-value">{{ bookingConfirmationData().bookingOption === 'one-room' ? 'One Room' : 'Entire Apartment' }}</span>
+                </div>
+                <div class="detail-row total-row">
+                  <span class="detail-label">Total Amount:</span>
+                  <span class="detail-value total-amount">₦{{ bookingConfirmationData().totalPrice | number:'1.0-0' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Instructions -->
+            <div class="payment-instructions">
+              <h3 class="payment-heading">
+                <i class="fas fa-credit-card"></i>
+                Next Steps: Payment
+              </h3>
+              <p class="payment-intro">
+                To confirm your reservation, please proceed with payment to the account details below:
+              </p>
+              
+              <div class="bank-details">
+                <div class="bank-detail-item">
+                  <span class="bank-label">Bank Name:</span>
+                  <span class="bank-value">Access Bank</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="bank-label">Account Name:</span>
+                  <span class="bank-value">Sweet Homes</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="bank-label">Account Number:</span>
+                  <span class="bank-value copy-value">0123456789</span>
+                  <button class="btn-copy" (click)="copyAccountNumber()" title="Copy account number">
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="bank-label">Amount:</span>
+                  <span class="bank-value amount-highlight">₦{{ bookingConfirmationData().totalPrice | number:'1.0-0' }}</span>
+                </div>
+              </div>
+
+              <div class="payment-note">
+                <i class="fas fa-info-circle"></i>
+                <p>
+                  <strong>Important:</strong> Please use your booking reference 
+                  <span class="reference-code">{{ bookingConfirmationData().bookingId }}</span> 
+                  as the payment reference/description.
+                </p>
+              </div>
+            </div>
+
+            <!-- Email Notification Info -->
+            <div class="notification-info">
+              <div class="notification-item">
+                <i class="fas fa-envelope"></i>
+                <p>A confirmation email has been sent to <strong>{{ bookingConfirmationData().guestEmail }}</strong></p>
+              </div>
+              <div class="notification-item">
+                <i class="fas fa-bell"></i>
+                <p>You will receive an email notification once your payment has been verified and your booking is approved.</p>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="confirmation-actions">
+              <button class="btn btn-primary" (click)="closeConfirmationModal()">
+                <i class="fas fa-check"></i>
+                Got it, Thanks!
+              </button>
+            </div>
+          </div>
+        }
+      </app-modal>
     </div>

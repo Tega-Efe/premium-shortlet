@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ApartmentServiceFirestore } from '../../core/services/apartment.service.firestore';
+import { ApartmentBrowsingService } from '../../core/services/apartment-browsing.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { Apartment } from '../../core/interfaces';
-import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
-import { HoverEffectDirective } from '../../core/directives/hover-effect.directive';
-import { TypingEffectDirective } from '../../shared/directives/typing-effect.directive';
+import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective } from '../../core/directives';
 
 @Component({
   selector: 'app-landing',
@@ -304,21 +302,60 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       padding: 0 3rem;
     }
 
+    .gallery-loading {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto 2rem;
+      aspect-ratio: 16/9;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      box-shadow: 0 8px 32px rgba(125, 25, 53, 0.12);
+    }
+
+    .gallery-loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(125, 25, 53, 0.1);
+      border-top-color: var(--color-burgundy, #7D1935);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .gallery-loading-text {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+    }
+
     .gallery-slider {
       overflow: hidden;
       border-radius: var(--radius-xl);
       box-shadow: 0 8px 32px rgba(125, 25, 53, 0.12);
+      position: relative;
+      width: 100%;
     }
 
     .gallery-track {
       display: flex;
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
     }
 
     .gallery-slide {
       min-width: 100%;
+      width: 100%;
       aspect-ratio: 16/9;
       flex-shrink: 0;
+      position: relative;
     }
 
     .gallery-image {
@@ -350,17 +387,28 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       z-index: 1;
     }
 
+    .gallery-actual-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
     .gallery-label {
       color: white;
       font-size: clamp(1rem, 3vw, 1.375rem);
       font-weight: 700;
       text-align: center;
       padding: 0.5rem 1.5rem;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.5);
       border-radius: var(--radius-md);
       backdrop-filter: blur(12px);
-      z-index: 1;
+      z-index: 2;
       font-family: 'Playfair Display', serif;
+      position: relative;
+      max-width: 90%;
+      word-wrap: break-word;
     }
 
     .gallery-nav {
@@ -875,11 +923,40 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
       }
 
       .gallery-container {
-        padding: 0 2rem;
+        padding: 0 2.5rem;
+        max-width: 100%;
+      }
+
+      .gallery-loading {
+        aspect-ratio: 4/3;
+        margin: 0 0 2rem;
+        max-height: 400px;
+      }
+
+      .gallery-slider {
+        position: relative;
+        width: 100%;
+      }
+
+      .gallery-track {
+        width: 100%;
       }
 
       .gallery-slide {
         aspect-ratio: 4/3;
+        width: 100%;
+        max-height: 400px;
+      }
+
+      .gallery-image {
+        padding: 1rem;
+        width: 100%;
+        height: 100%;
+      }
+
+      .gallery-label {
+        font-size: 0.875rem;
+        padding: 0.4rem 1rem;
       }
 
       .gallery-nav {
@@ -991,6 +1068,75 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
         font-size: 0.6875rem;
       }
 
+      .gallery-container {
+        padding: 0 2rem;
+        max-width: 100%;
+      }
+
+      .gallery-loading {
+        aspect-ratio: 4/3;
+        border-radius: var(--radius-lg);
+        max-height: 280px;
+      }
+
+      .gallery-loading-spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 3px;
+      }
+
+      .gallery-loading-text {
+        font-size: 0.8125rem;
+      }
+
+      .gallery-slider {
+        border-radius: var(--radius-lg);
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .gallery-track {
+        width: 100%;
+      }
+
+      .gallery-slide {
+        aspect-ratio: 4/3;
+        width: 100%;
+        max-height: 280px;
+      }
+
+      .gallery-image {
+        padding: 0.75rem;
+        width: 100%;
+        height: 100%;
+      }
+
+      .gallery-image i {
+        font-size: 2.5rem;
+      }
+
+      .gallery-label {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+      }
+
+      .gallery-nav {
+        width: 28px;
+        height: 28px;
+        font-size: 0.625rem;
+      }
+
+      .gallery-dots {
+        margin-top: 1rem;
+      }
+
+      .gallery-dot {
+        width: 7px;
+        height: 7px;
+        border-width: 1.5px;
+      }
+
       .apartments-grid,
       .features-grid,
       .testimonials-grid {
@@ -1005,12 +1151,13 @@ import { TypingEffectDirective } from '../../shared/directives/typing-effect.dir
   `]
 })
 export class LandingComponent implements OnInit, OnDestroy {
-  private apartmentService = inject(ApartmentServiceFirestore);
+  private apartmentService = inject(ApartmentBrowsingService);
   private router = inject(Router);
   protected themeService = inject(ThemeService);
 
   featuredApartments = signal<Apartment[]>([]);
   isLoading = signal<boolean>(false);
+  isGalleryLoading = signal<boolean>(true);
   stats = signal({
     totalListings: 1, // Single two-bedroom apartment
     totalBookings: 12, // Realistic for small-scale operation
@@ -1020,14 +1167,7 @@ export class LandingComponent implements OnInit, OnDestroy {
   // Gallery carousel state
   currentSlide = signal(0);
   private autoPlayInterval?: number;
-  galleryImages = [
-    { icon: 'fas fa-bed', label: 'Master Bedroom' },
-    { icon: 'fas fa-couch', label: 'Living Room' },
-    { icon: 'fas fa-utensils', label: 'Kitchen' },
-    { icon: 'fas fa-bath', label: 'Bathroom' },
-    { icon: 'fas fa-door-open', label: 'Second Bedroom' },
-    { icon: 'fas fa-building', label: 'Exterior View' }
-  ];
+  galleryImages: { url?: string; icon?: string; label: string }[] = [];
 
   ngOnInit(): void {
     this.loadFeaturedApartments();
@@ -1072,14 +1212,34 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   loadFeaturedApartments(): void {
     this.isLoading.set(true);
+    this.isGalleryLoading.set(true);
     this.apartmentService.getApartments().subscribe({
       next: (apartments) => {
         // Take first 6 apartments as featured
         this.featuredApartments.set(apartments.slice(0, 6));
+        
+        // Populate gallery with actual apartment images from database
+        const allImages: { url?: string; icon?: string; label: string }[] = [];
+        apartments.forEach((apartment, index) => {
+          if (apartment.images && apartment.images.length > 0) {
+            apartment.images.forEach((imageUrl, imgIndex) => {
+              allImages.push({
+                url: imageUrl,
+                label: `${apartment.title} - Image ${imgIndex + 1}`
+              });
+            });
+          }
+        });
+        
+        // Update gallery images
+        this.galleryImages = allImages.length > 0 ? allImages : [];
+        
         this.isLoading.set(false);
+        this.isGalleryLoading.set(false);
       },
       error: () => {
         this.isLoading.set(false);
+        this.isGalleryLoading.set(false);
       }
     });
   }

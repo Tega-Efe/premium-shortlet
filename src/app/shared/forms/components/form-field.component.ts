@@ -149,40 +149,11 @@ import { DatePickerComponent } from './date-picker.component';
       margin-bottom: 1.5rem;
     }
 
-    .form-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: #374151;
-    }
-
+    /* Component-specific styling - inherits global form styles from styles.css */
+    
     .required {
       color: var(--error, #ef4444);
       margin-left: 0.25rem;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid var(--border-light, #d1d5db);
-      border-radius: 0.375rem;
-      font-size: 1rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-    }
-
-    .form-control:focus {
-      outline: none;
-      border-color: var(--color-burgundy, #7D1935);
-      box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
-    }
-
-    .form-control:disabled,
-    .form-control:read-only {
-      background-color: var(--bg-secondary);
-      cursor: not-allowed;
-      opacity: 0.7;
     }
 
     .has-error .form-control {
@@ -231,29 +202,9 @@ import { DatePickerComponent } from './date-picker.component';
       flex-direction: column;
     }
 
-    textarea.form-control {
-      resize: vertical;
-      min-height: 80px;
-    }
-
     @media (max-width: 640px) {
       .form-field {
         margin-bottom: 1rem;
-      }
-
-      .form-label {
-        margin-bottom: 0.375rem;
-        font-size: 0.9375rem;
-      }
-
-      .form-control {
-        padding: 0.625rem;
-        font-size: 0.9375rem;
-      }
-
-      textarea.form-control {
-        padding: 0.625rem;
-        min-height: 70px;
       }
 
       .form-hint {

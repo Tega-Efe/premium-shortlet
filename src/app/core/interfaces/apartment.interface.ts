@@ -19,13 +19,7 @@ export interface Location {
   city: string;
   state: string;
   country: string;
-  coordinates?: Coordinates;
   landmarks?: string[];
-}
-
-export interface Coordinates {
-  latitude: number;
-  longitude: number;
 }
 
 export interface Pricing {
@@ -51,7 +45,6 @@ export interface Specifications {
   maxGuestsEntireApartment: number;
   // Legacy field for backward compatibility
   maxGuests?: number;
-  squareMeters?: number;
   floors?: number;
 }
 
@@ -60,11 +53,13 @@ export interface Availability {
   status: 'available' | 'booked' | 'maintenance';
   bookedDates?: DateRange[];
   blackoutDates?: DateRange[];
+  hiddenUntil?: Date | any; // Date until which the apartment should remain hidden
+  hideReason?: string; // Optional reason for hiding (maintenance, renovation, etc.)
 }
 
 export interface DateRange {
-  start: Date;
-  end: Date;
+  start: Date | string;  // Support both Date objects and ISO string dates
+  end: Date | string;
 }
 
 export interface Rating {

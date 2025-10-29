@@ -88,17 +88,58 @@ import { CommonModule } from '@angular/common';
     }
 
     .upload-content {
-      border: 2px dashed var(--border-color, #d1d5db);
-      border-radius: 0.75rem;
+      border: 2px solid transparent;
+      border-radius: var(--border-radius, 0.75rem);
       padding: 2rem;
       text-align: center;
-      background: var(--bg-primary, white);
+      background-image: 
+        linear-gradient(var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, 
+          var(--color-burgundy) 0%, 
+          var(--color-tan) 50%, 
+          var(--color-sage) 100%
+        );
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
       transition: all 0.3s ease;
     }
 
     .file-upload-label:not(.disabled):hover .upload-content {
-      border-color: var(--color-burgundy, #7D1935);
-      background: rgba(125, 25, 53, 0.02);
+      background-image: 
+        linear-gradient(var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, 
+          var(--color-burgundy) 0%, 
+          var(--color-tan) 30%,
+          var(--color-sage) 60%,
+          var(--color-burgundy) 100%
+        );
+      box-shadow: 0 4px 12px rgba(125, 25, 53, 0.15);
+    }
+
+    /* Dark mode gradient borders */
+    :root.dark-theme .upload-content,
+    [data-theme='dark'] .upload-content {
+      background-color: var(--bg-secondary);
+      background-image: 
+        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+        linear-gradient(135deg, 
+          #B84D66 0%,
+          #E8C4A0 50%,
+          #C9D4C7 100%
+        );
+    }
+
+    :root.dark-theme .file-upload-label:not(.disabled):hover .upload-content,
+    [data-theme='dark'] .file-upload-label:not(.disabled):hover .upload-content {
+      background-color: var(--bg-secondary);
+      background-image: 
+        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+        linear-gradient(135deg, 
+          #B84D66 0%,
+          #E8C4A0 30%,
+          #C9D4C7 60%,
+          #B84D66 100%
+        );
     }
 
     .upload-placeholder {

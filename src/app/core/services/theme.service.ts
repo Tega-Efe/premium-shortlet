@@ -37,10 +37,18 @@ export class ThemeService {
     
     if (savedTheme && ['light', 'dark', 'auto'].includes(savedTheme)) {
       this.selectedTheme.set(savedTheme);
+    } else {
+      // No saved preference - use 'auto' to detect browser preference
+      this.selectedTheme.set('auto');
     }
 
-    // Calculate effective theme
+    // Calculate effective theme immediately
     this.updateEffectiveTheme();
+    
+    // Apply theme immediately on initialization (before effect runs)
+    if (this.isBrowser) {
+      this.applyTheme(this.effectiveTheme());
+    }
   }
 
   private setupMediaQueryListener(): void {

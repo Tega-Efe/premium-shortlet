@@ -454,7 +454,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       overflow: hidden;
       border: 1px solid var(--border-color);
       border-radius: 0.5rem;
-      background: white;
+      background: var(--bg-primary);
       animation: fadeIn 0.4s ease-out;
       flex-shrink: 0;
     }
@@ -515,7 +515,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       text-align: left;
       border-bottom: 1px solid var(--border-color);
       font-size: 0.8125rem;
-      background: white;
+      background: var(--bg-primary);
     }
 
     .bookings-table th {
@@ -623,6 +623,28 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       font-size: 0.8125rem;
     }
 
+    .btn-primary {
+      background-color: var(--color-burgundy, #7D1935);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #5E1227;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(125, 25, 53, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-tan, #D4A574);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #C18E5A;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(212, 165, 116, 0.3);
+    }
+
     .btn-success {
       background-color: var(--color-sage, #A8B4A5);
       color: white;
@@ -723,6 +745,28 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .nights-badge i {
       display: none; /* Hide icon in badge since it's already in column header */
+    }
+
+    .apartment-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.625rem;
+      background: rgba(168, 180, 165, 0.15);
+      color: var(--color-sage);
+      border-radius: 0.375rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .apartment-badge:hover {
+      transform: scale(1.05);
+      background: rgba(168, 180, 165, 0.25);
+    }
+
+    .apartment-badge i {
+      font-size: 0.75rem;
     }
 
     .booking-option-badge {
@@ -1154,14 +1198,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .listing-form {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     .form-section {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      padding-bottom: 1.5rem;
+      gap: 1.5rem;
+      padding-bottom: 2rem;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -1174,7 +1218,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin: 0;
+      margin: 0 0 0.5rem 0;
       display: flex;
       align-items: center;
       gap: 0.375rem;
@@ -1188,37 +1232,36 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.375rem;
+      gap: 0.5rem;
+      margin-bottom: 0;
     }
 
     .form-row {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
+      gap: 1.5rem;
     }
 
     .form-label {
-      font-weight: 600;
+      font-weight: var(--font-semibold, 600);
       color: var(--text-primary);
-      font-size: 0.8125rem;
+      font-size: 0.875rem;
+      margin-bottom: 0;
+      display: block;
     }
 
+    /* Form inputs inherit global gradient border styling from styles.css */
     .form-input,
     .form-textarea {
-      padding: 0.625rem 0.875rem;
-      border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
+      padding: 0.75rem;
       font-size: 0.875rem;
-      transition: all 0.2s ease;
       font-family: inherit;
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      width: 100%;
     }
 
     .form-input:focus,
     .form-textarea:focus {
       outline: none;
-      border-color: var(--color-burgundy);
       box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
     }
 
@@ -1884,34 +1927,35 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       }
 
       .listing-form {
-        gap: 1rem;
+        gap: 1.5rem;
       }
 
       .form-section {
-        gap: 0.75rem;
-        padding-bottom: 1rem;
+        gap: 1.25rem;
+        padding-bottom: 1.5rem;
       }
 
       .section-title {
         font-size: 0.9375rem;
+        margin-bottom: 0.5rem;
       }
 
       .form-row {
-        gap: 0.875rem;
+        gap: 1.25rem;
       }
 
       .form-group {
-        gap: 0.25rem;
+        gap: 0.5rem;
       }
 
       .form-label {
-        font-size: 0.75rem;
+        font-size: 0.8125rem;
       }
 
       .form-input,
       .form-textarea,
       .form-control {
-        padding: 0.5rem 0.75rem;
+        padding: 0.625rem;
         font-size: 0.8125rem;
       }
 
@@ -2108,6 +2152,134 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       margin: 0;
       font-size: 0.9375rem;
     }
+
+    /* ===== DARK MODE STYLES ===== */
+    :host-context(.dark-theme) {
+      /* Table styling for dark mode */
+      .bookings-table th,
+      .bookings-table td {
+        background: var(--bg-secondary);
+        border-bottom-color: var(--border-color);
+      }
+
+      .bookings-table th {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+      }
+
+      .bookings-table tbody tr:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      .bookings-table tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+
+      /* Card backgrounds */
+      .stat-card,
+      .section-card {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+      }
+
+      /* Form inputs - inherit global gradient borders, only adjust focus state */
+      .form-input:focus,
+      .form-textarea:focus,
+      .form-control:focus {
+        box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.15);
+      }
+
+      /* Apartment cards */
+      .apartment-card {
+        background: var(--bg-secondary);
+        border-color: var(--border-color);
+      }
+
+      .apartment-card:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      /* Pagination */
+      .pagination-page {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        border-color: var(--border-color);
+      }
+
+      .pagination-page:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .pagination-page.active {
+        background: var(--color-burgundy);
+        color: white;
+      }
+
+      /* Modal */
+      .modal-content {
+        background: var(--bg-secondary);
+      }
+
+      /* Empty states */
+      .empty-state {
+        background: var(--bg-secondary);
+      }
+
+      /* Status badges - maintain readability in dark mode */
+      .status-pending {
+        background-color: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+      }
+
+      .status-confirmed,
+      .status-approved {
+        background-color: rgba(168, 180, 165, 0.2);
+        color: #a8b4a5;
+        border: 1px solid rgba(168, 180, 165, 0.3);
+      }
+
+      .status-rejected,
+      .status-cancelled {
+        background-color: rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+
+      /* Pricing display */
+      .apartment-pricing {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      /* Guest cell */
+      .guest-avatar {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* Button text fix for dark mode */
+      .btn-primary {
+        color: white;
+      }
+
+      .btn-secondary {
+        background-color: var(--color-tan, #D4A574);
+        color: var(--bg-primary);
+      }
+
+      .btn-secondary:hover {
+        background-color: #C18E5A;
+        color: var(--bg-primary);
+      }
+
+      .btn-outline {
+        color: var(--text-primary);
+        border-color: var(--border-color);
+      }
+
+      .btn-outline:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
   `]
 })
 export class AdminComponent implements OnInit {
@@ -2119,6 +2291,7 @@ export class AdminComponent implements OnInit {
   @ViewChild('approvalModal') approvalModal!: ModalComponent;
   @ViewChild('detailsModal') detailsModal!: ModalComponent;
   @ViewChild('availabilityModal') availabilityModal!: ModalComponent;
+  @ViewChild('hideDurationModal') hideDurationModal!: ModalComponent;
 
   // Data signals
   allBookings = signal<SimplifiedBooking[]>([]);
@@ -2138,10 +2311,16 @@ export class AdminComponent implements OnInit {
 
   // Availability management
   showAvailabilityModal = signal<boolean>(false);
-  isTogglingAvailability = signal<boolean>(false);
+  togglingApartmentId = signal<string | null>(null); // Track which apartment is being toggled
   availableApartmentsCount = computed(() => 
     this.apartments().filter(apt => apt.availability.isAvailable).length
   );
+  
+  // Hide duration management
+  showHideDurationModal = signal<boolean>(false);
+  selectedApartmentForHiding = signal<Apartment | null>(null);
+  hideDurationDays = signal<number>(0);
+  hideReason = signal<string>('');
 
   // UI state signals
   activeTab = signal<string>('pending');
@@ -2166,7 +2345,8 @@ export class AdminComponent implements OnInit {
       address: '',
       city: 'Lagos',
       state: 'Lagos',
-      country: 'Nigeria'
+      country: 'Nigeria',
+      landmarks: []
     },
     pricing: {
       oneRoomPrice: 25000,
@@ -2174,27 +2354,35 @@ export class AdminComponent implements OnInit {
       currency: 'NGN'
     },
     specifications: {
-      bedrooms: 1,
-      bathrooms: 1,
-      maxGuestsOneRoom: 4,
-      maxGuestsEntireApartment: 5
+      bedrooms: 2,
+      bathrooms: 2,
+      maxGuestsOneRoom: 2,
+      maxGuestsEntireApartment: 4,
+      floors: 1
     },
     amenities: [],
-    images: [
-      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800',
-      'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
-      'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800',
-      'https://images.unsplash.com/photo-1556912173-46c336c7fd55?w=800'
-    ],
+    images: [],
     availability: {
       isAvailable: true,
-      status: 'available'
+      status: 'available',
+      bookedDates: [],
+      blackoutDates: []
+    },
+    rating: {
+      average: 0,
+      count: 0,
+      breakdown: {
+        cleanliness: 0,
+        accuracy: 0,
+        communication: 0,
+        location: 0,
+        value: 0
+      }
     },
     featured: false
   };
   amenitiesText = '';
+  imagesText = '';
 
   // Pagination signals
   pendingPage = signal<number>(1);
@@ -2238,6 +2426,16 @@ export class AdminComponent implements OnInit {
 
   // Expose Math for template
   Math = Math;
+
+  /**
+   * Get apartment number from apartmentId
+   * Maps apartment IDs to sequential numbers (1, 2, 3, etc.)
+   */
+  getApartmentNumber(apartmentId: string): number {
+    const apartments = this.apartments();
+    const index = apartments.findIndex(apt => apt.id === apartmentId);
+    return index !== -1 ? index + 1 : 0; // Return 1-based index, 0 if not found
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -2334,13 +2532,13 @@ export class AdminComponent implements OnInit {
     if (!booking || !booking.id) return;
 
     const action = this.approvalAction();
-    const message = action === 'approve' ? 'Approving booking...' : 'Rejecting booking...';
     
     if (action === 'approve') {
-      this.loadingService.show(message);
+      // Dates are already blocked - approval just updates status and sends confirmation email
+      this.loadingService.show('Approving booking and sending confirmation email...');
       this.simplifiedBookingService.approveBooking(booking.id, this.rejectionReason).subscribe({
         next: () => {
-          this.notificationService.success('Booking approved successfully');
+          this.notificationService.success('Booking approved and confirmation email sent');
           this.closeApprovalModal();
           this.loadData();
           this.loadingService.hide();
@@ -2356,10 +2554,11 @@ export class AdminComponent implements OnInit {
         return;
       }
 
-      this.loadingService.show(message);
+      // Rejection will unblock the dates and send rejection email
+      this.loadingService.show('Rejecting booking and freeing up dates...');
       this.simplifiedBookingService.rejectBooking(booking.id, this.rejectionReason).subscribe({
         next: () => {
-          this.notificationService.success('Booking rejected');
+          this.notificationService.success('Booking rejected and dates unblocked');
           this.closeApprovalModal();
           this.loadData();
           this.loadingService.hide();
@@ -2455,17 +2654,154 @@ export class AdminComponent implements OnInit {
   }
 
   async toggleApartmentAvailabilityById(apartmentId: string, currentStatus: boolean): Promise<void> {
-    this.isTogglingAvailability.set(true);
-    try {
-      await this.apartmentService.toggleAvailability(apartmentId, !currentStatus).toPromise();
-      const statusText = !currentStatus ? 'available' : 'unavailable';
-      this.notificationService.success(`Apartment marked as ${statusText}`);
-      this.loadApartments();
-    } catch (error) {
-      this.notificationService.error('Failed to update apartment availability');
-    } finally {
-      this.isTogglingAvailability.set(false);
+    // If showing (making available), just toggle immediately
+    if (!currentStatus) {
+      this.togglingApartmentId.set(apartmentId);
+      this.loadingService.show('Making apartment available...');
+      
+      try {
+        await this.apartmentService.toggleAvailability(apartmentId, true).toPromise();
+        this.notificationService.success('Apartment is now available');
+        this.loadApartments();
+      } catch (error: any) {
+        console.error('Error showing apartment:', error);
+        const errorMessage = error?.message || 'Failed to update apartment availability';
+        this.notificationService.error(errorMessage);
+      } finally {
+        this.togglingApartmentId.set(null);
+        this.loadingService.hide();
+      }
+      return;
     }
+
+    // If hiding, ask if they want to set a duration
+    const apartment = this.apartments().find(apt => apt.id === apartmentId);
+    if (apartment) {
+      this.selectedApartmentForHiding.set(apartment);
+      this.hideDurationDays.set(0);
+      this.hideReason.set('');
+      this.showHideDurationModal.set(true);
+      if (this.hideDurationModal) {
+        this.hideDurationModal.openModal(`Hide ${apartment.title}`);
+      }
+    }
+  }
+
+  /**
+   * Hide apartment immediately without duration
+   */
+  async hideApartmentImmediately(): Promise<void> {
+    const apartment = this.selectedApartmentForHiding();
+    if (!apartment?.id) {
+      this.notificationService.error('No apartment selected');
+      return;
+    }
+
+    this.togglingApartmentId.set(apartment.id);
+    this.loadingService.show('Hiding apartment...');
+    
+    try {
+      await this.apartmentService.toggleAvailability(apartment.id, false).toPromise();
+      this.notificationService.success('Apartment is now hidden');
+      this.loadApartments();
+      this.closeHideDurationModal();
+    } catch (error: any) {
+      console.error('Error hiding apartment:', error);
+      const errorMessage = error?.message || 'Failed to update apartment availability';
+      this.notificationService.error(errorMessage);
+    } finally {
+      this.togglingApartmentId.set(null);
+      this.loadingService.hide();
+    }
+  }
+
+  /**
+   * Hide apartment for a specific duration
+   */
+  async hideApartmentForDuration(): Promise<void> {
+    const apartment = this.selectedApartmentForHiding();
+    const days = this.hideDurationDays();
+    const reason = this.hideReason();
+
+    if (!apartment?.id || days <= 0) {
+      this.notificationService.error('Please enter a valid number of days');
+      return;
+    }
+
+    this.togglingApartmentId.set(apartment.id);
+    this.loadingService.show(`Hiding apartment for ${days} day(s)...`);
+    
+    try {
+      // Calculate the hiddenUntil date
+      const hiddenUntil = new Date();
+      hiddenUntil.setDate(hiddenUntil.getDate() + days);
+
+      // Update apartment with hidden duration
+      await this.apartmentService.hideApartmentForDuration(apartment.id, hiddenUntil, reason).toPromise();
+      
+      this.notificationService.success(`Apartment hidden for ${days} day(s)`);
+      this.loadApartments();
+      this.closeHideDurationModal();
+    } catch (error: any) {
+      console.error('Error hiding apartment for duration:', error);
+      const errorMessage = error?.message || 'Failed to hide apartment';
+      this.notificationService.error(errorMessage);
+    } finally {
+      this.togglingApartmentId.set(null);
+      this.loadingService.hide();
+    }
+  }
+
+  /**
+   * Open hide duration modal
+   */
+  openHideDurationModal(apartment: Apartment): void {
+    this.selectedApartmentForHiding.set(apartment);
+    this.hideDurationDays.set(0);
+    this.hideReason.set('');
+    this.showHideDurationModal.set(true);
+    if (this.hideDurationModal) {
+      this.hideDurationModal.openModal(`Hide ${apartment.title}`);
+    }
+  }
+
+  /**
+   * Close hide duration modal
+   */
+  closeHideDurationModal(): void {
+    this.showHideDurationModal.set(false);
+    this.selectedApartmentForHiding.set(null);
+    this.hideDurationDays.set(0);
+    this.hideReason.set('');
+    // Don't call this.hideDurationModal.close() here - it creates a recursive loop
+    // The modal is already closing when this method is called from (modalClose) event
+  }
+
+  /**
+   * Calculate the date when the apartment will become available again
+   */
+  calculateHiddenUntilDate(): string {
+    const days = this.hideDurationDays();
+    if (days <= 0) {
+      return '';
+    }
+
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + days);
+    
+    return futureDate.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  /**
+   * Check if a specific apartment is being toggled
+   */
+  isTogglingApartment(apartmentId: string): boolean {
+    return this.togglingApartmentId() === apartmentId;
   }
 
   // Pagination methods
@@ -2518,6 +2854,7 @@ export class AdminComponent implements OnInit {
     this.showApartmentForm.set(true);
     this.listingData = { ...apartment };
     this.amenitiesText = apartment.amenities.join('\n');
+    this.imagesText = apartment.images.join('\n');
     
     // Scroll to form
     setTimeout(() => {
@@ -2546,28 +2883,44 @@ export class AdminComponent implements OnInit {
         address: '',
         city: 'Lagos',
         state: 'Lagos',
-        country: 'Nigeria'
+        country: 'Nigeria',
+        landmarks: []
       },
       pricing: {
         oneRoomPrice: 25000,
         entireApartmentPrice: 45000,
-        currency: '₦'
+        currency: 'NGN'
       },
       specifications: {
-        bedrooms: 1,
-        bathrooms: 1,
-        maxGuestsOneRoom: 4,
-        maxGuestsEntireApartment: 5
+        bedrooms: 2,
+        bathrooms: 2,
+        maxGuestsOneRoom: 2,
+        maxGuestsEntireApartment: 4,
+        floors: 1
       },
       amenities: [],
       images: [],
       availability: {
         isAvailable: true,
-        status: 'available'
+        status: 'available',
+        bookedDates: [],
+        blackoutDates: []
+      },
+      rating: {
+        average: 0,
+        count: 0,
+        breakdown: {
+          cleanliness: 0,
+          accuracy: 0,
+          communication: 0,
+          location: 0,
+          value: 0
+        }
       },
       featured: false
     };
     this.amenitiesText = '';
+    this.imagesText = '';
     this.listingSaveSuccess.set(false);
   }
 
@@ -2585,15 +2938,22 @@ export class AdminComponent implements OnInit {
         .map(a => a.trim())
         .filter(a => a.length > 0);
 
+      // Convert images text to array
+      const images = this.imagesText
+        .split('\n')
+        .map(img => img.trim())
+        .filter(img => img.length > 0);
+
       // Prepare apartment data with explicit integer conversion for prices
       const apartmentData: Omit<Apartment, 'id' | 'createdAt' | 'updatedAt'> = {
         title: this.listingData.title || '',
         description: this.listingData.description || '',
-        location: this.listingData.location || {
-          address: '',
-          city: 'Lagos',
-          state: 'Lagos',
-          country: 'Nigeria'
+        location: {
+          address: this.listingData.location?.address || '',
+          city: this.listingData.location?.city || 'Lagos',
+          state: this.listingData.location?.state || 'Lagos',
+          country: this.listingData.location?.country || 'Nigeria',
+          landmarks: this.listingData.location?.landmarks || []
         },
         pricing: {
           oneRoomPrice: Math.round(Number(this.listingData.pricing?.oneRoomPrice) || 25000),
@@ -2601,16 +2961,30 @@ export class AdminComponent implements OnInit {
           currency: this.listingData.pricing?.currency || 'NGN'
         },
         specifications: {
-          bedrooms: Math.round(Number(this.listingData.specifications?.bedrooms) || 1),
-          bathrooms: Math.round(Number(this.listingData.specifications?.bathrooms) || 1),
-          maxGuestsOneRoom: Math.round(Number(this.listingData.specifications?.maxGuestsOneRoom) || 4),
-          maxGuestsEntireApartment: Math.round(Number(this.listingData.specifications?.maxGuestsEntireApartment) || 5)
+          bedrooms: Math.round(Number(this.listingData.specifications?.bedrooms) || 2),
+          bathrooms: Math.round(Number(this.listingData.specifications?.bathrooms) || 2),
+          maxGuestsOneRoom: Math.round(Number(this.listingData.specifications?.maxGuestsOneRoom) || 2),
+          maxGuestsEntireApartment: Math.round(Number(this.listingData.specifications?.maxGuestsEntireApartment) || 4),
+          floors: Number(this.listingData.specifications?.floors) || 1
         },
         amenities: amenities,
-        images: this.listingData.images || [],
-        availability: this.listingData.availability || {
-          isAvailable: true,
-          status: 'available'
+        images: images,
+        availability: {
+          isAvailable: this.listingData.availability?.isAvailable ?? true,
+          status: this.listingData.availability?.status || 'available',
+          bookedDates: this.listingData.availability?.bookedDates || [],
+          blackoutDates: this.listingData.availability?.blackoutDates || []
+        },
+        rating: this.listingData.rating || {
+          average: 0,
+          count: 0,
+          breakdown: {
+            cleanliness: 0,
+            accuracy: 0,
+            communication: 0,
+            location: 0,
+            value: 0
+          }
         },
         featured: this.listingData.featured || false
       };

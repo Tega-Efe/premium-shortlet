@@ -376,47 +376,260 @@ import { PriceUtils } from '../../../core/utils';
     /* ===== Responsive Design ===== */
     @media (max-width: 768px) {
       .card-image {
-        height: 200px;
+        height: 180px;
+      }
+
+      .badge {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.25rem 0.625rem;
+        font-size: 0.6875rem;
+        gap: 0.25rem;
+      }
+
+      .badge i {
+        font-size: 0.6875rem;
+      }
+
+      .favorite-btn {
+        top: 0.5rem;
+        left: 0.5rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.875rem;
       }
 
       .card-content {
-        padding: var(--spacing-lg);
+        padding: 0.75rem;
+        gap: 0.625rem;
+      }
+
+      .card-header {
+        gap: 0.25rem;
       }
 
       .card-title {
-        font-size: var(--font-size-lg);
+        font-size: 0.9375rem;
+        line-height: 1.25;
+        -webkit-line-clamp: 2;
+      }
+
+      .card-location {
+        font-size: 0.75rem;
+        gap: 0.25rem;
+      }
+
+      .card-location i {
+        font-size: 0.75rem;
+      }
+
+      .card-description {
+        font-size: 0.75rem;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
       }
 
       .card-specs {
         grid-template-columns: repeat(2, 1fr);
+        gap: 0.375rem;
+      }
+
+      .spec {
+        padding: 0.375rem;
+        font-size: 0.6875rem;
+        gap: 0.25rem;
+      }
+
+      .spec i {
+        font-size: 0.875rem;
+      }
+
+      .card-amenities {
+        gap: 0.25rem;
+      }
+
+      .amenity-tag {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.625rem;
+        gap: 0.25rem;
+      }
+
+      .card-rating {
+        gap: 0.375rem;
+        font-size: 0.75rem;
+      }
+
+      .stars {
+        gap: 1px;
+      }
+
+      .stars i {
+        font-size: 0.6875rem;
+      }
+
+      .card-footer {
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+        margin-top: 0;
+      }
+
+      .card-pricing {
+        padding: 0.625rem;
+        gap: 0.375rem;
       }
 
       .price {
-        font-size: var(--font-size-2xl);
+        font-size: 1.125rem;
+      }
+
+      .price-label {
+        font-size: 0.6875rem;
       }
 
       .card-actions {
         flex-direction: column;
+        gap: 0.375rem;
       }
 
       .btn {
         width: 100%;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        gap: 0.25rem;
+      }
+
+      .btn i {
+        font-size: 0.75rem;
       }
     }
 
     @media (max-width: 480px) {
-      .card-specs {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--spacing-xs);
+      .card-image {
+        height: 160px;
       }
 
-      .spec {
-        padding: var(--spacing-xs);
+      .badge {
+        top: 0.375rem;
+        right: 0.375rem;
+        padding: 0.1875rem 0.5rem;
+        font-size: 0.625rem;
+        gap: 0.1875rem;
+      }
+
+      .badge i {
+        font-size: 0.625rem;
+      }
+
+      .favorite-btn {
+        top: 0.375rem;
+        left: 0.375rem;
+        width: 28px;
+        height: 28px;
         font-size: 0.75rem;
       }
 
+      .card-content {
+        padding: 0.625rem;
+        gap: 0.5rem;
+      }
+
+      .card-header {
+        gap: 0.1875rem;
+      }
+
+      .card-title {
+        font-size: 0.875rem;
+        line-height: 1.2;
+        -webkit-line-clamp: 2;
+      }
+
+      .card-location {
+        font-size: 0.6875rem;
+        gap: 0.1875rem;
+      }
+
+      .card-location i {
+        font-size: 0.6875rem;
+      }
+
+      .card-description {
+        font-size: 0.6875rem;
+        line-height: 1.3;
+        -webkit-line-clamp: 2;
+      }
+
+      .card-specs {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.25rem;
+      }
+
+      .spec {
+        padding: 0.3125rem;
+        font-size: 0.625rem;
+        gap: 0.1875rem;
+      }
+
       .spec i {
-        font-size: var(--font-size-base);
+        font-size: 0.75rem;
+      }
+
+      .card-amenities {
+        gap: 0.1875rem;
+      }
+
+      .amenity-tag {
+        padding: 0.1875rem 0.375rem;
+        font-size: 0.5625rem;
+        gap: 0.1875rem;
+      }
+
+      .amenity-tag i {
+        font-size: 0.5625rem;
+      }
+
+      .card-rating {
+        gap: 0.3125rem;
+        font-size: 0.6875rem;
+      }
+
+      .stars i {
+        font-size: 0.625rem;
+      }
+
+      .card-footer {
+        gap: 0.375rem;
+        padding-top: 0.375rem;
+      }
+
+      .card-pricing {
+        padding: 0.5rem;
+        gap: 0.3125rem;
+      }
+
+      .price {
+        font-size: 1rem;
+      }
+
+      .price-label {
+        font-size: 0.625rem;
+      }
+
+      .card-actions {
+        gap: 0.3125rem;
+      }
+
+      .btn {
+        padding: 0.4375rem 0.625rem;
+        font-size: 0.6875rem;
+        gap: 0.1875rem;
+      }
+
+      .btn i {
+        font-size: 0.6875rem;
       }
     }
   `]

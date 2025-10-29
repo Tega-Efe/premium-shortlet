@@ -1,12 +1,13 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TypingEffectDirective } from '../../directives/typing-effect.directive';
+import { TypingEffectDirective } from '../../../core/directives';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-footer',
-  imports: [CommonModule, RouterLink, FormsModule, TypingEffectDirective],
+  imports: [CommonModule, RouterLink, FormsModule, TypingEffectDirective, ModalComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './footer.component.html',
   styles: [`
@@ -195,7 +196,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
     .newsletter-form {
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-xs);
+      gap: var(--spacing-sm);
       margin-top: var(--spacing-xs);
     }
 
@@ -310,6 +311,7 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
       text-decoration: none;
       font-size: 0.8125rem;
       transition: color var(--transition-fast);
+      cursor: pointer;
     }
 
     .legal-link:hover {
@@ -441,9 +443,211 @@ import { TypingEffectDirective } from '../../directives/typing-effect.directive'
         gap: 0.625rem;
       }
     }
+
+    /* ===== Legal Modal Styles ===== */
+    .legal-modal-content {
+      padding: 1.5rem;
+      color: var(--text-primary);
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .legal-modal-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--color-tan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .legal-effective-date {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .legal-section {
+      margin-bottom: 2rem;
+    }
+
+    .legal-section h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .legal-section h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 1rem 0 0.5rem 0;
+    }
+
+    .legal-section p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .legal-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .legal-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .legal-list li i {
+      color: var(--primary);
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    .contact-info {
+      background: var(--surface-light);
+      padding: 1.25rem;
+      border-radius: var(--radius-lg);
+      border-left: 4px solid var(--primary);
+      margin-top: 1rem;
+    }
+
+    .contact-info p {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .contact-info p:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-info i {
+      color: var(--primary);
+      width: 20px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--surface-light);
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card i {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0.5rem 0;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .warning-text {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      margin-top: 1rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .warning-text i {
+      color: #ffc107;
+      margin-top: 0.25rem;
+      flex-shrink: 0;
+    }
+
+    /* Scrollbar styling for legal modals */
+    .legal-modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .legal-modal-content::-webkit-scrollbar-track {
+      background: var(--surface);
+      border-radius: 4px;
+    }
+
+    .legal-modal-content::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    .legal-modal-content::-webkit-scrollbar-thumb:hover {
+      background: var(--color-tan);
+    }
+
+    @media (max-width: 768px) {
+      .legal-modal-content {
+        padding: 1rem;
+      }
+
+      .legal-modal-title {
+        font-size: 1.5rem;
+      }
+
+      .legal-section h3 {
+        font-size: 1.1rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   `]
 })
 export class FooterComponent {
+  @ViewChild('aboutModal') aboutModal!: ModalComponent;
+  @ViewChild('privacyModal') privacyModal!: ModalComponent;
+  @ViewChild('termsModal') termsModal!: ModalComponent;
+  @ViewChild('cookieModal') cookieModal!: ModalComponent;
+
   currentYear = new Date().getFullYear();
   newsletterEmail = '';
   newsletterSubmitting = signal<boolean>(false);
@@ -464,5 +668,46 @@ export class FooterComponent {
       this.newsletterSubmitting.set(false);
       // In a real app, you would show a success toast here
     }, 1500);
+  }
+
+  // Modal methods
+  openAboutModal(): void {
+    if (this.aboutModal) {
+      this.aboutModal.openModal('About Sweet Homes');
+    }
+  }
+
+  closeAboutModal(): void {
+    // Modal closes automatically
+  }
+
+  openPrivacyModal(): void {
+    if (this.privacyModal) {
+      this.privacyModal.openModal('Privacy Policy');
+    }
+  }
+
+  closePrivacyModal(): void {
+    // Modal closes automatically
+  }
+
+  openTermsModal(): void {
+    if (this.termsModal) {
+      this.termsModal.openModal('Terms of Service');
+    }
+  }
+
+  closeTermsModal(): void {
+    // Modal closes automatically
+  }
+
+  openCookieModal(): void {
+    if (this.cookieModal) {
+      this.cookieModal.openModal('Cookie Policy');
+    }
+  }
+
+  closeCookieModal(): void {
+    // Modal closes automatically
   }
 }

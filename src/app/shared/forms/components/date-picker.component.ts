@@ -94,14 +94,22 @@ import { CommonModule } from '@angular/common';
     .date-trigger {
       width: 100%;
       padding: 0.75rem;
-      background: var(--bg-primary, white);
-      border: 1px solid #d1d5db;
-      border-radius: 0.375rem;
+      border: 2px solid transparent;
+      border-radius: var(--border-radius, 0.5rem);
+      background-image: 
+        linear-gradient(var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, 
+          var(--color-burgundy) 0%, 
+          var(--color-tan) 50%, 
+          var(--color-sage) 100%
+        );
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
       display: flex;
       align-items: center;
       gap: 0.75rem;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
       font-size: 1rem;
       text-align: left;
       position: relative;
@@ -109,13 +117,27 @@ import { CommonModule } from '@angular/common';
     }
 
     .date-trigger:hover:not(.disabled) {
-      border-color: var(--color-burgundy, #7D1935);
-      background: rgba(125, 25, 53, 0.02);
+      background-image: 
+        linear-gradient(var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, 
+          var(--color-burgundy) 0%, 
+          var(--color-tan) 30%,
+          var(--color-sage) 60%,
+          var(--color-burgundy) 100%
+        );
+      box-shadow: 0 2px 8px rgba(125, 25, 53, 0.1);
     }
 
     .date-trigger.open,
     .date-trigger.has-value {
-      border-color: var(--color-burgundy, #7D1935);
+      background-image: 
+        linear-gradient(var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, 
+          var(--color-burgundy) 0%, 
+          var(--color-tan) 30%,
+          var(--color-sage) 60%,
+          var(--color-burgundy) 100%
+        );
     }
 
     .date-trigger.open {
@@ -123,9 +145,38 @@ import { CommonModule } from '@angular/common';
     }
 
     .date-trigger.disabled {
-      background-color: #f3f4f6;
       cursor: not-allowed;
       opacity: 0.6;
+    }
+
+    /* Dark mode gradient borders */
+    :root.dark-theme .date-trigger,
+    [data-theme='dark'] .date-trigger {
+      background-color: var(--bg-secondary);
+      background-image: 
+        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+        linear-gradient(135deg, 
+          #B84D66 0%,
+          #E8C4A0 50%,
+          #C9D4C7 100%
+        );
+    }
+
+    :root.dark-theme .date-trigger:hover:not(.disabled),
+    :root.dark-theme .date-trigger.open,
+    :root.dark-theme .date-trigger.has-value,
+    [data-theme='dark'] .date-trigger:hover:not(.disabled),
+    [data-theme='dark'] .date-trigger.open,
+    [data-theme='dark'] .date-trigger.has-value {
+      background-color: var(--bg-secondary);
+      background-image: 
+        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
+        linear-gradient(135deg, 
+          #B84D66 0%,
+          #E8C4A0 30%,
+          #C9D4C7 60%,
+          #B84D66 100%
+        );
     }
 
     .date-icon {
@@ -531,7 +582,9 @@ export class DatePickerComponent implements ControlValueAccessor {
     
     const date = new Date(day.date);
     this.selectedDate.set(date);
-    this.onChange(date.toISOString().split('T')[0]);
+    // Format date in local timezone to avoid off-by-one errors
+    const formattedDate = this.formatDateToString(date);
+    this.onChange(formattedDate);
     this.closeCalendar();
   }
 
@@ -542,7 +595,9 @@ export class DatePickerComponent implements ControlValueAccessor {
     if (!this.isDateDisabled(today)) {
       this.selectedDate.set(today);
       this.currentMonth.set(new Date(today.getFullYear(), today.getMonth(), 1));
-      this.onChange(today.toISOString().split('T')[0]);
+      // Format date in local timezone to avoid off-by-one errors
+      const formattedDate = this.formatDateToString(today);
+      this.onChange(formattedDate);
       this.closeCalendar();
     }
   }
@@ -551,6 +606,14 @@ export class DatePickerComponent implements ControlValueAccessor {
     this.selectedDate.set(null);
     this.onChange('');
     this.closeCalendar();
+  }
+
+  // Helper method to format date as YYYY-MM-DD in local timezone
+  private formatDateToString(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   private isDateDisabled(date: Date): boolean {

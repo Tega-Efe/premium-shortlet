@@ -114,8 +114,7 @@ import { fadeInOut, slideInRight } from '../../../core/animations';
 
     @media (max-width: 768px) {
       .toast-container {
-        top: auto;
-        bottom: 1rem;
+        top: 1rem;
         left: 1rem;
         right: 1rem;
         max-width: none;

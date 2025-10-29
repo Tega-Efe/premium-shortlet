@@ -190,6 +190,7 @@
                       <thead>
                         <tr>
                           <th><i class="fas fa-user"></i> Guest Name</th>
+                          <th><i class="fas fa-building"></i> Apartment</th>
                           <th><i class="fas fa-moon"></i> Nights</th>
                           <th><i class="fas fa-naira-sign"></i> Total</th>
                           <th><i class="fas fa-cog"></i> Actions</th>
@@ -209,6 +210,12 @@
                                     <span class="guest-email">{{ booking.guestInfo.email }}</span>
                                   </div>
                                 </div>
+                              </td>
+                              <td>
+                                <span class="apartment-badge">
+                                  <i class="fas fa-building"></i>
+                                  Apartment {{ getApartmentNumber(booking.apartmentId) }}
+                                </span>
                               </td>
                               <td>
                                 <span class="nights-badge">
@@ -248,11 +255,11 @@
                 </div>
 
                 <!-- Pagination -->
-                @if (pendingTotalPages() > 1) {
-                  <div class="pagination-container">
-                    <div class="pagination-info">
-                      Showing {{ ((pendingPage() - 1) * itemsPerPage) + 1 }} to {{ Math.min(pendingPage() * itemsPerPage, pendingBookings().length) }} of {{ pendingBookings().length }} entries
-                    </div>
+                <div class="pagination-container">
+                  <div class="pagination-info">
+                    Showing {{ ((pendingPage() - 1) * itemsPerPage) + 1 }} to {{ Math.min(pendingPage() * itemsPerPage, pendingBookings().length) }} of {{ pendingBookings().length }} entries
+                  </div>
+                  @if (pendingTotalPages() > 1) {
                     <div class="pagination-controls">
                       <button 
                         class="pagination-btn"
@@ -282,8 +289,8 @@
                         <i class="fas fa-chevron-right"></i>
                       </button>
                     </div>
-                  </div>
-                }
+                  }
+                </div>
               </div>
             } @else {
               <div class="empty-state">
@@ -381,11 +388,11 @@
                 </div>
 
                 <!-- Pagination -->
-                @if (allBookingsTotalPages() > 1) {
-                  <div class="pagination-container">
-                    <div class="pagination-info">
-                      Showing {{ ((allBookingsPage() - 1) * itemsPerPage) + 1 }} to {{ Math.min(allBookingsPage() * itemsPerPage, allBookings().length) }} of {{ allBookings().length }} entries
-                    </div>
+                <div class="pagination-container">
+                  <div class="pagination-info">
+                    Showing {{ ((allBookingsPage() - 1) * itemsPerPage) + 1 }} to {{ Math.min(allBookingsPage() * itemsPerPage, allBookings().length) }} of {{ allBookings().length }} entries
+                  </div>
+                  @if (allBookingsTotalPages() > 1) {
                     <div class="pagination-controls">
                       <button 
                         class="pagination-btn"
@@ -415,8 +422,8 @@
                         <i class="fas fa-chevron-right"></i>
                       </button>
                     </div>
-                  </div>
-                }
+                  }
+                </div>
               </div>
             } @else {
               <div class="empty-state">
@@ -811,6 +818,30 @@
                       </div>
                     </div>
 
+                    <!-- Images Section (Optional - Storage Disabled) -->
+                    <div class="form-section">
+                      <h4 class="section-title">
+                        <i class="fas fa-images"></i>
+                        Property Images (Optional)
+                      </h4>
+                      
+                      <div class="form-group">
+                        <label for="images" class="form-label">Image URLs (one per line)</label>
+                        <textarea
+                          id="images"
+                          class="form-textarea"
+                          [(ngModel)]="imagesText"
+                          name="images"
+                          rows="4"
+                          placeholder="https://example.com/image1.jpg&#10;https://example.com/image2.jpg&#10;https://example.com/image3.jpg"
+                        ></textarea>
+                        <small class="form-hint">
+                          <i class="fas fa-info-circle"></i>
+                          Enter each image URL on a new line. Image upload from device is disabled (Firebase Storage not configured).
+                        </small>
+                      </div>
+                    </div>
+
                     <!-- Location Section -->
                     <div class="form-section">
                       <h4 class="section-title">
@@ -857,6 +888,54 @@
                             required
                           />
                         </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="country" class="form-label">Country</label>
+                        <input
+                          type="text"
+                          id="country"
+                          class="form-input"
+                          [(ngModel)]="listingData.location!.country"
+                          name="country"
+                          placeholder="Nigeria"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <!-- Additional Details Section -->
+                    <div class="form-section">
+                      <h4 class="section-title">
+                        <i class="fas fa-star"></i>
+                        Additional Details (Optional)
+                      </h4>
+                      
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label for="floors" class="form-label">Number of Floors</label>
+                          <input
+                            type="number"
+                            id="floors"
+                            class="form-input"
+                            [(ngModel)]="listingData.specifications!.floors"
+                            name="floors"
+                            min="1"
+                            placeholder="1"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-label">
+                          <input
+                            type="checkbox"
+                            [(ngModel)]="listingData.featured"
+                            name="featured"
+                            style="margin-right: 0.5rem;"
+                          />
+                          Featured Listing (Show prominently on homepage)
+                        </label>
                       </div>
                     </div>
 
@@ -1090,10 +1169,10 @@
                     class="btn-toggle"
                     [class.btn-make-unavailable]="apartment.availability.isAvailable"
                     [class.btn-make-available]="!apartment.availability.isAvailable"
-                    [disabled]="isTogglingAvailability()"
+                    [disabled]="isTogglingApartment(apartment.id!)"
                     (click)="toggleApartmentAvailabilityById(apartment.id!, apartment.availability.isAvailable)"
                   >
-                    @if (isTogglingAvailability()) {
+                    @if (isTogglingApartment(apartment.id!)) {
                       <i class="fas fa-spinner fa-spin"></i>
                     } @else {
                       <i [class]="apartment.availability.isAvailable ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
@@ -1109,6 +1188,87 @@
               <p>No apartments found. Please add an apartment first.</p>
             </div>
           }
+        </div>
+      </app-modal>
+
+      <!-- Hide Duration Modal -->
+      <app-modal
+        #hideDurationModal
+        [size]="'md'"
+        (modalClose)="closeHideDurationModal()"
+      >
+        <div class="hide-duration-modal">
+          <p class="modal-description">Choose how you want to hide this apartment from the booking page.</p>
+          
+          <div class="hide-options-container">
+            <!-- Option 1: Hide Indefinitely -->
+            <div class="hide-option">
+              <h4><i class="fas fa-ban"></i> Hide Now</h4>
+              <p class="option-description">Hide until manually shown again.</p>
+              <button
+                class="btn btn-secondary btn-block"
+                (click)="hideApartmentImmediately()"
+              >
+                <i class="fas fa-eye-slash"></i> Hide Now
+              </button>
+            </div>
+
+            <div class="option-divider">
+              <span>OR</span>
+            </div>
+
+            <!-- Option 2: Hide for Duration -->
+            <div class="hide-option">
+              <h4><i class="fas fa-clock"></i> Set Duration</h4>
+              <p class="option-description">Auto-show after specified days.</p>
+              
+              <div class="duration-form">
+                <div class="form-group">
+                  <label for="hideDays">Number of Days</label>
+                  <input
+                    type="number"
+                    id="hideDays"
+                    class="form-control"
+                    [ngModel]="hideDurationDays()"
+                    (ngModelChange)="hideDurationDays.set($event)"
+                    min="1"
+                    max="365"
+                    placeholder="Enter days (1-365)"
+                  />
+                  @if (hideDurationDays() > 0) {
+                    <small class="form-text">
+                      <i class="fas fa-calendar-check"></i> 
+                      Will become available again on: <strong>{{ calculateHiddenUntilDate() }}</strong>
+                    </small>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <label for="hideReason">Reason (Optional)</label>
+                  <input
+                    type="text"
+                    id="hideReason"
+                    class="form-control"
+                    [ngModel]="hideReason()"
+                    (ngModelChange)="hideReason.set($event)"
+                    placeholder="e.g., Maintenance, Renovation, Cleaning"
+                  />
+                </div>
+
+                <button
+                  class="btn btn-primary btn-block"
+                  [disabled]="hideDurationDays() < 1 || hideDurationDays() > 365"
+                  (click)="hideApartmentForDuration()"
+                >
+                  <i class="fas fa-clock"></i> Hide for {{ hideDurationDays() }} {{ hideDurationDays() === 1 ? 'Day' : 'Days' }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-outline btn-block mt-3" (click)="closeHideDurationModal()">
+            <i class="fas fa-times"></i> Cancel
+          </button>
         </div>
       </app-modal>
     </div>

@@ -2,7 +2,27 @@
  * Price calculation utilities for bookings
  */
 
-import { Pricing, Discount, BookingPricing, PriceBreakdown } from '../interfaces';
+import { Pricing, Discount } from '../interfaces';
+
+// Note: Complex booking pricing types (BookingPricing, PriceBreakdown) removed
+// These were part of the unused booking.interface.ts
+// The methods below are preserved but typed differently
+
+// Temporary interfaces for complex pricing (not implemented yet)
+interface BookingPricing {
+  basePrice: number;
+  totalPrice: number;
+  currency: string;
+  breakdown?: PriceBreakdown;
+}
+
+interface PriceBreakdown {
+  accommodationCost: number;
+  serviceFee: number;
+  cleaningFee: number;
+  tax: number;
+  discount?: number;
+}
 
 export class PriceUtils {
   private static readonly SERVICE_FEE_PERCENTAGE = 0.10; // 10%

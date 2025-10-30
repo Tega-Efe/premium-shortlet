@@ -261,7 +261,7 @@ import { NotificationService } from '../../services/notification.service';
       padding: 0.625rem 0.875rem;
       border: 2px solid transparent;
       border-radius: var(--radius-md);
-      font-size: 0.875rem;
+      font-size: 1rem; /* 16px to prevent iOS auto-zoom */
       color: var(--text-primary);
       background-image: 
         linear-gradient(var(--bg-primary), var(--bg-primary)),

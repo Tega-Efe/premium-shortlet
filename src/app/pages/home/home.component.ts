@@ -10,7 +10,6 @@ import { Apartment } from '../../core/interfaces';
 import { CardComponent } from '../../shared/components/card/card.component';
 // import { FilterComponent } from '../../shared/components/filter/filter.component'; // COMMENTED OUT: Not used in single-apartment mode
 import { ModalComponent } from '../../shared/components/modal/modal.component';
-import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { DynamicFormComponent, FormSubmitEvent } from '../../shared/forms';
 import { simplifiedBookingFormConfig } from '../../shared/forms/simplified-form-configs';
 import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scroll.directive';
@@ -23,7 +22,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     CardComponent, 
     // FilterComponent,  // COMMENTED OUT: Not used in single-apartment mode
     ModalComponent,
-    LoaderComponent,
     DynamicFormComponent,
     AnimateOnScrollDirective
   ],
@@ -248,14 +246,37 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     /* Loading */
-    .loading-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .apartments-loading {
+      position: relative;
+      margin: 0 auto 2rem;
       min-height: 400px;
       background: var(--bg-secondary);
-      border-radius: 0.875rem;
-      box-shadow: 0 2px 12px rgba(125, 25, 53, 0.08);
+      border-radius: var(--radius-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      box-shadow: 0 8px 32px rgba(125, 25, 53, 0.12);
+    }
+
+    .apartments-loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(125, 25, 53, 0.1);
+      border-top-color: var(--color-burgundy, #7D1935);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .apartments-loading-text {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      font-weight: 500;
     }
 
     /* Apartments Grid */

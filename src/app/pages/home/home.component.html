@@ -79,8 +79,9 @@
 
             <!-- Loading State -->
             @if (isLoading()) {
-              <div class="loading-container" appAnimateOnScroll="fade-in">
-                <app-loader />
+              <div class="apartments-loading">
+                <div class="apartments-loading-spinner"></div>
+                <p class="apartments-loading-text">Loading apartments...</p>
               </div>
             }
 

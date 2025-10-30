@@ -236,7 +236,7 @@ export class AdminAuthService {
    * Stop all session monitoring
    */
   private stopSessionMonitoring(): void {
-    // Unsubscribe from session snapshot
+    // Unsubscribe from session snapshot FIRST to prevent triggers
     if (this.sessionUnsubscribe) {
       this.sessionUnsubscribe();
       this.sessionUnsubscribe = null;
@@ -251,12 +251,16 @@ export class AdminAuthService {
       this.activitySubscription = null;
     }
 
-    // Clean up session in Firestore
-    this.cleanupSession();
+    // DON'T clean up session in Firestore when being forced out by another device
+    // Only clean up if we're the active session
+    if (!this.isLoggingOut) {
+      this.cleanupSession();
+    }
   }
 
   /**
    * Clean up session document in Firestore
+   * Only called when this device voluntarily logs out (not when forced out)
    */
   private async cleanupSession(): Promise<void> {
     const user = this.auth.currentUser;
@@ -264,10 +268,18 @@ export class AdminAuthService {
 
     const sessionRef = doc(this.firestore, `admin-sessions/${user.uid}`);
     try {
-      await setDoc(sessionRef, { 
-        isActive: false,
-        sessionId: this.sessionId 
-      }, { merge: true });
+      // First check if we're still the active session
+      const currentSession = await getDoc(sessionRef);
+      const currentData = currentSession.data() as AdminSession | undefined;
+      
+      // Only mark as inactive if we're still the current session
+      // This prevents Device A from interfering when Device B has taken over
+      if (currentData && currentData.sessionId === this.sessionId) {
+        await setDoc(sessionRef, { 
+          isActive: false
+        }, { merge: true });
+      }
+      // If sessionId doesn't match, another device has taken over - don't touch the session
     } catch (error) {
       console.error('Error cleaning up session:', error);
     }
@@ -277,8 +289,28 @@ export class AdminAuthService {
    * Force logout (called when another device logs in)
    */
   private async forceLogout(): Promise<void> {
+    if (this.isLoggingOut) return; // Prevent duplicate calls
+    
     this.isLoggingOut = true; // Set flag to prevent duplicate logouts
-    this.stopSessionMonitoring();
+    
+    // Unsubscribe from session snapshot FIRST to prevent any further triggers
+    if (this.sessionUnsubscribe) {
+      this.sessionUnsubscribe();
+      this.sessionUnsubscribe = null;
+    }
+
+    // Clear inactivity timer
+    this.clearInactivityTimer();
+
+    // Unsubscribe from activity events
+    if (this.activitySubscription) {
+      this.activitySubscription.unsubscribe();
+      this.activitySubscription = null;
+    }
+    
+    // DON'T call stopSessionMonitoring() or cleanupSession() here
+    // The new device has already taken over the session
+    
     try {
       await signOut(this.auth);
       this.router.navigate(['/admin/login'], { 

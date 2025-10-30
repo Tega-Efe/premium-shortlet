@@ -446,22 +446,18 @@ import { ModalComponent } from '../modal/modal.component';
 
     /* ===== Legal Modal Styles ===== */
     .legal-modal-content {
-      padding: 1.5rem;
-      color: var(--text-primary);
       max-height: 70vh;
       overflow-y: auto;
+      padding: 1.5rem;
     }
 
     .legal-modal-title {
-      font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.75rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--color-tan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border-color);
     }
 
     .legal-effective-date {
@@ -480,94 +476,74 @@ import { ModalComponent } from '../modal/modal.component';
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 0.75rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--border);
     }
 
     .legal-section h4 {
       font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin: 1rem 0 0.5rem 0;
+      margin: 1.5rem 0 0.75rem 0;
+      line-height: 1.4;
     }
 
     .legal-section p {
-      color: var(--text-secondary);
       line-height: 1.7;
+      color: var(--text-secondary);
       margin-bottom: 1rem;
+      text-align: justify;
     }
 
     .legal-list {
       list-style: none;
       padding: 0;
-      margin: 1rem 0;
+      margin: 0;
     }
 
     .legal-list li {
       display: flex;
-      align-items: flex-start;
       gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
       color: var(--text-secondary);
-      margin-bottom: 0.75rem;
-      line-height: 1.6;
+      text-align: justify;
     }
 
-    .legal-list li i {
-      color: var(--primary);
-      margin-top: 0.25rem;
-      flex-shrink: 0;
-    }
-
-    .contact-info {
-      background: var(--surface-light);
-      padding: 1.25rem;
-      border-radius: var(--radius-lg);
-      border-left: 4px solid var(--primary);
-      margin-top: 1rem;
-    }
-
-    .contact-info p {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-      color: var(--text-primary);
-    }
-
-    .contact-info p:last-child {
+    .legal-list li:last-child {
       margin-bottom: 0;
     }
 
-    .contact-info i {
-      color: var(--primary);
-      width: 20px;
+    .legal-list li i {
+      color: var(--color-burgundy);
+      margin-top: 0.3rem;
+      flex-shrink: 0;
+      font-size: 0.875rem;
+    }
+
+    .legal-list li strong {
+      display: block;
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
     }
 
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1.25rem;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
     .feature-card {
-      background: var(--surface-light);
-      padding: 1.5rem;
+      padding: 1.25rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
       text-align: center;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
-
-    .feature-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
 
     .feature-card i {
       font-size: 2rem;
-      color: var(--primary);
+      color: var(--color-burgundy);
       margin-bottom: 0.75rem;
     }
 
@@ -575,7 +551,7 @@ import { ModalComponent } from '../modal/modal.component';
       font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin: 0.5rem 0;
+      margin-bottom: 0.5rem;
     }
 
     .feature-card p {
@@ -585,23 +561,61 @@ import { ModalComponent } from '../modal/modal.component';
       line-height: 1.5;
     }
 
+    .contact-info {
+      background: var(--bg-secondary);
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-burgundy);
+    }
+
+    .contact-info p {
+      margin-bottom: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .contact-info p:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-info i {
+      color: var(--color-burgundy);
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    .contact-info strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
     .warning-text {
       display: flex;
       align-items: flex-start;
       gap: 0.75rem;
       background: rgba(255, 193, 7, 0.1);
       border-left: 4px solid #ffc107;
-      padding: 1rem;
+      padding: 1.25rem;
       border-radius: var(--radius-md);
       margin-top: 1rem;
       color: var(--text-primary);
-      line-height: 1.6;
+      line-height: 1.7;
+      text-align: justify;
     }
 
     .warning-text i {
       color: #ffc107;
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
       flex-shrink: 0;
+      font-size: 1.125rem;
+    }
+
+    .warning-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
     /* Scrollbar styling for legal modals */
@@ -610,17 +624,39 @@ import { ModalComponent } from '../modal/modal.component';
     }
 
     .legal-modal-content::-webkit-scrollbar-track {
-      background: var(--surface);
+      background: var(--bg-secondary);
       border-radius: 4px;
     }
 
     .legal-modal-content::-webkit-scrollbar-thumb {
-      background: var(--primary);
+      background: var(--color-burgundy);
       border-radius: 4px;
     }
 
     .legal-modal-content::-webkit-scrollbar-thumb:hover {
       background: var(--color-tan);
+    }
+
+    /* ===== DARK MODE STYLES ===== */
+    :host-context(.dark-theme) {
+      .input-icon {
+        color: var(--color-tan);
+      }
+
+      .newsletter-input {
+        background: rgba(250, 247, 242, 0.1);
+        border-color: rgba(212, 165, 116, 0.4);
+        color: var(--text-primary);
+      }
+
+      .newsletter-input::placeholder {
+        color: rgba(212, 165, 116, 0.6);
+      }
+
+      .newsletter-input:focus {
+        border-color: var(--color-tan);
+        background: rgba(250, 247, 242, 0.15);
+      }
     }
 
     @media (max-width: 768px) {

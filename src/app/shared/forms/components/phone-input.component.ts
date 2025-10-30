@@ -63,7 +63,8 @@ import { CommonModule } from '@angular/common';
 
     .phone-prefix {
       padding: 0.75rem 0 0.75rem 0.75rem;
-      background: transparent;
+      /* Ensure prefix uses the same fill as the input */
+      background-color: var(--bg-primary);
       color: var(--text-primary);
       font-weight: var(--font-semibold, 600);
       font-size: 1rem;
@@ -77,8 +78,10 @@ import { CommonModule } from '@angular/common';
       border: none;
       font-size: 1rem;
       outline: none;
-      background: transparent;
+      /* Match input fill with prefix/wrapper */
+      background-color: var(--bg-primary);
       color: var(--text-primary);
+      caret-color: var(--text-primary);
     }
 
     .phone-input::placeholder {
@@ -107,6 +110,14 @@ import { CommonModule } from '@angular/common';
           #E8C4A0 50%,
           #C9D4C7 100%
         );
+    }
+
+    /* Dark theme: ensure prefix and input share the same fill */
+    :root.dark-theme .phone-prefix,
+    [data-theme='dark'] .phone-prefix,
+    :root.dark-theme .phone-input,
+    [data-theme='dark'] .phone-input {
+      background-color: var(--bg-secondary);
     }
 
     :root.dark-theme .phone-input-wrapper:focus-within,

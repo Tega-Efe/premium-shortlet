@@ -1,0 +1,394 @@
+import { Injectable, signal, inject } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { 
+  Auth, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged,
+  User,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
+  UserCredential
+} from '@angular/fire/auth';
+import { 
+  Firestore, 
+  doc, 
+  setDoc, 
+  getDoc, 
+  onSnapshot,
+  serverTimestamp,
+  Timestamp
+} from '@angular/fire/firestore';
+import { BehaviorSubject, Observable, fromEvent, merge, Subscription } from 'rxjs';
+import { filter, debounceTime } from 'rxjs/operators';
+
+interface AdminSession {
+  userId: string;
+  sessionId: string;
+  deviceInfo: string;
+  lastActivity: Timestamp | any;
+  loginTime: Timestamp | any;
+  isActive: boolean;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminAuthService {
+  private firestore = inject(Firestore);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+  
+  isAuthenticated = signal<boolean>(false);
+  currentUser = signal<User | null>(null);
+  isLoading = signal<boolean>(true);
+
+  // Session management
+  private sessionId: string = this.generateSessionId();
+  private sessionUnsubscribe: (() => void) | null = null;
+  private inactivityTimer: any = null;
+  private activitySubscription: Subscription | null = null;
+  private routeSubscription: Subscription | null = null;
+  
+  // Configuration
+  private readonly INACTIVITY_TIMEOUT = 15 * 60 * 1000; // 15 minutes in milliseconds
+  private readonly SESSION_CHECK_INTERVAL = 30 * 1000; // Check every 30 seconds
+
+  constructor(
+    private auth: Auth,
+    private router: Router
+  ) {
+    this.initAuthStateListener();
+    this.initRouteListener();
+  }
+
+  /**
+   * Initialize authentication state listener
+   */
+  private initAuthStateListener(): void {
+    onAuthStateChanged(this.auth, (user) => {
+      this.currentUser.set(user);
+      this.currentUserSubject.next(user);
+      this.isAuthenticated.set(!!user);
+      this.isLoading.set(false);
+
+      if (user) {
+        this.startSessionMonitoring(user);
+      } else {
+        this.stopSessionMonitoring();
+      }
+    });
+  }
+
+  /**
+   * Initialize route listener to logout when leaving admin area
+   */
+  private initRouteListener(): void {
+    this.routeSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      const url = event.urlAfterRedirects || event.url;
+      
+      // If user navigates away from admin area while logged in, logout
+      if (this.isAuthenticated() && !url.startsWith('/admin')) {
+        console.log('🚪 User navigated away from admin area - logging out');
+        this.logout();
+      }
+    });
+  }
+
+  /**
+   * Generate unique session ID
+   */
+  private generateSessionId(): string {
+    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  /**
+   * Get device information for session tracking
+   */
+  private getDeviceInfo(): string {
+    const userAgent = navigator.userAgent;
+    const platform = navigator.platform;
+    return `${platform} - ${userAgent.substring(0, 100)}`;
+  }
+
+  /**
+   * Start monitoring session for single-device login and inactivity
+   */
+  private async startSessionMonitoring(user: User): Promise<void> {
+    const sessionRef = doc(this.firestore, `admin-sessions/${user.uid}`);
+
+    // Create or update session in Firestore
+    const sessionData: AdminSession = {
+      userId: user.uid,
+      sessionId: this.sessionId,
+      deviceInfo: this.getDeviceInfo(),
+      lastActivity: serverTimestamp(),
+      loginTime: serverTimestamp(),
+      isActive: true
+    };
+
+    await setDoc(sessionRef, sessionData);
+
+    // Listen for session changes (detect if another device logs in)
+    this.sessionUnsubscribe = onSnapshot(sessionRef, (snapshot) => {
+      const data = snapshot.data() as AdminSession;
+      
+      if (data && data.sessionId !== this.sessionId) {
+        console.log('🚨 Another device has logged in - logging out this session');
+        alert('Your session has been terminated because you logged in from another device.');
+        this.forceLogout();
+      }
+    });
+
+    // Start inactivity monitoring
+    this.startInactivityMonitoring();
+  }
+
+  /**
+   * Start monitoring user activity for auto-logout
+   */
+  private startInactivityMonitoring(): void {
+    // Clear any existing timer
+    this.clearInactivityTimer();
+
+    // Activity events to monitor
+    const activityEvents = merge(
+      fromEvent(document, 'mousedown'),
+      fromEvent(document, 'keydown'),
+      fromEvent(document, 'scroll'),
+      fromEvent(document, 'touchstart')
+    ).pipe(debounceTime(1000)); // Debounce to avoid too many updates
+
+    // Subscribe to activity events
+    this.activitySubscription = activityEvents.subscribe(() => {
+      this.updateLastActivity();
+      this.resetInactivityTimer();
+    });
+
+    // Set initial inactivity timer
+    this.resetInactivityTimer();
+  }
+
+  /**
+   * Update last activity timestamp in Firestore
+   */
+  private async updateLastActivity(): Promise<void> {
+    const user = this.getCurrentUser();
+    if (!user) return;
+
+    const sessionRef = doc(this.firestore, `admin-sessions/${user.uid}`);
+    try {
+      await setDoc(sessionRef, { 
+        lastActivity: serverTimestamp(),
+        isActive: true 
+      }, { merge: true });
+    } catch (error) {
+      console.error('Error updating activity:', error);
+    }
+  }
+
+  /**
+   * Reset inactivity timer
+   */
+  private resetInactivityTimer(): void {
+    this.clearInactivityTimer();
+    
+    this.inactivityTimer = setTimeout(() => {
+      console.log('⏰ Inactivity timeout - logging out');
+      alert('You have been logged out due to inactivity.');
+      this.logout();
+    }, this.INACTIVITY_TIMEOUT);
+  }
+
+  /**
+   * Clear inactivity timer
+   */
+  private clearInactivityTimer(): void {
+    if (this.inactivityTimer) {
+      clearTimeout(this.inactivityTimer);
+      this.inactivityTimer = null;
+    }
+  }
+
+  /**
+   * Stop all session monitoring
+   */
+  private stopSessionMonitoring(): void {
+    // Unsubscribe from session snapshot
+    if (this.sessionUnsubscribe) {
+      this.sessionUnsubscribe();
+      this.sessionUnsubscribe = null;
+    }
+
+    // Clear inactivity timer
+    this.clearInactivityTimer();
+
+    // Unsubscribe from activity events
+    if (this.activitySubscription) {
+      this.activitySubscription.unsubscribe();
+      this.activitySubscription = null;
+    }
+
+    // Clean up session in Firestore
+    this.cleanupSession();
+  }
+
+  /**
+   * Clean up session document in Firestore
+   */
+  private async cleanupSession(): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) return;
+
+    const sessionRef = doc(this.firestore, `admin-sessions/${user.uid}`);
+    try {
+      await setDoc(sessionRef, { 
+        isActive: false,
+        sessionId: this.sessionId 
+      }, { merge: true });
+    } catch (error) {
+      console.error('Error cleaning up session:', error);
+    }
+  }
+
+  /**
+   * Force logout (called when another device logs in)
+   */
+  private async forceLogout(): Promise<void> {
+    this.stopSessionMonitoring();
+    try {
+      await signOut(this.auth);
+      this.router.navigate(['/admin/login'], { 
+        queryParams: { reason: 'session-terminated' } 
+      });
+    } catch (error) {
+      console.error('Force logout error:', error);
+    }
+  }
+
+  /**
+   * Login with email and password
+   * @param email - Admin email
+   * @param password - Admin password
+   * @param rememberMe - Whether to persist session across browser restarts
+   */
+  async login(email: string, password: string, rememberMe: boolean = false): Promise<UserCredential> {
+    try {
+      // Set persistence based on remember me
+      const persistence = rememberMe ? browserLocalPersistence : browserSessionPersistence;
+      await setPersistence(this.auth, persistence);
+
+      // Sign in
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      
+      // Session will be created automatically by onAuthStateChanged listener
+      
+      return userCredential;
+    } catch (error: any) {
+      throw this.handleAuthError(error);
+    }
+  }
+
+  /**
+   * Logout current admin
+   */
+  async logout(): Promise<void> {
+    try {
+      this.stopSessionMonitoring();
+      await signOut(this.auth);
+      this.router.navigate(['/admin/login']);
+    } catch (error: any) {
+      console.error('Logout error:', error);
+      throw new Error('Failed to logout. Please try again.');
+    }
+  }
+
+  /**
+   * Cleanup when service is destroyed
+   */
+  ngOnDestroy(): void {
+    this.stopSessionMonitoring();
+    
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Check if user is authenticated
+   */
+  isLoggedIn(): boolean {
+    return this.isAuthenticated();
+  }
+
+  /**
+   * Get current user
+   */
+  getCurrentUser(): User | null {
+    return this.currentUser();
+  }
+
+  /**
+   * Get current user email
+   */
+  getCurrentUserEmail(): string | null {
+    return this.currentUser()?.email || null;
+  }
+
+  /**
+   * Handle authentication errors
+   */
+  private handleAuthError(error: any): Error {
+    let message = 'An error occurred during authentication.';
+
+    switch (error.code) {
+      case 'auth/invalid-email':
+        message = 'Invalid email address format.';
+        break;
+      case 'auth/user-disabled':
+        message = 'This account has been disabled.';
+        break;
+      case 'auth/user-not-found':
+        message = 'Invalid email or password.';
+        break;
+      case 'auth/wrong-password':
+        message = 'Invalid email or password.';
+        break;
+      case 'auth/invalid-credential':
+        message = 'Invalid email or password.';
+        break;
+      case 'auth/too-many-requests':
+        message = 'Too many failed attempts. Please try again later.';
+        break;
+      case 'auth/network-request-failed':
+        message = 'Network error. Please check your connection.';
+        break;
+      case 'auth/operation-not-allowed':
+        message = 'Email/password authentication is not enabled.';
+        break;
+      default:
+        message = error.message || 'Authentication failed. Please try again.';
+    }
+
+    return new Error(message);
+  }
+
+  /**
+   * Wait for authentication state to be initialized
+   */
+  async waitForAuthInit(): Promise<void> {
+    if (!this.isLoading()) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      const unsubscribe = onAuthStateChanged(this.auth, () => {
+        unsubscribe();
+        resolve();
+      });
+    });
+  }
+}

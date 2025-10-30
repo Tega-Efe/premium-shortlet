@@ -28,12 +28,11 @@
         <span>Our Apartment</span>
       </a>
       <a 
-        routerLink="/admin" 
-        routerLinkActive="active"
-        class="nav-link"
+        (click)="openAboutModal()"
+        class="nav-link clickable"
       >
-        <i class="fas fa-shield-halved"></i>
-        <span>Admin</span>
+        <i class="fas fa-info-circle"></i>
+        <span>About</span>
       </a>
       
       <!-- Theme Toggle -->
@@ -92,13 +91,11 @@
         <span>Our Apartment</span>
       </a>
       <a 
-        routerLink="/admin" 
-        routerLinkActive="active"
-        class="nav-link"
-        (click)="closeMobileMenu()"
+        (click)="openAboutModal(); closeMobileMenu()"
+        class="nav-link clickable"
       >
-        <i class="fas fa-shield-halved"></i>
-        <span>Admin Dashboard</span>
+        <i class="fas fa-info-circle"></i>
+        <span>About</span>
       </a>
       
       <!-- CTA Button - COMMENTED OUT: Not needed for single-apartment mode -->
@@ -116,3 +113,85 @@
 @if (mobileMenuOpen()) {
   <div class="mobile-backdrop" (click)="closeMobileMenu()"></div>
 }
+
+<!-- About Modal -->
+<app-modal
+  #aboutModal
+  [size]="'lg'"
+  (modalClose)="closeAboutModal()"
+>
+  <div class="legal-modal-content">
+    <h2 class="legal-modal-title">About Sweet Homes</h2>
+    
+    <section class="legal-section">
+      <h3>Our Story</h3>
+      <p>
+        Sweet Homes was founded with a simple vision: to revolutionize the short-term rental experience in Lagos. 
+        We understand that finding quality accommodation that feels like home can be challenging, especially when 
+        you're visiting a new city for business or pleasure.
+      </p>
+      <p>
+        Our premium two-bedroom apartment in Victoria Island represents our commitment to excellence. Every detail 
+        has been carefully curated to ensure you have a comfortable, luxurious, and memorable stay.
+      </p>
+    </section>
+
+    <section class="legal-section">
+      <h3>What We Offer</h3>
+      <ul class="legal-list">
+        <li><i class="fas fa-check"></i> <strong>Prime Location:</strong> Located in the heart of Victoria Island, Lagos, with easy access to business districts, shopping centers, and entertainment venues.</li>
+        <li><i class="fas fa-check"></i> <strong>Luxury Amenities:</strong> Fully furnished apartments with modern appliances, high-speed internet, air conditioning, and premium bedding.</li>
+        <li><i class="fas fa-check"></i> <strong>Flexible Booking:</strong> Whether you need accommodation for a few days or several months, we offer flexible booking options to suit your needs.</li>
+        <li><i class="fas fa-check"></i> <strong>24/7 Support:</strong> Our dedicated team is available round the clock to ensure your stay is seamless and comfortable.</li>
+        <li><i class="fas fa-check"></i> <strong>Safety & Security:</strong> We prioritize your safety with secure premises, CCTV surveillance, and verified booking processes.</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h3>Our Mission</h3>
+      <p>
+        To provide exceptional short-term rental experiences that combine the comfort of home with the luxury 
+        of a five-star hotel. We strive to be the trusted choice for business travelers, tourists, and anyone 
+        seeking quality accommodation in Lagos.
+      </p>
+    </section>
+
+    <section class="legal-section">
+      <h3>Why Choose Us?</h3>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fas fa-star"></i>
+          <h4>Premium Quality</h4>
+          <p>Carefully maintained properties with luxury finishes and modern amenities.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-shield-alt"></i>
+          <h4>Secure Booking</h4>
+          <p>Safe and transparent booking process with instant confirmation.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-headset"></i>
+          <h4>Excellent Support</h4>
+          <p>Dedicated customer service team available 24/7 for your needs.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-hand-holding-heart"></i>
+          <h4>Personalized Service</h4>
+          <p>We treat every guest as family and cater to your specific requirements.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="legal-section">
+      <h3>Contact Us</h3>
+      <p>
+        Have questions or special requests? We'd love to hear from you!
+      </p>
+      <div class="contact-info">
+        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> admin@sweethomes.com</p>
+        <p><i class="fas fa-phone"></i> <strong>Phone:</strong> +234 809 123 4567</p>
+        <p><i class="fas fa-location-dot"></i> <strong>Location:</strong> Victoria Island, Lagos, Nigeria</p>
+      </div>
+    </section>
+  </div>
+</app-modal>

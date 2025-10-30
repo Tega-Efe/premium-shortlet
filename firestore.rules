@@ -16,6 +16,11 @@ service cloud.firestore {
       allow read: if true; // Anyone can check availability
       allow write: if true; // For now, allow writes (should be restricted to admin in production)
     }
+
+    // Admin Sessions collection - only authenticated admin can read/write their own session
+    match /admin-sessions/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
     
     // Bookings collection - public read/write for now
     match /bookings/{bookingId} {

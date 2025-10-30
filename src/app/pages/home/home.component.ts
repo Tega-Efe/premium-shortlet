@@ -1428,6 +1428,9 @@ export class HomeComponent implements OnInit {
   closeConfirmationModal(): void {
     this.showConfirmationModal.set(false);
     this.bookingConfirmationData.set(null);
+    if (this.confirmationModal) {
+      this.confirmationModal.close();
+    }
   }
 
   // Copy account number to clipboard

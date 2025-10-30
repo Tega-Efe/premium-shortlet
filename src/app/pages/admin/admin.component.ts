@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NotificationService, LoadingService } from '../../core/services';
 import { SimplifiedBookingService } from '../../core/services/simplified-booking.service'; // For single-apartment operations
 import { ApartmentManagementService } from '../../core/services/apartment-management.service';
+import { AdminAuthService } from '../../core/auth/services/admin-auth.service';
 import { SimplifiedBooking, AdminAction, Apartment } from '../../core/interfaces';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
@@ -33,6 +34,149 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       padding: 2rem 0;
     }
 
+    .header-content {
+      text-align: left;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .header-left {
+      flex: 1;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .admin-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-burgundy), var(--color-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.125rem;
+      flex-shrink: 0;
+    }
+
+    .admin-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .admin-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1;
+    }
+
+    .btn-logout {
+      background: rgba(193, 125, 92, 0.2);
+      color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(193, 125, 92, 0.3);
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-logout:hover {
+      background: rgba(193, 125, 92, 0.3);
+      border-color: rgba(193, 125, 92, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-logout i {
+      font-size: 0.75rem;
+    }
+
+    /* Logout Modal Styles */
+    .logout-modal-content {
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .logout-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1.125rem;
+      background: linear-gradient(135deg, rgba(193, 125, 92, 0.2), rgba(193, 125, 92, 0.1));
+      border: 2px solid rgba(193, 125, 92, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--color-terracotta);
+    }
+
+    .logout-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 0.5rem 0;
+    }
+
+    .logout-message {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin: 0 0 1.5rem 0;
+      line-height: 1.5;
+    }
+
+    .logout-actions {
+      display: flex;
+      gap: 0.625rem;
+      justify-content: center;
+    }
+
+    .logout-actions .btn {
+      min-width: 100px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(212, 165, 116, 0.2);
+      padding: 0.375rem 0.875rem;
+      border-radius: 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      color: var(--color-tan);
+    }
+
+    .header-badge i {
+      font-size: 0.875rem;
+    }
+
     .container {
       max-width: 1400px;
       margin: 0 auto;
@@ -44,6 +188,13 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       font-weight: 700;
       margin: 0 0 0.375rem 0;
       color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .page-title i {
+      font-size: 1.75rem;
     }
 
     .page-subtitle {
@@ -534,9 +685,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       font-size: 0.6875rem;
     }
 
-    /* Alternating row colors */
+    /* Alternating row colors - light mode */
     .bookings-table tbody tr:nth-child(even) {
-      background-color: rgba(249, 250, 251, 0.5);
+      background-color: rgba(0, 0, 0, 0.02);
     }
 
     .bookings-table tbody tr {
@@ -544,7 +695,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .bookings-table tbody tr:hover {
-      background-color: var(--bg-primary);
+      background-color: rgba(0, 0, 0, 0.03);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       transform: translateY(-1px);
     }
@@ -1090,9 +1241,17 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       border: 1px solid rgba(168, 180, 165, 0.3);
     }
 
+    .apartment-status-badge.available .status-indicator {
+      background: var(--color-sage, #A8B4A5);
+    }
+
     .apartment-status-badge.unavailable {
       background: #fee2e2;
       color: #991b1b;
+    }
+
+    .apartment-status-badge.unavailable .status-indicator {
+      background: #991b1b;
     }
 
     .apartment-location {
@@ -1606,6 +1765,20 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
         padding: 1.5rem 0;
       }
 
+      .header-top {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .header-right {
+        width: 100%;
+      }
+
+      .admin-info {
+        width: 100%;
+        justify-content: space-between;
+      }
+
       .page-title {
         font-size: 1.5rem;
       }
@@ -1732,6 +1905,39 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
         width: 100%;
         justify-content: center;
       }
+
+      .apartments-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .apartment-card {
+        padding: 1rem;
+      }
+
+      .apartment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .apartment-status-badge {
+        align-self: flex-start;
+      }
+
+      .apartment-pricing {
+        padding: 0.75rem;
+      }
+
+      .apartment-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .apartment-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     @media (max-width: 480px) {
@@ -1817,11 +2023,20 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       }
 
       .listings-wrapper {
-        padding: 1rem;
+        padding: 0.75rem;
       }
 
       .listings-header {
         margin-bottom: 1rem;
+      }
+
+      .apartments-grid {
+        grid-template-columns: 1fr;
+        gap: 0.875rem;
+      }
+
+      .apartment-card {
+        padding: 0.875rem;
       }
 
       .table-header {
@@ -2155,6 +2370,11 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     /* ===== DARK MODE STYLES ===== */
     :host-context(.dark-theme) {
+      /* Table container background should match content */
+      .table-container {
+        background: var(--bg-secondary);
+      }
+
       /* Table styling for dark mode */
       .bookings-table th,
       .bookings-table td {
@@ -2163,7 +2383,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       }
 
       .bookings-table th {
-        background-color: var(--bg-primary);
+        background-color: var(--bg-secondary);
         color: var(--text-primary);
       }
 
@@ -2285,6 +2505,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 export class AdminComponent implements OnInit {
   private simplifiedBookingService = inject(SimplifiedBookingService); // For single-apartment operations
   private apartmentService = inject(ApartmentManagementService);
+  private authService = inject(AdminAuthService);
   private notificationService = inject(NotificationService);
   private loadingService = inject(LoadingService);
 
@@ -2292,6 +2513,11 @@ export class AdminComponent implements OnInit {
   @ViewChild('detailsModal') detailsModal!: ModalComponent;
   @ViewChild('availabilityModal') availabilityModal!: ModalComponent;
   @ViewChild('hideDurationModal') hideDurationModal!: ModalComponent;
+  @ViewChild('logoutModal') logoutModal!: ModalComponent;
+
+  // Auth state
+  currentUserEmail = computed(() => this.authService.currentUser()?.email || 'Admin');
+  showLogoutModal = signal<boolean>(false);
 
   // Data signals
   allBookings = signal<SimplifiedBooking[]>([]);
@@ -3036,6 +3262,33 @@ export class AdminComponent implements OnInit {
       }
     } catch (error) {
       this.notificationService.error('Failed to delete apartment');
+    } finally {
+      this.loadingService.hide();
+    }
+  }
+
+  // Logout functionality
+  openLogoutModal(): void {
+    this.showLogoutModal.set(true);
+    if (this.logoutModal) {
+      this.logoutModal.openModal('Sign Out');
+    }
+  }
+
+  closeLogoutModal(): void {
+    this.showLogoutModal.set(false);
+    if (this.logoutModal) {
+      this.logoutModal.close();
+    }
+  }
+
+  async confirmLogout(): Promise<void> {
+    try {
+      this.loadingService.show('Signing out...');
+      await this.authService.logout();
+      this.notificationService.success('Signed out successfully');
+    } catch (error) {
+      this.notificationService.error('Failed to sign out. Please try again.');
     } finally {
       this.loadingService.hide();
     }

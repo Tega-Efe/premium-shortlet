@@ -1,12 +1,13 @@
-import { Component, signal, ChangeDetectionStrategy, HostListener, effect } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, HostListener, effect, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { slideInUp } from '../../../core/animations';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule, RouterLink, RouterLinkActive, ThemeToggleComponent],
+  imports: [CommonModule, RouterLink, RouterLinkActive, ThemeToggleComponent, ModalComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [slideInUp],
   templateUrl: './navbar.component.html',
@@ -140,6 +141,10 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
       height: 2px;
       background: linear-gradient(90deg, var(--color-burgundy) 0%, var(--color-burgundy-light) 100%);
       border-radius: var(--radius-full);
+    }
+
+    .nav-link.clickable {
+      cursor: pointer;
     }
 
     /* ===== CTA Button ===== */
@@ -362,9 +367,162 @@ import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
         gap: var(--spacing-lg);
       }
     }
+
+    /* ===== About Modal Styles ===== */
+    .legal-modal-content {
+      max-height: 70vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .legal-modal-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .legal-section {
+      margin-bottom: 2rem;
+    }
+
+    .legal-section h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .legal-section p {
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+
+    .legal-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .legal-list li {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      text-align: justify;
+    }
+
+    .legal-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .legal-list li i {
+      color: var(--color-burgundy);
+      margin-top: 0.3rem;
+      flex-shrink: 0;
+      font-size: 0.875rem;
+    }
+
+    .legal-list li strong {
+      display: block;
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .feature-card {
+      padding: 1.25rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .feature-card i {
+      font-size: 2rem;
+      color: var(--color-burgundy);
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .contact-info {
+      background: var(--bg-secondary);
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-burgundy);
+    }
+
+    .contact-info p {
+      margin-bottom: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .contact-info p:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-info i {
+      color: var(--color-burgundy);
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    .contact-info strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .legal-modal-content {
+        padding: 1rem;
+      }
+
+      .legal-modal-title {
+        font-size: 1.5rem;
+      }
+
+      .legal-section h3 {
+        font-size: 1.1rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   `]
 })
 export class NavbarComponent {
+  @ViewChild('aboutModal') aboutModal!: ModalComponent;
+  
   mobileMenuOpen = signal<boolean>(false);
   isScrolled = signal<boolean>(false);
 
@@ -392,5 +550,15 @@ export class NavbarComponent {
   closeMobileMenu(): void {
     this.mobileMenuOpen.set(false);
     document.body.style.overflow = '';
+  }
+
+  openAboutModal(): void {
+    if (this.aboutModal) {
+      this.aboutModal.openModal('About Sweet Homes');
+    }
+  }
+
+  closeAboutModal(): void {
+    // Modal closes automatically
   }
 }

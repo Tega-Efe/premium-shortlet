@@ -9,15 +9,33 @@
         </div>
         <div class="container" appAnimateOnScroll="slide-up">
           <div class="header-content">
-            <div class="header-badge">
-              <i class="fas fa-shield-alt"></i>
-              <span>Admin Portal</span>
+            <div class="header-top">
+              <div class="header-left">
+                <div class="header-badge">
+                  <i class="fas fa-shield-alt"></i>
+                  <span>Admin Portal</span>
+                </div>
+                <h1 class="page-title">
+                  <i class="fas fa-th-large"></i>
+                  Dashboard
+                </h1>
+                <p class="page-subtitle">Manage bookings and apartment availability for our Victoria Island property</p>
+              </div>
+              <div class="header-right">
+                <div class="admin-info">
+                  <div class="admin-avatar">
+                    <i class="fas fa-user-shield"></i>
+                  </div>
+                  <div class="admin-details">
+                    <span class="admin-name">{{ currentUserEmail() }}</span>
+                    <button class="btn-logout" (click)="openLogoutModal()">
+                      <i class="fas fa-sign-out-alt"></i>
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h1 class="page-title">
-              <i class="fas fa-th-large"></i>
-              Dashboard
-            </h1>
-            <p class="page-subtitle">Manage bookings and apartment availability for our Victoria Island property</p>
           </div>
         </div>
       </div>
@@ -1206,7 +1224,7 @@
               <h4><i class="fas fa-ban"></i> Hide Now</h4>
               <p class="option-description">Hide until manually shown again.</p>
               <button
-                class="btn btn-secondary btn-block"
+                class="btn btn-secondary btn-block" style="margin-bottom: 0.5rem;"
                 (click)="hideApartmentImmediately()"
               >
                 <i class="fas fa-eye-slash"></i> Hide Now
@@ -1256,7 +1274,7 @@
                 </div>
 
                 <button
-                  class="btn btn-primary btn-block"
+                  class="btn btn-primary btn-block" style="margin-top: 1rem; margin-bottom: 1rem;"
                   [disabled]="hideDurationDays() < 1 || hideDurationDays() > 365"
                   (click)="hideApartmentForDuration()"
                 >
@@ -1269,6 +1287,33 @@
           <button class="btn btn-outline btn-block mt-3" (click)="closeHideDurationModal()">
             <i class="fas fa-times"></i> Cancel
           </button>
+        </div>
+      </app-modal>
+
+      <!-- Logout Confirmation Modal -->
+      <app-modal
+        #logoutModal
+        [size]="'sm'"
+        (modalClose)="closeLogoutModal()"
+      >
+        <div class="logout-modal-content">
+          <div class="logout-icon">
+            <i class="fas fa-sign-out-alt"></i>
+          </div>
+          <h3 class="logout-title">Sign Out?</h3>
+          <p class="logout-message">
+            Are you sure you want to sign out of the admin portal?
+          </p>
+          <div class="logout-actions">
+            <button class="btn btn-outline" (click)="closeLogoutModal()">
+              <i class="fas fa-times"></i>
+              Cancel
+            </button>
+            <button class="btn btn-danger" (click)="confirmLogout()">
+              <i class="fas fa-sign-out-alt"></i>
+              Sign Out
+            </button>
+          </div>
         </div>
       </app-modal>
     </div>

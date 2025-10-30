@@ -16,11 +16,10 @@ import { fadeInOut, scaleIn } from '../../../core/animations';
       background: linear-gradient(135deg, rgba(31, 28, 24, 0.6) 0%, rgba(62, 56, 50, 0.7) 100%);
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       z-index: var(--z-modal);
       backdrop-filter: blur(4px);
-      padding: 5rem var(--spacing-lg) var(--spacing-lg);
-      overflow-y: auto;
+      padding: var(--spacing-lg);
     }
 
     .modal-overlay.blur-backdrop {
@@ -34,7 +33,7 @@ import { fadeInOut, scaleIn } from '../../../core/animations';
       box-shadow: var(--shadow-xl), 0 0 0 1px var(--border-color);
       max-width: 600px;
       width: 100%;
-      max-height: 75vh;
+      max-height: 90vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -260,13 +259,11 @@ import { fadeInOut, scaleIn } from '../../../core/animations';
     /* ===== Responsive Design ===== */
     @media (max-width: 768px) {
       .modal-overlay {
-        padding: 4rem var(--spacing-md) var(--spacing-md);
-        align-items: flex-start;
+        padding: var(--spacing-md);
       }
 
       .modal-container {
         max-width: 100%;
-        max-height: 70vh;
         border-radius: var(--radius-xl);
       }
 
@@ -303,11 +300,7 @@ import { fadeInOut, scaleIn } from '../../../core/animations';
 
     @media (max-width: 480px) {
       .modal-overlay {
-        padding: 3.5rem 0.5rem 0.5rem;
-      }
-
-      .modal-container {
-        max-height: 65vh;
+        padding: 0.5rem;
       }
 
       .modal-header {

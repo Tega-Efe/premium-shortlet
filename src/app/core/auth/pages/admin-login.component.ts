@@ -158,12 +158,12 @@ import { NotificationService } from '../../services/notification.service';
     .login-page {
       min-height: 100vh;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       background: var(--bg-primary);
       position: relative;
-      overflow-y: auto;
-      padding: 5rem 1rem 2rem;
+      overflow: hidden;
+      padding: 2rem 1rem;
     }
 
     .login-background {
@@ -501,42 +501,21 @@ import { NotificationService } from '../../services/notification.service';
 
     /* Responsive */
     @media (max-width: 640px) {
-      .login-page {
-        padding: 4rem 1rem 1.5rem;
-      }
-
-      .login-container {
-        max-width: 100%;
-      }
-
       .login-card {
-        padding: 1.5rem 1.25rem;
-      }
-
-      .login-header {
-        margin-bottom: 1.25rem;
-      }
-
-      .brand-icon {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 0.75rem;
-      }
-
-      .brand-icon i {
-        font-size: 1.5rem;
+        padding: 2rem 1.5rem;
       }
 
       .login-title {
-        font-size: 1.25rem;
+        font-size: 1.75rem;
       }
 
-      .login-subtitle {
-        font-size: 0.8125rem;
+      .brand-icon {
+        width: 70px;
+        height: 70px;
       }
 
-      .login-form {
-        gap: 1rem;
+      .brand-icon i {
+        font-size: 2rem;
       }
 
       .remember-me-group {
@@ -547,42 +526,6 @@ import { NotificationService } from '../../services/notification.service';
 
       .remember-me-hint {
         margin-left: 1.75rem;
-      }
-
-      .login-footer {
-        margin-top: 1.5rem;
-        padding-top: 1.25rem;
-      }
-
-      .back-to-home {
-        margin-top: 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .login-page {
-        padding: 3.5rem 0.75rem 1rem;
-      }
-
-      .login-card {
-        padding: 1.25rem 1rem;
-      }
-
-      .brand-icon {
-        width: 45px;
-        height: 45px;
-      }
-
-      .brand-icon i {
-        font-size: 1.25rem;
-      }
-
-      .login-title {
-        font-size: 1.125rem;
-      }
-
-      .login-subtitle {
-        font-size: 0.75rem;
       }
     }
 

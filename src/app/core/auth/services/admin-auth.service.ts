@@ -22,6 +22,7 @@ import {
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, fromEvent, merge, Subscription } from 'rxjs';
 import { filter, debounceTime } from 'rxjs/operators';
+import { NotificationService } from '../../services/notification.service';
 
 interface AdminSession {
   userId: string;
@@ -37,6 +38,7 @@ interface AdminSession {
 })
 export class AdminAuthService {
   private firestore = inject(Firestore);
+  private notificationService = inject(NotificationService);
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   
@@ -50,6 +52,7 @@ export class AdminAuthService {
   private inactivityTimer: any = null;
   private activitySubscription: Subscription | null = null;
   private routeSubscription: Subscription | null = null;
+  private isLoggingOut: boolean = false; // Flag to prevent duplicate logouts
   
   // Configuration
   private readonly INACTIVITY_TIMEOUT = 15 * 60 * 1000; // 15 minutes in milliseconds
@@ -120,7 +123,15 @@ export class AdminAuthService {
   private async startSessionMonitoring(user: User): Promise<void> {
     const sessionRef = doc(this.firestore, `admin-sessions/${user.uid}`);
 
-    // Create or update session in Firestore
+    // First, check if there's an existing session
+    const existingSession = await getDoc(sessionRef);
+    const existingData = existingSession.data() as AdminSession | undefined;
+
+    // If there's an active session with a different sessionId, it means we're the new login
+    // We should NOT set up the listener yet, just update the session
+    const isNewLogin = existingData && existingData.isActive && existingData.sessionId !== this.sessionId;
+
+    // Create or update session in Firestore with our new session ID
     const sessionData: AdminSession = {
       userId: user.uid,
       sessionId: this.sessionId,
@@ -132,13 +143,21 @@ export class AdminAuthService {
 
     await setDoc(sessionRef, sessionData);
 
-    // Listen for session changes (detect if another device logs in)
+    // Listen for session changes (detect if another device logs in AFTER us)
     this.sessionUnsubscribe = onSnapshot(sessionRef, (snapshot) => {
       const data = snapshot.data() as AdminSession;
       
-      if (data && data.sessionId !== this.sessionId) {
+      // Only logout if:
+      // 1. Session data exists
+      // 2. The sessionId in Firestore is different from ours (another device logged in)
+      // 3. We're not already in the process of logging out
+      // 4. The session is marked as active
+      if (data && 
+          data.sessionId !== this.sessionId && 
+          !this.isLoggingOut && 
+          data.isActive) {
         console.log('🚨 Another device has logged in - logging out this session');
-        alert('Your session has been terminated because you logged in from another device.');
+        this.notificationService.warning('Your session has been terminated because you logged in from another device.');
         this.forceLogout();
       }
     });
@@ -198,7 +217,7 @@ export class AdminAuthService {
     
     this.inactivityTimer = setTimeout(() => {
       console.log('⏰ Inactivity timeout - logging out');
-      alert('You have been logged out due to inactivity.');
+      this.notificationService.info('You have been logged out due to inactivity.');
       this.logout();
     }, this.INACTIVITY_TIMEOUT);
   }
@@ -258,6 +277,7 @@ export class AdminAuthService {
    * Force logout (called when another device logs in)
    */
   private async forceLogout(): Promise<void> {
+    this.isLoggingOut = true; // Set flag to prevent duplicate logouts
     this.stopSessionMonitoring();
     try {
       await signOut(this.auth);
@@ -266,6 +286,8 @@ export class AdminAuthService {
       });
     } catch (error) {
       console.error('Force logout error:', error);
+    } finally {
+      this.isLoggingOut = false; // Reset flag
     }
   }
 
@@ -297,12 +319,15 @@ export class AdminAuthService {
    */
   async logout(): Promise<void> {
     try {
+      this.isLoggingOut = true; // Set flag to prevent duplicate logouts
       this.stopSessionMonitoring();
       await signOut(this.auth);
       this.router.navigate(['/admin/login']);
     } catch (error: any) {
       console.error('Logout error:', error);
       throw new Error('Failed to logout. Please try again.');
+    } finally {
+      this.isLoggingOut = false; // Reset flag
     }
   }
 

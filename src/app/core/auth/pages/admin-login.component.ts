@@ -562,8 +562,9 @@ export class AdminLoginComponent {
     const reason = this.route.snapshot.queryParams['reason'];
     
     if (reason === 'session-terminated') {
-      this.warningMessage.set('Your session was terminated because you logged in from another device.');
-      this.notificationService.error('Session terminated - Another device logged in');
+      // Notification already shown by auth service
+      // Just clear the query params by navigating to clean URL
+      this.router.navigate(['/admin/login'], { replaceUrl: true });
     }
   }
 

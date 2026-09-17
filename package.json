@@ -16,7 +16,8 @@
     "cleanup:analyze": "ts-node scripts/cleanup-bookings.ts analyze",
     "cleanup:fix": "ts-node scripts/cleanup-bookings.ts fix",
     "cleanup:delete": "ts-node scripts/cleanup-bookings.ts delete",
-    "seed": "ts-node scripts/seed-firestore.ts"
+    "seed": "ts-node scripts/seed-firestore.ts",
+    "quotation:generate": "ts-node scripts/quotation-pdf.ts"
   },
   "prettier": {
     "printWidth": 100,
@@ -61,6 +62,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "pdfmake": "^0.2.20",
+    "puppeteer": "^23.11.1",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.2"
   }

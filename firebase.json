@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "shortlet-connect",
     "public": "dist/shortlet-connect/browser",
     "ignore": [
       "firebase.json",

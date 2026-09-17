@@ -45,7 +45,7 @@ const PROPERTY_ADDRESS = 'No. 14 Imueruze Street, Off Upper Adesuwa Road, G.R.A 
 const PROPERTY_CONTACT = {
   phones: ['+234 707 651 1255', '+234 704 907 1901']
 };
-const PROPERTY_LOGO_URL = 'https://firebasestorage.googleapis.com/v0/b/restless-society.firebasestorage.app/o/Osaka%20Apartments-logo.jpeg?alt=media&token=47bc5210-0c71-4607-9489-1c2d77e57104';
+const PROPERTY_LOGO_URL = 'https://firebasestorage.googleapis.com/v0/b/restless-society.firebasestorage.app/o/Osaka%20Apartments-logo.PNG?alt=media&token=529e360d-23a4-43e9-8ee2-d44763273e22';
 
 // The 7 real property photos, split at random between the two units so each
 // listing gets its own distinct set instead of sharing all 7.

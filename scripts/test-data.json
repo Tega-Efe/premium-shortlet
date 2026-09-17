@@ -2,8 +2,8 @@
   "apartments": {
     "main-apartment-001": {
       "id": "main-apartment-001",
-      "title": "Luxury Two-Bedroom Apartment in Victoria Island",
-      "description": "Experience luxury living in this stunning two-bedroom apartment located in the heart of Victoria Island, Lagos.\n\nThis beautifully furnished apartment features:\n- Spacious living room with modern furniture\n- Fully equipped kitchen with premium appliances\n- Two comfortable bedrooms with king-size beds\n- Two bathrooms with hot water showers\n- High-speed WiFi and Smart TV\n- 24/7 security and power backup\n- Dedicated parking space\n- Access to swimming pool and gym\n\nPerfect for business travelers, families, or couples looking for a comfortable short-term stay in Lagos. The apartment is within walking distance to restaurants, shopping centers, and business districts.\n\nBook the entire apartment or just one room - flexible options to suit your needs!",
+      "title": "Osaka apartments",
+      "description": "Experience luxury living in this stunning two-bedroom apartment at No. 14 Imueruze Street, Off Upper Adesuwa Road, G.R.A Benin City, Benin.\n\nThis beautifully furnished apartment features:\n- Spacious living room with modern furniture\n- Fully equipped kitchen with premium appliances\n- Two comfortable bedrooms with king-size beds\n- Two bathrooms with hot water showers\n- High-speed WiFi and Smart TV\n- 24/7 security and power backup\n- Dedicated parking space\n- Access to swimming pool and gym\n\nPerfect for business travelers, families, or couples looking for a comfortable short-term stay in Benin City. The apartment is within walking distance to restaurants, shopping centers, and business districts.\n\nBook the entire apartment or just one room - flexible options to suit your needs!",
       "bedrooms": 2,
       "bathrooms": 2,
       "guests": 4,
@@ -31,13 +31,13 @@
         "Washer/Dryer"
       ],
       "location": {
-        "city": "Lagos",
-        "state": "Lagos",
+        "city": "Benin City",
+        "state": "Edo",
         "country": "Nigeria",
-        "address": "Victoria Island, Lagos",
+        "address": "No. 14 Imueruze Street, Off Upper Adesuwa Road, G.R.A Benin City, Benin",
         "coordinates": {
-          "lat": 6.4281,
-          "lng": 3.4219
+          "lat": 6.3350,
+          "lng": 5.6037
         }
       },
       "pricing": {
@@ -64,9 +64,8 @@
       "totalReviews": 127,
       "owner": {
         "id": "owner-001",
-        "name": "Sweet Homes",
-        "email": "admin@sweethomes.com",
-        "phone": "+234 809 123 4567",
+        "name": "Osaka apartments",
+        "phone": "+234 707 651 1255 / +234 704 907 1901",
         "verified": true
       },
       "createdAt": "2025-10-27T10:00:00.000Z",

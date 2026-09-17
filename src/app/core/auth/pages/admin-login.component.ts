@@ -26,7 +26,10 @@ import { NotificationService } from '../../services/notification.service';
           <!-- Logo/Brand Section -->
           <div class="login-header">
             <div class="brand-icon">
-              <i class="fas fa-shield-halved"></i>
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/restless-society.firebasestorage.app/o/Osaka%20Apartments-logo.jpeg?alt=media&token=47bc5210-0c71-4607-9489-1c2d77e57104"
+                alt="Osaka apartments logo"
+              />
             </div>
             <h1 class="login-title">Admin Portal</h1>
             <p class="login-subtitle">Sign in to access the dashboard</p>
@@ -47,7 +50,7 @@ import { NotificationService } from '../../services/notification.service';
                 class="form-input"
                 [(ngModel)]="email"
                 [disabled]="isLoading()"
-                placeholder="admin@sweethomes.com"
+                placeholder="Enter admin email"
                 required
                 email
                 autocomplete="email"
@@ -213,9 +216,11 @@ import { NotificationService } from '../../services/notification.service';
       box-shadow: 0 3px 12px rgba(125, 25, 53, 0.2);
     }
 
-    .brand-icon i {
-      font-size: 1.75rem;
-      color: white;
+    .brand-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: inherit;
     }
 
     .login-title {

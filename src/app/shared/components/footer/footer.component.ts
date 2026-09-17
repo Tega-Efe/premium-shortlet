@@ -75,8 +75,10 @@ import { ModalComponent } from '../modal/modal.component';
     }
 
     .brand-icon {
-      font-size: var(--font-size-2xl);
-      color: var(--color-tan);
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
       transition: transform var(--transition-base);
     }
 
@@ -709,7 +711,7 @@ export class FooterComponent {
   // Modal methods
   openAboutModal(): void {
     if (this.aboutModal) {
-      this.aboutModal.openModal('About Sweet Homes');
+      this.aboutModal.openModal('About Osaka apartments');
     }
   }
 

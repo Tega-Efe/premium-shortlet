@@ -901,6 +901,10 @@ import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective }
         gap: 1.5rem;
       }
 
+      .hero-image {
+        display: none;
+      }
+
       .hero-title {
         font-size: 2rem;
       }

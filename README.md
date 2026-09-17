@@ -2,7 +2,7 @@
 
 **Project:** Shortlet Connect (repo: `premium-shortlet`)
 **Stack:** Angular 18+ (Signals, standalone components, OnPush), Firebase (Firestore, Auth, Storage), Font Awesome 6
-**Domain:** Single-apartment (now multi-apartment-ready) shortlet booking platform, Victoria Island, Lagos. Pricing in Naira (₦).
+**Domain:** Single-apartment (now multi-apartment-ready) shortlet booking platform, Osaka apartments, Benin City. Pricing in Naira (₦).
 
 This file consolidates the 18 separate documentation/summary files that had accumulated in the repo root. It keeps the information that's still relevant for running, extending, and debugging the app, and drops the parts that were just point-in-time change logs. Original files can be deleted once this is reviewed.
 

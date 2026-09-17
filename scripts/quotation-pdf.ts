@@ -34,7 +34,7 @@ const html = `<!DOCTYPE html>
     <tr><th>Prepared By</th><td>Adjeh Dominic Efeoghene</td></tr>
     <tr><th>Email</th><td>dominicadjeh@gmail.com</td></tr>
     <tr><th>Phone</th><td>08158389029</td></tr>
-    <tr><th>Recipient</th><td>Sweet Homes Apartments</td></tr>
+    <tr><th>Recipient</th><td>Osaka apartments</td></tr>
   </table>
 
   <h3>1. Summary</h3>
@@ -95,7 +95,7 @@ const html = `<!DOCTYPE html>
     <tr><td>Performance & UX Polish</td><td>Optimize perceived performance, accessibility pass, simplify key interactions, minor UI refinements.</td><td>150,000</td></tr>
     <tr><td>Documentation & Handover</td><td>Setup guide, runbook, feature index; 1 training/walkthrough session (up to 2 hours).</td><td>100,000</td></tr>
     <tr><td>Deployment & Environment Setup</td><td>Production build optimization, environment configuration, release checklist, basic monitoring hooks.</td><td>100,000</td></tr>
-    <tr><td>Hosting & Domain Procurement + Setup (Service)</td><td>I will handle the domain purchase and hosting onboarding (DNS, SSL, redirects). Third‑party charges for the domain/hosting are billed at actual cost to Sweet Homes; this line covers my procurement and setup service.</td><td>100,000</td></tr>
+    <tr><td>Hosting & Domain Procurement + Setup (Service)</td><td>I will handle the domain purchase and hosting onboarding (DNS, SSL, redirects). Third‑party charges for the domain/hosting are billed at actual cost to Osaka apartments; this line covers my procurement and setup service.</td><td>100,000</td></tr>
     <tr><td>Project Management, QA & Contingency</td><td>Structured testing, issue triage, buffer for minor scope clarifications without change requests.</td><td>150,000</td></tr>
     <tr><th colspan=\"2\" style=\"text-align:right\">Total</th><th>1,500,000</th></tr>
   </table>
@@ -117,7 +117,7 @@ const html = `<!DOCTYPE html>
 
   <h3>8. Acceptance</h3>
   <p>To proceed: approve this quotation, confirm payment schedule, and provide required access (repository, staging environment, keys). Valid for 15 days from the date above.</p>
-  <p class=\"small-note\"><strong>Remark:</strong> My goal is to ensure Sweet Homes Apartments has a reliable, secure, and easy‑to‑use platform that supports your day‑to‑day operations and growth. I appreciate the opportunity to partner with you on this phase and look forward to building a long‑term working relationship, iterating together as your needs evolve.</p>
+  <p class=\"small-note\"><strong>Remark:</strong> My goal is to ensure Osaka apartments has a reliable, secure, and easy‑to‑use platform that supports your day‑to‑day operations and growth. I appreciate the opportunity to partner with you on this phase and look forward to building a long‑term working relationship, iterating together as your needs evolve.</p>
 
   <h3>Contact</h3>
   <table>

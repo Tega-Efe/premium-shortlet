@@ -68,13 +68,14 @@ import { ModalComponent } from '../modal/modal.component';
     }
 
     .logo-icon {
-      font-size: var(--font-size-2xl);
-      color: var(--color-tan);
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
       transition: all var(--transition-base);
     }
 
     .logo:hover .logo-icon {
-      color: var(--color-burgundy);
       transform: scale(1.1);
     }
 
@@ -554,7 +555,7 @@ export class NavbarComponent {
 
   openAboutModal(): void {
     if (this.aboutModal) {
-      this.aboutModal.openModal('About Sweet Homes');
+      this.aboutModal.openModal('About Osaka apartments');
     }
   }
 

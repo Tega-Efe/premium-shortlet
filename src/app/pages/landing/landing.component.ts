@@ -1024,6 +1024,10 @@ import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective }
         padding: 2.5rem 1rem;
       }
 
+      .cta-section {
+        display: none;
+      }
+
       .section-header {
         margin-bottom: 1.75rem;
       }

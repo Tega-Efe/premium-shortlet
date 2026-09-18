@@ -1519,7 +1519,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .approval-question {
       font-size: 1.125rem;
       font-weight: 600;
-      color: #1f2937;
+      color: var(--text-primary);
       margin: 0;
     }
 

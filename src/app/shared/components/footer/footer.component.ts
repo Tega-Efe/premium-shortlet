@@ -100,6 +100,10 @@ import { ModalComponent } from '../modal/modal.component';
       font-size: var(--font-size-sm);
     }
 
+    .footer-description-mobile {
+      display: none;
+    }
+
     /* ===== Section Headings ===== */
     .footer-heading {
       display: flex;
@@ -357,6 +361,19 @@ import { ModalComponent } from '../modal/modal.component';
 
       .brand-section {
         grid-column: 1;
+      }
+
+      .quick-links-section,
+      .newsletter-section {
+        display: none;
+      }
+
+      .footer-description-full {
+        display: none !important;
+      }
+
+      .footer-description-mobile {
+        display: block !important;
       }
 
       .footer-bottom {

@@ -203,10 +203,8 @@ import { fadeInOut, scaleIn } from '../../../core/animations';
       align-items: center;
       justify-content: center;
       gap: var(--spacing-xs);
-      padding: var(--spacing-sm) var(--spacing-xl);
       border: none;
       border-radius: var(--radius-md);
-      font-size: var(--font-size-base);
       font-weight: var(--font-weight-semibold);
       cursor: pointer;
       transition: all var(--transition-base);
@@ -299,20 +297,22 @@ import { fadeInOut, scaleIn } from '../../../core/animations';
     }
 
     @media (max-width: 480px) {
+      /* Body/header/footer share one 1.5rem side inset so content lines up
+         and the form has room to breathe (was 0.75rem body / 1rem header). */
       .modal-overlay {
-        padding: 0.5rem;
-      }
-
-      .modal-header {
-        padding: 0.75rem 1rem;
-      }
-
-      .modal-body {
         padding: 0.75rem;
       }
 
+      .modal-header {
+        padding: 1rem 1.5rem;
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
       .modal-footer {
-        padding: 0.75rem 1rem;
+        padding: 1rem 1.5rem;
       }
 
       .modal-title {

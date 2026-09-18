@@ -117,8 +117,6 @@ import { PriceUtils } from '../../../core/utils';
       position: absolute;
       top: var(--spacing-md);
       left: var(--spacing-md);
-      width: 40px;
-      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -326,10 +324,8 @@ import { PriceUtils } from '../../../core/utils';
       align-items: center;
       justify-content: center;
       gap: var(--spacing-xs);
-      padding: var(--spacing-sm) var(--spacing-md);
       border: none;
       border-radius: var(--radius-md);
-      font-size: var(--font-size-sm);
       font-weight: var(--font-weight-semibold);
       cursor: pointer;
       transition: all var(--transition-base);
@@ -394,8 +390,6 @@ import { PriceUtils } from '../../../core/utils';
       .favorite-btn {
         top: 0.5rem;
         left: 0.5rem;
-        width: 32px;
-        height: 32px;
         font-size: 0.875rem;
       }
 
@@ -497,8 +491,6 @@ import { PriceUtils } from '../../../core/utils';
 
       .btn {
         width: 100%;
-        padding: 0.5rem 0.75rem;
-        font-size: 0.75rem;
         gap: 0.25rem;
       }
 
@@ -527,8 +519,6 @@ import { PriceUtils } from '../../../core/utils';
       .favorite-btn {
         top: 0.375rem;
         left: 0.375rem;
-        width: 28px;
-        height: 28px;
         font-size: 0.75rem;
       }
 
@@ -623,8 +613,6 @@ import { PriceUtils } from '../../../core/utils';
       }
 
       .btn {
-        padding: 0.4375rem 0.625rem;
-        font-size: 0.6875rem;
         gap: 0.1875rem;
       }
 

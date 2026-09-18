@@ -247,11 +247,9 @@ import { ModalComponent } from '../modal/modal.component';
       align-items: center;
       justify-content: center;
       gap: var(--spacing-xs);
-      padding: 0.625rem var(--spacing-md);
       background: linear-gradient(135deg, var(--color-tan) 0%, var(--color-gold) 100%);
       color: var(--color-charcoal);
       font-weight: var(--font-weight-semibold);
-      font-size: 0.8125rem;
       border: none;
       border-radius: var(--radius-md);
       cursor: pointer;
@@ -448,8 +446,7 @@ import { ModalComponent } from '../modal/modal.component';
         font-size: 0.75rem;
       }
 
-      .newsletter-input,
-      .newsletter-btn {
+      .newsletter-input {
         font-size: 0.75rem;
       }
 

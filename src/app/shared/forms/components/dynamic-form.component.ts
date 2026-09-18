@@ -107,10 +107,8 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     }
 
     .btn {
-      padding: 0.75rem 1.5rem;
       border: none;
       border-radius: 0.375rem;
-      font-size: 1rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
@@ -185,10 +183,8 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
 
     .btn-restore,
     .btn-dismiss {
-      padding: 0.5rem 1rem;
       border: none;
       border-radius: 0.375rem;
-      font-size: 0.875rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
@@ -211,7 +207,11 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
     .btn-dismiss {
       background: transparent;
       color: var(--text-secondary);
-      padding: 0.5rem;
+      /* icon-only: square, same height as the compact button tier */
+      width: var(--btn-height-sm);
+      height: var(--btn-height-sm);
+      padding: 0;
+      justify-content: center;
     }
 
     .btn-dismiss:hover {
@@ -258,12 +258,6 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
 
       .btn-restore {
         flex: 1;
-        padding: 0.625rem 0.875rem;
-        font-size: 0.8125rem;
-      }
-
-      .btn-dismiss {
-        padding: 0.625rem;
       }
 
       .form-actions {
@@ -272,10 +266,6 @@ import { Subject, debounceTime, takeUntil } from 'rxjs';
         gap: 0.75rem;
       }
 
-      .btn {
-        padding: 0.625rem 1rem;
-        font-size: 0.9375rem;
-      }
 
       .auto-save-indicator {
         text-align: center;

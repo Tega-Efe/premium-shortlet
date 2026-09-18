@@ -153,7 +153,9 @@ import { ModalComponent } from '../modal/modal.component';
       display: flex;
       align-items: center;
       gap: var(--spacing-xs);
-      padding: var(--spacing-sm) var(--spacing-lg);
+      /* compact tier: 36px keeps the bar at its current height */
+      min-height: var(--btn-height-sm);
+      padding: 0 var(--spacing-lg);
       background: linear-gradient(135deg, var(--color-burgundy) 0%, var(--color-burgundy-light) 100%);
       color: var(--text-inverse);
       font-weight: var(--font-weight-semibold);
@@ -179,7 +181,8 @@ import { ModalComponent } from '../modal/modal.component';
     .btn-cta.mobile {
       width: 100%;
       justify-content: center;
-      padding: var(--spacing-md);
+      min-height: var(--btn-height);
+      padding: 0 var(--spacing-md);
       font-size: var(--font-size-base);
     }
 

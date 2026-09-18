@@ -159,14 +159,15 @@ import { NotificationService } from '../../services/notification.service';
   `,
   styles: [`
     .login-page {
-      min-height: 100vh;
+      /* body already reserves --navbar-height, so subtract it here */
+      min-height: calc(100vh - var(--navbar-height));
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--bg-primary);
       position: relative;
       overflow: hidden;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
     }
 
     .login-background {
@@ -187,21 +188,21 @@ import { NotificationService } from '../../services/notification.service';
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 450px;
+      max-width: 360px; /* same card width at every screen size */
     }
 
     .login-card {
       background: var(--bg-secondary);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      padding: 2rem 1.75rem;
+      padding: 1.5rem;
       border: 1px solid var(--border-color);
     }
 
     /* Header */
     .login-header {
       text-align: center;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.25rem;
     }
 
     .brand-icon {
@@ -224,22 +225,23 @@ import { NotificationService } from '../../services/notification.service';
     }
 
     .login-title {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 0.375rem;
+      margin-bottom: 0.25rem;
     }
 
     .login-subtitle {
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: 0.95rem;
+      margin: 0;
     }
 
     /* Form */
     .login-form {
       display: flex;
       flex-direction: column;
-      gap: 1.125rem;
+      /* vertical rhythm comes from .form-group margin-bottom (--field-gap) */
     }
 
     .form-group {
@@ -262,46 +264,8 @@ import { NotificationService } from '../../services/notification.service';
       font-size: 0.75rem;
     }
 
-    .form-input {
-      padding: 0.625rem 0.875rem;
-      border: 2px solid transparent;
-      border-radius: var(--radius-md);
-      font-size: 1rem; /* 16px to prevent iOS auto-zoom */
-      color: var(--text-primary);
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 50%, 
-          var(--color-sage) 100%
-        );
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      transition: all 0.3s ease;
-    }
-
-    .form-input:focus {
-      outline: none;
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 30%,
-          var(--color-sage) 60%,
-          var(--color-burgundy) 100%
-        );
-      box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
-    }
-
-    .form-input::placeholder {
-      color: var(--text-tertiary);
-      opacity: 0.7;
-    }
-
-    .form-input:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+    /* Border, fill, focus ring and 44px height come from the global field
+       rules in styles.css, so these inputs match every other form. */
 
     /* Password Input */
     .password-input-wrapper {
@@ -390,6 +354,7 @@ import { NotificationService } from '../../services/notification.service';
       border-radius: var(--radius-md);
       color: #d97706;
       font-size: 0.8125rem;
+      margin-bottom: var(--field-gap);
       animation: shake 0.3s ease-in-out;
     }
 
@@ -409,6 +374,7 @@ import { NotificationService } from '../../services/notification.service';
       border-radius: var(--radius-md);
       color: #dc2626;
       font-size: 0.8125rem;
+      margin-bottom: var(--field-gap);
       animation: shake 0.3s ease-in-out;
     }
 
@@ -425,12 +391,10 @@ import { NotificationService } from '../../services/notification.service';
 
     /* Submit Button */
     .btn-login {
-      padding: 1rem;
       background: linear-gradient(135deg, var(--color-burgundy) 0%, #a5264a 100%);
       color: white;
       border: none;
       border-radius: var(--radius-md);
-      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -438,7 +402,6 @@ import { NotificationService } from '../../services/notification.service';
       justify-content: center;
       gap: 0.625rem;
       transition: all 0.3s ease;
-      margin-top: 0.5rem;
     }
 
     .btn-login:hover:not(:disabled) {
@@ -462,8 +425,8 @@ import { NotificationService } from '../../services/notification.service';
 
     /* Footer */
     .login-footer {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
       border-top: 1px solid var(--border-color);
       text-align: center;
     }
@@ -483,7 +446,7 @@ import { NotificationService } from '../../services/notification.service';
 
     /* Back to Home */
     .back-to-home {
-      margin-top: 2rem;
+      margin-top: 1.25rem;
       text-align: center;
     }
 
@@ -506,23 +469,6 @@ import { NotificationService } from '../../services/notification.service';
 
     /* Responsive */
     @media (max-width: 640px) {
-      .login-card {
-        padding: 2rem 1.5rem;
-      }
-
-      .login-title {
-        font-size: 1.75rem;
-      }
-
-      .brand-icon {
-        width: 70px;
-        height: 70px;
-      }
-
-      .brand-icon i {
-        font-size: 2rem;
-      }
-
       .remember-me-group {
         flex-direction: column;
         align-items: flex-start;

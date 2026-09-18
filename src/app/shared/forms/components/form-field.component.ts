@@ -35,7 +35,6 @@ import { DatePickerComponent } from './date-picker.component';
             [formControl]="control"
             [accept]="config.accept || 'image/jpeg,image/png,image/jpg'"
             [placeholder]="config.placeholder || 'Click to upload'"
-            [hint]="config.hint || 'JPG, PNG up to 5MB'"
           />
         }
         @case ('date') {
@@ -131,8 +130,8 @@ import { DatePickerComponent } from './date-picker.component';
         }
       }
 
-      @if (config.hint && !hasError) {
-        <small class="form-hint">{{ config.hint }}</small>
+      @if (hintText && !hasError) {
+        <small class="form-hint">{{ hintText }}</small>
       }
 
       @if (hasError) {
@@ -146,7 +145,7 @@ import { DatePickerComponent } from './date-picker.component';
   `,
   styles: [`
     .form-field {
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--field-gap);
     }
 
     /* Component-specific styling - inherits global form styles from styles.css */
@@ -203,10 +202,6 @@ import { DatePickerComponent } from './date-picker.component';
     }
 
     @media (max-width: 640px) {
-      .form-field {
-        margin-bottom: 1rem;
-      }
-
       .form-hint {
         margin-top: 0.1875rem;
         font-size: 0.8125rem;
@@ -225,6 +220,15 @@ import { DatePickerComponent } from './date-picker.component';
 export class FormFieldComponent {
   @Input({ required: true }) config!: FormFieldConfig;
   @Input({ required: true }) control!: FormControl;
+
+  /**
+   * Single owner of hint rendering for every field type. Custom controls
+   * (file-upload, phone, ...) no longer print their own copy.
+   */
+  get hintText(): string | null {
+    if (this.config.hint) return this.config.hint;
+    return this.config.type === 'file' ? 'JPG, PNG up to 5MB' : null;
+  }
 
   get isRequired(): boolean {
     return this.control.hasValidator(Validators.required);

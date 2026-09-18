@@ -95,9 +95,7 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       background: rgba(193, 125, 92, 0.2);
       color: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(193, 125, 92, 0.3);
-      padding: 0.375rem 0.75rem;
       border-radius: 0.375rem;
-      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -401,11 +399,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .btn-toggle-availability {
-      padding: 0.625rem 1.5rem;
       border: none;
       border-radius: 0.5rem;
       font-weight: 600;
-      font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
@@ -414,11 +410,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .btn-manage-availability {
-      padding: 0.625rem 1.5rem;
       border: none;
       border-radius: 0.5rem;
       font-weight: 600;
-      font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
@@ -752,11 +746,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     /* Buttons */
     .btn {
-      padding: 0.5rem 1rem;
       border: none;
       border-radius: 0.375rem;
       font-weight: 600;
-      font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s;
       display: inline-flex;
@@ -769,10 +761,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       vertical-align: middle;
     }
 
-    .btn-sm {
-      padding: 0.375rem 0.75rem;
-      font-size: 0.8125rem;
-    }
 
     .btn-primary {
       background-color: var(--color-burgundy, #7D1935);
@@ -831,8 +819,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     /* Icon-only Action Buttons */
     .btn-icon {
-      width: 32px;
-      height: 32px;
       padding: 0;
       border: none;
       border-radius: 0.375rem;
@@ -1463,8 +1449,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .btn-save {
       background: linear-gradient(135deg, var(--color-burgundy), #9d2449);
       color: white;
-      padding: 0.75rem 1.75rem;
-      font-size: 0.875rem;
       font-weight: 600;
       border: none;
       border-radius: 0.5rem;
@@ -1673,13 +1657,11 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .pagination-btn {
-      padding: 0.4375rem 0.875rem;
       border: 1px solid var(--border-color);
       background: white;
       color: var(--text-primary);
       border-radius: 0.375rem;
       cursor: pointer;
-      font-size: 0.8125rem;
       font-weight: 500;
       transition: all 0.2s ease;
       display: flex;
@@ -1833,8 +1815,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       .btn-manage-availability {
         width: 100%;
         justify-content: center;
-        padding: 0.625rem 1.25rem;
-        font-size: 0.8125rem;
       }
 
       .tabs {
@@ -2108,8 +2088,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       }
 
       .pagination-btn {
-        padding: 0.375rem 0.625rem;
-        font-size: 0.75rem;
         gap: 0.1875rem;
       }
 
@@ -2310,11 +2288,9 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .btn-toggle {
-      padding: 0.625rem 1.25rem;
       border: none;
       border-radius: 0.5rem;
       font-weight: 600;
-      font-size: 0.875rem;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;

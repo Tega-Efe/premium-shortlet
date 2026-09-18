@@ -27,7 +27,7 @@ import { CommonModule } from '@angular/common';
       />
       
       <label [for]="inputId" class="file-upload-label" [class.disabled]="disabled">
-        <div class="upload-content">
+        <div class="upload-content gradient-border-field">
           @if (!selectedFile()) {
             <div class="upload-placeholder">
               <div class="upload-icon">
@@ -35,7 +35,6 @@ import { CommonModule } from '@angular/common';
               </div>
               <div class="upload-text">
                 <p class="upload-title">{{ placeholder || 'Click to upload or drag and drop' }}</p>
-                <p class="upload-hint">{{ hint || 'JPG, PNG up to 5MB' }}</p>
               </div>
             </div>
           } @else {
@@ -87,59 +86,18 @@ import { CommonModule } from '@angular/common';
       opacity: 0.6;
     }
 
+    /* Border/fill/focus look comes from .gradient-border-field (styles.css) */
     .upload-content {
-      border: 2px solid transparent;
-      border-radius: var(--border-radius, 0.75rem);
+      margin: 0; /* opt out of the global [class*="content"] margin-top */
       padding: 2rem;
       text-align: center;
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 50%, 
-          var(--color-sage) 100%
-        );
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      transition: all 0.3s ease;
     }
 
     .file-upload-label:not(.disabled):hover .upload-content {
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 30%,
-          var(--color-sage) 60%,
-          var(--color-burgundy) 100%
-        );
+      background-image:
+        linear-gradient(var(--field-fill), var(--field-fill)),
+        var(--field-border-active);
       box-shadow: 0 4px 12px rgba(125, 25, 53, 0.15);
-    }
-
-    /* Dark mode gradient borders */
-    :root.dark-theme .upload-content,
-    [data-theme='dark'] .upload-content {
-      background-color: var(--bg-secondary);
-      background-image: 
-        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-        linear-gradient(135deg, 
-          #B84D66 0%,
-          #E8C4A0 50%,
-          #C9D4C7 100%
-        );
-    }
-
-    :root.dark-theme .file-upload-label:not(.disabled):hover .upload-content,
-    [data-theme='dark'] .file-upload-label:not(.disabled):hover .upload-content {
-      background-color: var(--bg-secondary);
-      background-image: 
-        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-        linear-gradient(135deg, 
-          #B84D66 0%,
-          #E8C4A0 30%,
-          #C9D4C7 60%,
-          #B84D66 100%
-        );
     }
 
     .upload-placeholder {
@@ -188,12 +146,6 @@ import { CommonModule } from '@angular/common';
       margin: 0;
     }
 
-    .upload-hint {
-      font-size: 0.875rem;
-      color: var(--text-secondary, #6b7280);
-      margin: 0;
-    }
-
     .file-preview {
       display: flex;
       align-items: center;
@@ -238,8 +190,6 @@ import { CommonModule } from '@angular/common';
     }
 
     .remove-file {
-      width: 32px;
-      height: 32px;
       background: rgba(239, 68, 68, 0.1);
       color: #ef4444;
       border: none;
@@ -287,10 +237,6 @@ import { CommonModule } from '@angular/common';
         font-size: 0.875rem;
       }
 
-      .upload-hint {
-        font-size: 0.75rem;
-      }
-
       .file-preview {
         padding: 0.75rem;
       }
@@ -324,7 +270,6 @@ import { CommonModule } from '@angular/common';
 export class FileUploadComponent implements ControlValueAccessor {
   @Input() accept = 'image/jpeg,image/png,image/jpg';
   @Input() placeholder = '';
-  @Input() hint = '';
   @Input() maxSize = 5 * 1024 * 1024; // 5MB default
   
   inputId = `file-upload-${Math.random().toString(36).substring(7)}`;

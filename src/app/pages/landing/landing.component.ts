@@ -787,10 +787,8 @@ import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective }
 
     /* Buttons */
     .btn {
-      padding: clamp(0.625rem, 2vw, 0.75rem) clamp(1.25rem, 3vw, 1.5rem);
       border: none;
       border-radius: 0.5rem;
-      font-size: clamp(0.8125rem, 1.8vw, 0.9375rem);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -805,10 +803,6 @@ import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective }
       font-size: clamp(0.9375rem, 2vw, 1rem);
     }
 
-    .btn-lg {
-      padding: clamp(0.75rem, 2.2vw, 1rem) clamp(1.5rem, 3.5vw, 2rem);
-      font-size: clamp(0.875rem, 1.9vw, 1rem);
-    }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, #9B2447 100%);
@@ -838,7 +832,6 @@ import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective }
       background-color: transparent;
       color: var(--color-burgundy, #7D1935);
       border: 2px solid var(--color-burgundy, #7D1935);
-      padding: 0.875rem 2rem;
     }
 
     .btn-outline:hover {

@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
     }
   ],
   template: `
-    <div class="phone-input-wrapper">
+    <div class="phone-input-wrapper gradient-border-field">
       <div class="phone-prefix">+234</div>
       <input
         type="tel"
@@ -30,58 +30,45 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
   styles: [`
-    /* Inherits gradient border from global styles.css */
+    /* Border/fill/focus look comes from .gradient-border-field (styles.css) */
     .phone-input-wrapper {
       display: flex;
       align-items: center;
-      border-radius: var(--border-radius, 0.5rem);
       overflow: hidden;
-      border: 2px solid transparent;
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 50%, 
-          var(--color-sage) 100%
-        );
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      transition: all 0.3s ease;
-    }
-
-    .phone-input-wrapper:focus-within {
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 30%,
-          var(--color-sage) 60%,
-          var(--color-burgundy) 100%
-        );
-      box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
     }
 
     .phone-prefix {
-      padding: 0.75rem 0 0.75rem 0.75rem;
-      /* Ensure prefix uses the same fill as the input */
-      background-color: var(--bg-primary);
+      /* same vertical metrics as .form-control so heights line up */
+      padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-md);
+      line-height: 1.5;
       color: var(--text-primary);
       font-weight: var(--font-semibold, 600);
       font-size: 1rem;
-      border-right: 1px solid var(--border-light);
+      
       user-select: none;
     }
 
+    /* The wrapper owns border, fill and focus ring; the inner input is a bare
+       text box and must not inherit the global field look. */
     .phone-input {
       flex: 1;
-      padding: 0.75rem;
+      min-width: 0;
+      width: auto;
+      padding: var(--spacing-sm) var(--spacing-md);
+      line-height: 1.5;
       border: none;
+      border-radius: 0;
       font-size: 1rem;
       outline: none;
-      /* Match input fill with prefix/wrapper */
-      background-color: var(--bg-primary);
+      background: transparent;
+      box-shadow: none;
       color: var(--text-primary);
       caret-color: var(--text-primary);
+    }
+
+    .phone-input:focus {
+      background: transparent;
+      box-shadow: none;
     }
 
     .phone-input::placeholder {
@@ -97,52 +84,6 @@ import { CommonModule } from '@angular/common';
     .phone-input-wrapper:has(.phone-input:disabled) {
       opacity: 0.6;
       cursor: not-allowed;
-    }
-
-    /* Dark mode - ensure consistent background */
-    :root.dark-theme .phone-input-wrapper,
-    [data-theme='dark'] .phone-input-wrapper {
-      background-color: var(--bg-secondary);
-      background-image: 
-        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-        linear-gradient(135deg, 
-          #B84D66 0%,
-          #E8C4A0 50%,
-          #C9D4C7 100%
-        );
-    }
-
-    /* Dark theme: ensure prefix and input share the same fill */
-    :root.dark-theme .phone-prefix,
-    [data-theme='dark'] .phone-prefix,
-    :root.dark-theme .phone-input,
-    [data-theme='dark'] .phone-input {
-      background-color: var(--bg-secondary);
-    }
-
-    :root.dark-theme .phone-input-wrapper:focus-within,
-    [data-theme='dark'] .phone-input-wrapper:focus-within {
-      background-color: var(--bg-secondary);
-      background-image: 
-        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-        linear-gradient(135deg, 
-          #B84D66 0%,
-          #E8C4A0 30%,
-          #C9D4C7 60%,
-          #B84D66 100%
-        );
-    }
-
-    @media (max-width: 640px) {
-      .phone-prefix {
-        padding: 0.625rem 0 0.625rem 0.625rem;
-        font-size: 0.9375rem;
-      }
-
-      .phone-input {
-        padding: 0.625rem;
-        font-size: 0.9375rem;
-      }
     }
   `]
 })

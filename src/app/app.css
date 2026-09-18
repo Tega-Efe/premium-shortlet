@@ -2,7 +2,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--navbar-height));
   width: 100%;
 }
 
@@ -10,5 +10,5 @@
 main {
   flex: 1;
   width: 100%;
-  min-height: calc(100vh - 70px - 200px); /* viewport - navbar - footer */
+  min-height: calc(100vh - var(--navbar-height) - 200px); /* viewport - navbar - footer */
 }

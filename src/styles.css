@@ -25,35 +25,53 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Responsive Base Font Size - Smaller for space optimization */
-@media (max-width: 767px) {
-  html {
-    font-size: 16px; /* Keep 16px on mobile to prevent iOS auto-zoom on inputs */
+/* Root font-size is locked at 16px at every breakpoint. Density changes go
+   through the --spacing-* / --font-size-* tokens only, so there is one source
+   of density truth instead of two multiplying together. (Inputs also need
+   16px on mobile to prevent iOS auto-zoom.) */
+
+/* ===== Breakpoint scale (single source of truth) =====
+   CSS custom properties can't be used inside @media, so the scale is
+   documented here and every media query in this file must use it:
+     480 / 640 / 768 / 1024 / 1280 / 1536
+   Pair ranges as (max-width: N-1px) / (min-width: Npx), e.g. 767 / 768. */
+
+/* ===== Layout tokens (theme independent) =====
+   --navbar-height is the body offset for the fixed navbar. Full-height
+   sections derive their height from it: calc(100vh - var(--navbar-height)). */
+:root {
+  --navbar-height: 72px;
+
+  /* Control sizing - one scale for every form and button in the app.
+     Inputs are 44px tall (spacing-sm padding + 1.5 line-height + 2px border).
+       --btn-height     standard button (forms, modals, cards, CTAs)
+       --btn-height-sm  compact button (navbar CTA, inline utility actions)
+                        and the square icon-only buttons */
+  --btn-height: 3rem;
+  --btn-height-sm: 2.25rem;
+  --btn-padding-x: 1.5rem;
+  --btn-padding-x-sm: 1rem;
+
+  /* Vertical gap between form fields (every form, incl. admin login) */
+  --field-gap: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --navbar-height: 58px;
   }
 }
 
-@media (min-width: 768px) and (max-width: 1399px) {
-  html {
-    font-size: 14px; /* Tablet sizes */
-  }
-}
-
-@media (min-width: 1400px) {
-  html {
-    font-size: 15px; /* Desktop - slightly smaller */
-  }
-}
-
-@media (min-width: 1920px) {
-  html {
-    font-size: 15.5px; /* Very large screens - slightly reduced */
+@media (min-width: 1024px) {
+  :root {
+    --navbar-height: 62px;
   }
 }
 
 body {
   margin: 0;
   padding: 0;
-  padding-top: 72px; /* Space for fixed navbar - mobile default - increased for maximum breathing room */
+  padding-top: var(--navbar-height); /* Space for fixed navbar */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -112,6 +130,7 @@ body {
   /* Text Colors */
   --text-primary: var(--color-charcoal);
   --text-secondary: var(--color-warm-gray);
+  --text-tertiary: #7A6F64; /* 4.6:1 on cream */
   --text-inverse: var(--color-cream);
 
   /* Border Colors */
@@ -169,6 +188,12 @@ body {
   --z-modal-backdrop: 1040;
   --z-modal: 1050;
   --z-toast: 1080;
+
+  /* Gradient-border field look (see .gradient-border-field) */
+  --field-fill: var(--bg-primary);
+  --field-border: linear-gradient(135deg, var(--color-burgundy) 0%, var(--color-tan) 50%, var(--color-sage) 100%);
+  --field-border-active: linear-gradient(135deg, var(--color-burgundy) 0%, var(--color-tan) 30%, var(--color-sage) 60%, var(--color-burgundy) 100%);
+  --field-ring: rgba(125, 25, 53, 0.1);
 }
 
 /* ===== Dark Theme ===== */
@@ -218,6 +243,7 @@ body {
   /* Text Colors - Improved readability */
   --text-primary: #E5DFD6;
   --text-secondary: #B3A89C;
+  --text-tertiary: #9A8E82;
   --text-inverse: #1F1C18;
 
   /* Border Colors - More visible in dark mode */
@@ -229,6 +255,12 @@ body {
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+
+  /* Gradient-border field look (see .gradient-border-field) */
+  --field-fill: var(--bg-secondary);
+  --field-border: linear-gradient(135deg, #B84D66 0%, #E8C4A0 50%, #C9D4C7 100%);
+  --field-border-active: linear-gradient(135deg, #B84D66 0%, #E8C4A0 30%, #C9D4C7 60%, #B84D66 100%);
+  --field-ring: rgba(184, 77, 102, 0.15);
 }
 
 /* Smooth transition when switching themes */
@@ -289,6 +321,7 @@ body {
     /* Text Colors - Improved readability */
     --text-primary: #E5DFD6;
     --text-secondary: #B3A89C;
+    --text-tertiary: #9A8E82;
     --text-inverse: #1F1C18;
 
     /* Border Colors - More visible in dark mode */
@@ -300,6 +333,12 @@ body {
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.5);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 10px 10px -5px rgba(0, 0, 0, 0.6);
+
+    /* Gradient-border field look (see .gradient-border-field) */
+    --field-fill: var(--bg-secondary);
+    --field-border: linear-gradient(135deg, #B84D66 0%, #E8C4A0 50%, #C9D4C7 100%);
+    --field-border-active: linear-gradient(135deg, #B84D66 0%, #E8C4A0 30%, #C9D4C7 60%, #B84D66 100%);
+    --field-ring: rgba(184, 77, 102, 0.15);
   }
 }
 
@@ -354,7 +393,7 @@ h6 {
   }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1280px) {
   h1 {
     font-size: 2.25rem; /* More controlled on large screens - reduced from 2.5rem */
   }
@@ -412,64 +451,129 @@ button:disabled {
   opacity: 0.6;
 }
 
+/* ---- Button sizing (single source of truth) ---------------------------
+   Component styles keep colour/shadow/hover; they must NOT declare
+   padding, height or font-size for these classes - change --btn-* above.
+   The compact group comes second so `.btn.btn-sm` resolves to compact. */
+.btn,
+.btn-lg,
+.btn-login,
+.btn-save,
+.btn-toggle,
+.btn-toggle-availability,
+.btn-manage-availability,
+.btn-outline,
+.newsletter-btn,
+.pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--btn-height);
+  padding: 0.5rem var(--btn-padding-x);
+  font-size: var(--font-size-base);
+  line-height: 1.25;
+}
+
+.btn-sm,
+.btn-logout,
+.btn-copy,
+.btn-restore,
+.btn-today,
+.btn-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  min-height: var(--btn-height-sm);
+  padding: 0.375rem var(--btn-padding-x-sm);
+  font-size: var(--font-size-sm);
+  line-height: 1.25;
+}
+
+/* Icon-only buttons: square, same size as the compact tier */
+.favorite-btn,
+.nav-btn,
+.btn-icon,
+.remove-file {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--btn-height-sm);
+  height: var(--btn-height-sm);
+  padding: 0;
+  flex-shrink: 0;
+}
+
 /* ===== Forms ===== */
 
 /* Form Groups */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--field-gap);
 }
 
 .form-group:last-child {
   margin-bottom: 0;
 }
 
-/* Input Fields with Gradient Borders */
-input,
-textarea,
-select,
-.form-control {
-  font-family: inherit;
-  font-size: var(--font-size-base);
-  line-height: 1.5;
-  color: var(--text-primary);
-  background: var(--bg-primary);
+/* ---- Gradient-border field look --------------------------------------
+   Single definition of the burgundy/tan/sage border. Used by:
+     - .form-control and native text-like inputs/textarea/select
+     - custom field wrappers (.phone-input-wrapper, .upload-content) via
+       the .gradient-border-field class
+   Colours, fill and the dark-mode variant all come from the --field-* tokens,
+   so there is no per-component dark override to keep in sync.
+
+   Bare tag selectors sit inside :where() (specificity 0) and skip
+   checkbox/radio/range/file/etc., so a global edit can no longer leak into
+   custom components or non-text inputs; any class always wins. */
+.gradient-border-field,
+.form-control,
+:where(
+  input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'],
+            [type='hidden'], [type='submit'], [type='button'], [type='reset'],
+            [type='color'], [type='image']),
+  textarea,
+  select
+) {
   border: 2px solid transparent;
   border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  width: 100%;
-  transition: all var(--transition-fast);
-  position: relative;
-  background-clip: padding-box;
-  
-  /* Beautiful gradient border for light mode */
-  background-image: 
-    linear-gradient(var(--bg-primary), var(--bg-primary)),
-    linear-gradient(135deg, 
-      var(--color-burgundy) 0%, 
-      var(--color-tan) 50%, 
-      var(--color-sage) 100%
-    );
+  background-color: var(--field-fill);
+  background-image:
+    linear-gradient(var(--field-fill), var(--field-fill)),
+    var(--field-border);
   background-origin: border-box;
   background-clip: padding-box, border-box;
+  transition: all var(--transition-fast);
 }
 
-input:focus,
-textarea:focus,
-select:focus,
-.form-control:focus {
+.gradient-border-field:focus-within,
+.form-control:focus,
+:where(input, textarea, select):focus {
   outline: none;
   border-color: transparent;
-  box-shadow: 0 0 0 4px rgba(125, 25, 53, 0.1);
-  
-  /* Enhanced gradient on focus */
-  background-image: 
-    linear-gradient(var(--bg-primary), var(--bg-primary)),
-    linear-gradient(135deg, 
-      var(--color-burgundy) 0%, 
-      var(--color-tan) 30%,
-      var(--color-sage) 60%,
-      var(--color-burgundy) 100%
-    );
+  box-shadow: 0 0 0 4px var(--field-ring);
+  background-image:
+    linear-gradient(var(--field-fill), var(--field-fill)),
+    var(--field-border-active);
+}
+
+/* Metrics for real form controls (wrappers set their own padding) */
+.form-control,
+:where(
+  input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'],
+            [type='hidden'], [type='submit'], [type='button'], [type='reset'],
+            [type='color'], [type='image']),
+  textarea,
+  select
+) {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: 1.5rem; /* fixed, so every field is exactly 44px regardless of font-size */
+  color: var(--text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  width: 100%;
+  position: relative;
 }
 
 input:disabled,
@@ -506,52 +610,6 @@ small {
   margin-top: 0.375rem;
   font-size: 0.875rem;
   color: var(--text-secondary);
-}
-
-/* Dark mode specific input styling */
-:root.dark-theme input,
-:root.dark-theme textarea,
-:root.dark-theme select,
-:root.dark-theme .form-control,
-[data-theme='dark'] input,
-[data-theme='dark'] textarea,
-[data-theme='dark'] select,
-[data-theme='dark'] .form-control {
-  background-color: var(--bg-secondary);
-  color: var(--text-primary);
-  
-  /* Dark mode gradient border */
-  background-image: 
-    linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-    linear-gradient(135deg, 
-      #B84D66 0%,
-      #E8C4A0 50%,
-      #C9D4C7 100%
-    );
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-}
-
-:root.dark-theme input:focus,
-:root.dark-theme textarea:focus,
-:root.dark-theme select:focus,
-:root.dark-theme .form-control:focus,
-[data-theme='dark'] input:focus,
-[data-theme='dark'] textarea:focus,
-[data-theme='dark'] select:focus,
-[data-theme='dark'] .form-control:focus {
-  background-color: var(--bg-secondary);
-  box-shadow: 0 0 0 4px rgba(184, 77, 102, 0.15);
-  
-  /* Enhanced dark mode gradient on focus */
-  background-image: 
-    linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-    linear-gradient(135deg, 
-      #B84D66 0%,
-      #E8C4A0 30%,
-      #C9D4C7 60%,
-      #B84D66 100%
-    );
 }
 
 :root.dark-theme input::placeholder,
@@ -662,336 +720,23 @@ small {
   background-clip: text;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  line-height: 1.6;
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-/* ===== CSS Custom Properties (Design Tokens) ===== */
-:root {
-  /* Primary Colors */
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --primary-light: #60a5fa;
-  --primary-lighter: #dbeafe;
-
-  /* Secondary Colors */
-  --secondary: #8b5cf6;
-  --secondary-dark: #7c3aed;
-  --secondary-light: #a78bfa;
-
-  /* Success/Error/Warning */
-  --success: #10b981;
-  --success-light: #d1fae5;
-  --error: #ef4444;
-  --error-light: #fee2e2;
-  --warning: #f59e0b;
-  --warning-light: #fef3c7;
-  --info: #8B7355;
-  --info-light: #E8E0D5;
-
-  /* Neutral Colors */
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
-
-  /* Background Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: var(--gray-50);
-  --bg-tertiary: var(--gray-100);
-  --bg-overlay: rgba(0, 0, 0, 0.5);
-
-  /* Text Colors */
-  --text-primary: var(--gray-900);
-  --text-secondary: var(--gray-600);
-  --text-tertiary: var(--gray-500);
-  --text-inverse: #ffffff;
-
-  /* Border Colors */
-  --border-light: var(--gray-200);
-  --border-medium: var(--gray-300);
-  --border-dark: var(--gray-400);
-
-  /* Shadow Values */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-
-  /* Spacing Scale */
-  --spacing-xs: 0.25rem;   /* 4px */
-  --spacing-sm: 0.5rem;    /* 8px */
-  --spacing-md: 1rem;      /* 16px */
-  --spacing-lg: 1.5rem;    /* 24px */
-  --spacing-xl: 2rem;      /* 32px */
-  --spacing-2xl: 3rem;     /* 48px */
-  --spacing-3xl: 4rem;     /* 64px */
-
-  /* Border Radius */
-  --radius-sm: 0.25rem;    /* 4px */
-  --radius-md: 0.5rem;     /* 8px */
-  --radius-lg: 0.75rem;    /* 12px */
-  --radius-xl: 1rem;       /* 16px */
-  --radius-full: 9999px;
-
-  /* Typography */
-  --font-size-xs: 0.75rem;     /* 12px */
-  --font-size-sm: 0.875rem;    /* 14px */
-  --font-size-base: 1rem;      /* 16px */
-  --font-size-lg: 1.125rem;    /* 18px */
-  --font-size-xl: 1.25rem;     /* 20px */
-  --font-size-2xl: 1.5rem;     /* 24px */
-  --font-size-3xl: 1.875rem;   /* 30px */
-  --font-size-4xl: 2.25rem;    /* 36px */
-  --font-size-5xl: 3rem;       /* 48px */
-
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-
-  /* Line Heights */
-  --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
-
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-base: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
-
-  /* Z-Index Scale */
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
-  --z-toast: 1080;
-
-  /* Container Widths */
-  --container-sm: 640px;
-  --container-md: 768px;
-  --container-lg: 1024px;
-  --container-xl: 1280px;
-  --container-2xl: 1536px;
-}
-
-/* ===== Typography ===== */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
-}
-
-h1 {
-  font-size: var(--font-size-4xl);
-}
-
-h2 {
-  font-size: var(--font-size-3xl);
-}
-
-h3 {
-  font-size: var(--font-size-2xl);
-}
-
-h4 {
-  font-size: var(--font-size-xl);
-}
-
-h5 {
-  font-size: var(--font-size-lg);
-}
-
-h6 {
-  font-size: var(--font-size-base);
-}
-
-p {
-  margin-bottom: var(--spacing-md);
-  line-height: var(--line-height-relaxed);
-  color: var(--text-secondary);
-}
-
-a {
-  color: var(--primary);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-a:hover {
-  color: var(--primary-dark);
-  text-decoration: underline;
-}
-
-/* ===== Lists ===== */
-ul, ol {
-  margin-bottom: var(--spacing-md);
-  padding-left: var(--spacing-lg);
-}
-
-li {
-  margin-bottom: var(--spacing-xs);
-  color: var(--text-secondary);
-}
-
-/* ===== Images ===== */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* ===== Buttons ===== */
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  background: none;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* ===== Forms ===== */
-input,
-textarea,
-select {
-  font-family: inherit;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  color: var(--text-primary);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  width: 100%;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-lighter);
-}
-
-input:disabled,
-textarea:disabled,
-select:disabled {
-  background-color: var(--gray-100);
-  cursor: not-allowed;
-}
-
-label {
-  display: block;
-  margin-bottom: var(--spacing-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
-  font-size: var(--font-size-sm);
-}
-
-/* ===== Scrollbar Styling ===== */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--gray-100);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--gray-400);
-  border-radius: var(--radius-full);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gray-500);
-}
-
-/* ===== Selection Styling ===== */
-::selection {
-  background-color: var(--primary-lighter);
-  color: var(--text-primary);
-}
-
-::-moz-selection {
-  background-color: var(--primary-lighter);
-  color: var(--text-primary);
-}
-
-/* ===== Focus Visible (Accessibility) ===== */
-:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-/* ===== Responsive Body Padding ===== */
-@media (min-width: 768px) {
-  body {
-    padding-top: 58px; /* Tablet/Desktop navbar - reduced from 64px */
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    padding-top: 62px; /* Large screens navbar - reduced from 68px */
-  }
-}
-
-/* ===== Page Content Spacing (Prevents navbar overlap) ===== */
+/* ===== Page Content Spacing (Prevents navbar overlap) =====
+   Merged from the removed duplicate block. body's padding-top comes from
+   --navbar-height above; these add breathing room after the navbar. */
 .container,
 .page-container,
 main,
 [class*="content"] {
-  margin-top: var(--spacing-md); /* Additional spacing after navbar */
+  margin-top: var(--spacing-md);
 }
 
 /* First section after navbar - extra spacing on mobile */
 section:first-of-type,
 .hero-section,
 .landing-section {
-  padding-top: var(--spacing-lg); /* Extra breathing room on mobile */
+  padding-top: var(--spacing-lg);
 }
 
-/* Reduce spacing on larger screens */
 @media (min-width: 768px) {
   .container,
   .page-container,
@@ -1011,6 +756,6 @@ section:first-of-type,
   section:first-of-type,
   .hero-section,
   .landing-section {
-    padding-top: var(--spacing-sm); /* Reduced from var(--spacing-md) */
+    padding-top: var(--spacing-sm);
   }
 }

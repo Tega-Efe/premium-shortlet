@@ -298,7 +298,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .pagination-btn {
-      padding: 0.75rem 1.5rem;
       border: 2px solid var(--border-color);
       border-radius: 0.5rem;
       background: var(--bg-secondary);
@@ -310,7 +309,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       align-items: center;
       gap: 0.4rem;
       font-family: inherit;
-      font-size: 0.875rem;
     }
 
     .pagination-btn:hover:not(:disabled) {
@@ -409,7 +407,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     .btn {
-      padding: clamp(0.75rem, 2vw, 0.875rem) clamp(1.5rem, 3vw, 1.75rem); /* Responsive padding */
       border: none;
       border-radius: 0.5rem;
       font-weight: 600;
@@ -419,7 +416,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       align-items: center;
       gap: 0.625rem;
       font-family: inherit;
-      font-size: clamp(0.875rem, 1.8vw, 1rem); /* Responsive font size */
     }
 
     .btn i {
@@ -668,9 +664,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
         flex-wrap: wrap;
       }
 
-      .pagination-btn {
-        padding: 0.75rem 1.25rem;
-      }
 
       .pagination-pages {
         order: 3;
@@ -755,6 +748,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       }
     }
 
+    /* The modal body already insets content by 1.5rem on phones; drop the
+       extra 1rem here so the form lines up with the apartment summary card. */
+    @media (max-width: 480px) {
+      .booking-form-container {
+        padding: 0;
+      }
+    }
+
     /* Unavailable Modal Styles */
     .unavailable-modal-content {
       text-align: center;
@@ -805,10 +806,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       gap: 1rem;
     }
 
-    .unavailable-actions .btn {
-      padding: 0.875rem 2rem;
-      font-size: 1rem;
-    }
 
     /* Booking Confirmation Modal Styles */
     .confirmation-modal-content {
@@ -995,10 +992,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       color: white;
       border: none;
       border-radius: var(--radius-sm);
-      padding: 0.375rem 0.75rem;
       cursor: pointer;
       transition: all 0.2s ease;
-      font-size: 0.875rem;
     }
 
     .btn-copy:hover {
@@ -1084,10 +1079,6 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       margin-top: 1.5rem;
     }
 
-    .confirmation-actions .btn {
-      padding: 0.875rem 2.5rem;
-      font-size: 1rem;
-    }
 
     @keyframes scaleIn {
       from {

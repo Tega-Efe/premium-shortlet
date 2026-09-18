@@ -240,8 +240,6 @@ import { CommonModule } from '@angular/common';
     }
 
     .nav-btn {
-      width: 32px;
-      height: 32px;
       background: transparent;
       border: none;
       border-radius: 0.375rem;
@@ -345,10 +343,8 @@ import { CommonModule } from '@angular/common';
     .btn-today,
     .btn-clear {
       flex: 1;
-      padding: 0.5rem;
       border: none;
       border-radius: 0.375rem;
-      font-size: 0.875rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -413,8 +409,6 @@ import { CommonModule } from '@angular/common';
       }
 
       .nav-btn {
-        width: 28px;
-        height: 28px;
         font-size: 0.875rem;
       }
 
@@ -431,11 +425,7 @@ import { CommonModule } from '@angular/common';
         padding-top: 0.625rem;
       }
 
-      .btn-today,
-      .btn-clear {
-        padding: 0.4375rem;
-        font-size: 0.8125rem;
-      }
+      
     }
   `]
 })

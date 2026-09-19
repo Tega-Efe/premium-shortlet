@@ -13,17 +13,9 @@ import {
   Timestamp,
   CollectionReference,
   DocumentData,
-  writeBatch
+  writeBatch,
+  runTransaction
 } from '@angular/fire/firestore';
-// FIREBASE STORAGE - Currently commented out
-// Uncomment these imports when ready to enable ID photo upload functionality
-// import { 
-//   Storage, 
-//   ref, 
-//   uploadBytes, 
-//   getDownloadURL, 
-//   deleteObject 
-// } from '@angular/fire/storage';
 import { Observable, from, throwError, of, forkJoin } from 'rxjs';
 import { map, switchMap, catchError, tap } from 'rxjs/operators';
 import { 
@@ -34,33 +26,33 @@ import {
 } from '../interfaces/simplified-booking.interface';
 import { Apartment, DateRange } from '../interfaces/apartment.interface';
 import { EmailNotificationService } from './email-notification.service';
+import { StorageService } from './storage.service';
+import { environment } from '../../../environments/environment';
 
 /**
  * Simplified Booking Service
  * Handles single apartment booking operations with Firestore
  * 
  * Features:
- * - Create bookings (with optional ID photo upload - currently disabled)
+ * - Create bookings, with optional ID photo upload to Firebase Storage
  * - Check apartment availability
  * - Approve/reject bookings with automatic date blocking
  * - Send email notifications via Django API
  * - Toggle apartment availability (admin)
  * - Track booked dates per apartment
- * 
- * FIREBASE STORAGE STATUS: DISABLED
- * To enable ID photo upload:
- * 1. Uncomment Storage imports at the top of this file
- * 2. Uncomment the 'private storage' injection in constructor
- * 3. Uncomment the uploadIdPhoto() method
- * 4. Uncomment the ID photo upload logic in createBooking()
+ *
+ * CONCURRENCY: createBooking() re-checks availability and reserves the dates
+ * inside a single Firestore transaction (see the private helper below), so two
+ * guests submitting overlapping dates at the same time can no longer both
+ * succeed — the second transaction re-reads the just-written state and fails
+ * with a clear "no longer available" error instead of silently overwriting it.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class SimplifiedBookingService {
   private firestore = inject(Firestore);
-  // FIREBASE STORAGE - Uncomment when ready
-  // private storage = inject(Storage);
+  private storageService = inject(StorageService);
   private emailService = inject(EmailNotificationService);
   
   // Firestore collections
@@ -78,8 +70,8 @@ export class SimplifiedBookingService {
     isApartmentAvailable: true
   });
   
-  // Admin email for notifications (TODO: Move to environment config)
-  private readonly ADMIN_EMAIL = 'admin@shortletconnect.com';
+  // Admin email for notifications — configured in environment.ts / environment.prod.ts
+  private readonly ADMIN_EMAIL = environment.emailApi?.adminEmail ?? 'admin@shortletconnect.com';
   
   constructor() {
     this.bookingsCollection = collection(this.firestore, 'simplified-bookings');
@@ -90,135 +82,168 @@ export class SimplifiedBookingService {
   }
   
   /**
-   * Create a new booking with optional ID photo upload
-   * 
-   * STORAGE STATUS: Currently disabled
-   * ID photos are NOT uploaded until Firebase Storage is configured
-   * The formData.idPhoto file is logged but not saved
+   * Create a new booking, with optional ID photo upload to Firebase Storage.
+   *
+   * Availability is re-checked and the dates are reserved inside a single
+   * Firestore transaction (see runBookingTransaction below), so this is safe
+   * against two guests submitting overlapping dates at the same time.
    */
   createBooking(formData: BookingFormData, apartmentId: string, pricePerNight?: number): Observable<SimplifiedBooking> {
     this.isLoading.set(true);
-    
-    // First, fetch the apartment to get its title and verify it exists
-    const apartmentRef = doc(this.firestore, 'apartments', apartmentId);
-    
-    return from(getDoc(apartmentRef)).pipe(
-      switchMap(apartmentDoc => {
-        if (!apartmentDoc.exists()) {
+
+    // Quick, non-authoritative pre-check so an obviously-unavailable request
+    // fails fast (and skips the photo upload) with a clear message. The real
+    // enforcement happens inside the transaction below, which re-checks the
+    // same thing against the live document at commit time.
+    return this.checkApartmentAvailabilityForDates(apartmentId, formData.checkInDate, formData.checkOutDate).pipe(
+      switchMap(isAvailable => {
+        if (!isAvailable) {
           this.isLoading.set(false);
-          return throwError(() => new Error('Apartment not found'));
+          return throwError(() => new Error('Apartment is not available for the selected dates'));
         }
-        
-        const apartment = apartmentDoc.data() as Apartment;
-        const apartmentTitle = apartment.title;
-        
-        // Check if apartment is available for the selected dates
-        return this.checkApartmentAvailabilityForDates(apartmentId, formData.checkInDate, formData.checkOutDate).pipe(
-          switchMap(isAvailable => {
-            if (!isAvailable) {
-              this.isLoading.set(false);
-              return throwError(() => new Error('Apartment is not available for the selected dates'));
-            }
-            
-            // Calculate pricing if provided
-            const calculatedPricePerNight = pricePerNight || (formData.bookingOption === 'one-room' ? 25000 : 45000);
-            const totalPrice = calculatedPricePerNight * formData.numberOfNights;
-            
-            const booking: SimplifiedBooking = {
-              apartmentId: apartmentId,
-              apartmentTitle: apartmentTitle,
-              guestInfo: {
-                name: formData.name,
-                email: formData.email,
-                phone: formData.phone,
-                address: formData.address
-                // ID photo fields will be added when storage is enabled
-              },
-              bookingDetails: {
-                bookingOption: formData.bookingOption,
-                checkInDate: formData.checkInDate,
-                checkOutDate: formData.checkOutDate,
-                numberOfNights: formData.numberOfNights,
-                numberOfGuests: formData.numberOfGuests
-              },
-              pricing: {
-                pricePerNight: calculatedPricePerNight,
-                totalPrice: totalPrice
-              },
-              status: 'pending',
-              createdAt: new Date().toISOString()
-            };
-            
-            // ============================================================
-            // FIREBASE STORAGE - ID PHOTO UPLOAD (CURRENTLY DISABLED)
-            // ============================================================
-            // When ready to enable storage, uncomment this block and comment out the else block
-            
-            /* ENABLE STORAGE - UNCOMMENT THIS BLOCK
-            if (formData.idPhoto) {
-              return this.uploadIdPhoto(formData.idPhoto, formData.email).pipe(
-                switchMap(({ url, path }) => {
-                  booking.guestInfo.idPhotoUrl = url;
-                  booking.guestInfo.idPhotoPath = path;
-                  return this.saveBookingToFirestore(booking);
-                }),
-                tap(savedBooking => {
-                  this.sendAdminNotification(savedBooking);
-                  this.isLoading.set(false);
-                }),
-                catchError(error => {
-                  this.isLoading.set(false);
-                  return throwError(() => error);
-                })
-              );
-            } else {
-              // No ID photo, save directly
-              return this.saveBookingToFirestore(booking).pipe(
-                tap(savedBooking => {
-                  this.sendAdminNotification(savedBooking);
-                  this.isLoading.set(false);
-                }),
-                catchError(error => {
-                  this.isLoading.set(false);
-                  return throwError(() => error);
-                })
-              );
-            }
-            END ENABLE STORAGE */
-            
-            // ============================================================
-            // NO STORAGE VERSION (CURRENTLY ACTIVE)
-            // ============================================================
-            // Log ID photo info if provided, but don't upload
-            if (formData.idPhoto) {
-              console.warn('⚠️ ID photo provided but not uploaded. Firebase Storage not configured.');
-              console.warn('📝 File name:', formData.idPhoto.name);
-              console.warn('📏 File size:', (formData.idPhoto.size / 1024 / 1024).toFixed(2), 'MB');
-              console.warn('💡 To enable uploads, uncomment the Storage section in simplified-booking.service.ts');
-            }
-            
-            // Save booking without ID photo
-            return this.saveBookingToFirestore(booking).pipe(
+
+        // Upload the ID photo first (if provided). Storage writes can't be
+        // part of a Firestore transaction, so this happens outside it; if the
+        // transaction below then fails because another booking just took the
+        // dates, we clean the uploaded file back up (see catchError).
+        const uploadStep: Observable<{ idPhotoUrl?: string; idPhotoPath?: string }> = formData.idPhoto
+          ? this.uploadIdPhoto(formData.idPhoto, formData.email)
+          : of({});
+
+        return uploadStep.pipe(
+          switchMap(photoResult =>
+            this.runBookingTransaction(formData, apartmentId, pricePerNight, photoResult).pipe(
               tap(savedBooking => {
-                console.log('✅ Booking saved to Firestore (without ID photo)');
+                console.log('✅ Booking saved and dates blocked atomically');
                 this.sendAdminNotification(savedBooking);
                 this.isLoading.set(false);
               }),
               catchError(error => {
-                console.error('❌ Error saving booking:', error);
                 this.isLoading.set(false);
-                return throwError(() => error);
+
+                // Roll back the photo upload if the booking itself didn't go through
+                if (photoResult.idPhotoPath) {
+                  this.storageService.deleteFile(photoResult.idPhotoPath).catch(() => {
+                    console.warn('⚠️ Could not clean up orphaned ID photo upload:', photoResult.idPhotoPath);
+                  });
+                }
+
+                const message = error?.message === 'DATES_NO_LONGER_AVAILABLE'
+                  ? 'Sorry, those dates were just booked by someone else. Please choose different dates.'
+                  : (error?.message || 'Failed to create booking');
+                return throwError(() => new Error(message));
               })
-            );
-            // ============================================================
-            // END NO STORAGE VERSION
-            // ============================================================
-          })
+            )
+          )
         );
       }),
       catchError(error => {
         this.isLoading.set(false);
         return throwError(() => error);
+      })
+    );
+  }
+
+  /**
+   * Atomically re-checks availability and writes the booking + updated
+   * bookedDates in one Firestore transaction. If another booking commits
+   * first for overlapping dates, this transaction fails with
+   * 'DATES_NO_LONGER_AVAILABLE' instead of silently corrupting the array.
+   */
+  private runBookingTransaction(
+    formData: BookingFormData,
+    apartmentId: string,
+    pricePerNight: number | undefined,
+    photoResult: { idPhotoUrl?: string; idPhotoPath?: string }
+  ): Observable<SimplifiedBooking> {
+    const apartmentRef = doc(this.firestore, 'apartments', apartmentId);
+    const newBookingRef = doc(this.bookingsCollection);
+
+    return from(runTransaction(this.firestore, async (tx) => {
+      const apartmentSnap = await tx.get(apartmentRef);
+
+      if (!apartmentSnap.exists()) {
+        throw new Error('Apartment not found');
+      }
+
+      const apartment = apartmentSnap.data() as Apartment;
+      const requestedCheckIn = new Date(formData.checkInDate);
+      const requestedCheckOut = new Date(formData.checkOutDate);
+
+      const overlapsAny = (ranges: DateRange[] = []) =>
+        ranges.some(range =>
+          this.datesOverlap(requestedCheckIn, requestedCheckOut, new Date(range.start), new Date(range.end))
+        );
+
+      const isAvailable =
+        apartment.availability.isAvailable &&
+        !overlapsAny(apartment.availability.bookedDates) &&
+        !overlapsAny(apartment.availability.blackoutDates);
+
+      if (!isAvailable) {
+        throw new Error('DATES_NO_LONGER_AVAILABLE');
+      }
+
+      const calculatedPricePerNight = pricePerNight || (formData.bookingOption === 'one-room' ? 25000 : 45000);
+      const totalPrice = calculatedPricePerNight * formData.numberOfNights;
+
+      const booking: SimplifiedBooking = {
+        apartmentId,
+        apartmentTitle: apartment.title,
+        guestInfo: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          ...(photoResult.idPhotoUrl && { idPhotoUrl: photoResult.idPhotoUrl }),
+          ...(photoResult.idPhotoPath && { idPhotoPath: photoResult.idPhotoPath })
+        },
+        bookingDetails: {
+          bookingOption: formData.bookingOption,
+          checkInDate: formData.checkInDate,
+          checkOutDate: formData.checkOutDate,
+          numberOfNights: formData.numberOfNights,
+          numberOfGuests: formData.numberOfGuests
+        },
+        pricing: {
+          pricePerNight: calculatedPricePerNight,
+          totalPrice
+        },
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      };
+
+      const updatedBookedDates: DateRange[] = [
+        ...(apartment.availability.bookedDates || []),
+        { start: formData.checkInDate, end: formData.checkOutDate }
+      ];
+
+      tx.set(newBookingRef, booking);
+      tx.update(apartmentRef, {
+        'availability.bookedDates': updatedBookedDates,
+        'availability.status': this.determineApartmentStatus(updatedBookedDates, apartment.availability.blackoutDates),
+        updatedAt: Timestamp.now()
+      });
+
+      return { ...booking, id: newBookingRef.id };
+    }));
+  }
+
+  /**
+   * Upload a guest's ID photo to Firebase Storage via the shared StorageService.
+   * A failed upload doesn't block the booking — it just proceeds without a photo.
+   */
+  private uploadIdPhoto(file: File, guestEmail: string): Observable<{ idPhotoUrl?: string; idPhotoPath?: string }> {
+    const timestamp = Date.now();
+    const sanitizedEmail = guestEmail.replace(/[^a-zA-Z0-9]/g, '_');
+    const extension = file.name.split('.').pop() || 'jpg';
+    const path = `booking-ids/${sanitizedEmail}_${timestamp}.${extension}`;
+
+    return from(this.storageService.uploadFile(path, file)).pipe(
+      map(url => ({ idPhotoUrl: url, idPhotoPath: path })),
+      catchError(error => {
+        console.error('❌ Failed to upload ID photo, continuing booking without it:', error);
+        return of({});
       })
     );
   }
@@ -588,63 +613,6 @@ export class SimplifiedBookingService {
     );
   }
   
-  /**
-   * Block apartment dates when booking is created (immediately, not waiting for approval)
-   */
-  blockApartmentDates(
-    apartmentId: string, 
-    checkInDate: string, 
-    checkOutDate: string
-  ): Observable<void> {
-    console.log('🔒 Blocking apartment dates:', { apartmentId, checkInDate, checkOutDate });
-    
-    const apartmentRef = doc(this.firestore, 'apartments', apartmentId);
-    
-    return from(getDoc(apartmentRef)).pipe(
-      switchMap(docSnap => {
-        if (!docSnap.exists()) {
-          console.error('❌ Apartment not found for blocking');
-          throw new Error('Apartment not found');
-        }
-        
-        const apartment = docSnap.data() as Apartment;
-        
-        // Store dates as ISO strings to ensure consistency
-        const newBookedDate: DateRange = {
-          start: checkInDate,  // Store as string, not Date object
-          end: checkOutDate
-        };
-        
-        const existingBookedDates = apartment.availability.bookedDates || [];
-        const updatedBookedDates = [...existingBookedDates, newBookedDate];
-        
-        console.log('📅 Updating booked dates:', {
-          existingCount: existingBookedDates.length,
-          newCount: updatedBookedDates.length,
-          newBooking: {
-            start: newBookedDate.start,
-            end: newBookedDate.end
-          }
-        });
-        
-        // Update apartment with new booked dates
-        const updates = {
-          'availability.bookedDates': updatedBookedDates,
-          'availability.status': this.determineApartmentStatus(updatedBookedDates),
-          updatedAt: Timestamp.now()
-        };
-        
-        return from(updateDoc(apartmentRef, updates)).pipe(
-          tap(() => console.log('✅ Apartment dates blocked successfully'))
-        );
-      }),
-      map(() => undefined),
-      catchError(error => {
-        console.error('❌ Error blocking apartment dates:', error);
-        throw error;
-      })
-    );
-  }
   
   /**
    * Unblock apartment dates when a booking is cancelled or rejected
@@ -655,52 +623,48 @@ export class SimplifiedBookingService {
     checkOutDate: string
   ): Observable<void> {
     console.log('🔓 Unblocking apartment dates:', { apartmentId, checkInDate, checkOutDate });
-    
+
     const apartmentRef = doc(this.firestore, 'apartments', apartmentId);
-    
-    return from(getDoc(apartmentRef)).pipe(
-      switchMap(docSnap => {
-        if (!docSnap.exists()) {
-          console.error('❌ Apartment not found for unblocking');
-          throw new Error('Apartment not found');
+
+    // Transactional read-modify-write: guards against this running at the
+    // same moment as another createBooking()/rejectBooking() transaction on
+    // the same apartment (e.g. two admins rejecting bookings back to back).
+    return from(runTransaction(this.firestore, async (tx) => {
+      const docSnap = await tx.get(apartmentRef);
+
+      if (!docSnap.exists()) {
+        console.error('❌ Apartment not found for unblocking');
+        throw new Error('Apartment not found');
+      }
+
+      const apartment = docSnap.data() as Apartment;
+      const existingBookedDates = apartment.availability.bookedDates || [];
+
+      const updatedBookedDates = existingBookedDates.filter(bookedDate => {
+        const bookedStart = typeof bookedDate.start === 'string' ? bookedDate.start : bookedDate.start.toISOString?.() || '';
+        const bookedEnd = typeof bookedDate.end === 'string' ? bookedDate.end : bookedDate.end.toISOString?.() || '';
+        const isMatchingRange = bookedStart === checkInDate && bookedEnd === checkOutDate;
+
+        if (isMatchingRange) {
+          console.log('🗑️ Removing booked date range:', { start: bookedStart, end: bookedEnd });
         }
-        
-        const apartment = docSnap.data() as Apartment;
-        const existingBookedDates = apartment.availability.bookedDates || [];
-        
-        // Remove the matching date range
-        const updatedBookedDates = existingBookedDates.filter(bookedDate => {
-          const bookedStart = typeof bookedDate.start === 'string' ? bookedDate.start : bookedDate.start.toISOString?.() || '';
-          const bookedEnd = typeof bookedDate.end === 'string' ? bookedDate.end : bookedDate.end.toISOString?.() || '';
-          
-          // Check if this is the date range to remove
-          const isMatchingRange = bookedStart === checkInDate && bookedEnd === checkOutDate;
-          
-          if (isMatchingRange) {
-            console.log('🗑️ Removing booked date range:', { start: bookedStart, end: bookedEnd });
-          }
-          
-          return !isMatchingRange;
-        });
-        
-        console.log('📅 Updating after unblocking:', {
-          previousCount: existingBookedDates.length,
-          newCount: updatedBookedDates.length,
-          removed: existingBookedDates.length - updatedBookedDates.length
-        });
-        
-        // Update apartment with filtered booked dates
-        const updates = {
-          'availability.bookedDates': updatedBookedDates,
-          'availability.status': this.determineApartmentStatus(updatedBookedDates),
-          updatedAt: Timestamp.now()
-        };
-        
-        return from(updateDoc(apartmentRef, updates)).pipe(
-          tap(() => console.log('✅ Apartment dates unblocked successfully'))
-        );
-      }),
-      map(() => undefined),
+
+        return !isMatchingRange;
+      });
+
+      console.log('📅 Updating after unblocking:', {
+        previousCount: existingBookedDates.length,
+        newCount: updatedBookedDates.length,
+        removed: existingBookedDates.length - updatedBookedDates.length
+      });
+
+      tx.update(apartmentRef, {
+        'availability.bookedDates': updatedBookedDates,
+        'availability.status': this.determineApartmentStatus(updatedBookedDates, apartment.availability.blackoutDates),
+        updatedAt: Timestamp.now()
+      });
+    })).pipe(
+      tap(() => console.log('✅ Apartment dates unblocked successfully')),
       catchError(error => {
         console.error('❌ Error unblocking apartment dates:', error);
         throw error;
@@ -886,66 +850,6 @@ export class SimplifiedBookingService {
     }
     
     return 'available';
-  }
-  
-  /**
-   * Upload ID photo to Firebase Storage
-   * 
-   * CURRENTLY DISABLED - Uncomment when Firebase Storage is configured
-   * 
-   * To enable:
-   * 1. Uncomment Storage imports at the top of this file
-   * 2. Uncomment 'private storage = inject(Storage);' in constructor
-   * 3. Uncomment this method
-   * 4. Uncomment the storage upload logic in createBooking()
-   */
-  /*
-  private uploadIdPhoto(file: File, userEmail: string): Observable<{ url: string; path: string }> {
-    const timestamp = Date.now();
-    const sanitizedEmail = userEmail.replace(/[^a-zA-Z0-9]/g, '_');
-    const filePath = `booking-ids/${sanitizedEmail}_${timestamp}.jpg`;
-    const storageRef = ref(this.storage, filePath);
-    
-    return from(uploadBytes(storageRef, file)).pipe(
-      switchMap(() => from(getDownloadURL(storageRef))),
-      map(url => ({ url, path: filePath }))
-    );
-  }
-  */
-  
-  /**
-   * Save booking to Firestore and IMMEDIATELY block the dates
-   */
-  private saveBookingToFirestore(booking: SimplifiedBooking): Observable<SimplifiedBooking> {
-    return from(addDoc(this.bookingsCollection, booking)).pipe(
-      switchMap(docRef => {
-        const savedBooking = {
-          ...booking,
-          id: docRef.id
-        };
-        
-        // IMMEDIATELY block dates when booking is created (don't wait for approval)
-        console.log('🔒 Immediately blocking dates for new booking:', {
-          apartmentId: booking.apartmentId,
-          checkIn: booking.bookingDetails.checkInDate,
-          checkOut: booking.bookingDetails.checkOutDate
-        });
-        
-        return this.blockApartmentDates(
-          booking.apartmentId,
-          booking.bookingDetails.checkInDate,
-          booking.bookingDetails.checkOutDate
-        ).pipe(
-          map(() => savedBooking),
-          catchError(error => {
-            console.error('❌ Failed to block dates, but booking was saved:', error);
-            // Return the booking even if date blocking fails
-            // Admin will need to manually manage availability
-            return of(savedBooking);
-          })
-        );
-      })
-    );
   }
   
   /**

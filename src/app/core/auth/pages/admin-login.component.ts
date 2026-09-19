@@ -25,14 +25,9 @@ import { NotificationService } from '../../services/notification.service';
         <div class="login-card">
           <!-- Logo/Brand Section -->
           <div class="login-header">
-            <div class="brand-icon">
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/restless-society.firebasestorage.app/o/Osaka%20Apartments-logo.PNG?alt=media&token=529e360d-23a4-43e9-8ee2-d44763273e22"
-                alt="Osaka apartments logo"
-              />
-            </div>
-            <h1 class="login-title">Admin Portal</h1>
-            <p class="login-subtitle">Sign in to access the dashboard</p>
+            
+            
+            <p class="login-subtitle">Sign in to access the Admin Dashboard</p>
           </div>
 
           <!-- Login Form -->

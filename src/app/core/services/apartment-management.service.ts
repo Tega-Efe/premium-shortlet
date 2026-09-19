@@ -11,9 +11,10 @@ import {
   query, 
   where,
   Timestamp,
-  writeBatch
+  writeBatch,
+  runTransaction
 } from '@angular/fire/firestore';
-import { Observable, from, map, catchError, of, switchMap, tap } from 'rxjs';
+import { Observable, from, map, catchError, of, tap } from 'rxjs';
 import { Apartment, DateRange } from '../interfaces';
 
 /**
@@ -240,7 +241,12 @@ export class ApartmentManagementService {
   }
 
   /**
-   * Add blocked dates to apartment (for offline bookings or maintenance)
+   * Add blocked dates to apartment (for offline bookings or maintenance).
+   *
+   * Runs as a Firestore transaction: the read of the current bookedDates/
+   * blackoutDates array and the write of the appended range happen against
+   * the same server-side snapshot, so this can't silently clobber a write
+   * that lands (e.g. from a guest's createBooking()) in between.
    */
   addBlockedDates(
     apartmentId: string,
@@ -249,38 +255,24 @@ export class ApartmentManagementService {
     type: 'booking' | 'maintenance' = 'maintenance'
   ): Observable<void> {
     const apartmentDoc = doc(this.firestore, 'apartments', apartmentId);
-    
-    return from(getDoc(apartmentDoc)).pipe(
-      switchMap(docSnap => {
-        if (!docSnap.exists()) {
-          throw new Error('Apartment not found');
-        }
-        
-        const apartment = docSnap.data() as Apartment;
-        const newDateRange: DateRange = { start: startDate, end: endDate };
-        
-        if (type === 'booking') {
-          const bookedDates = apartment.availability.bookedDates || [];
-          bookedDates.push(newDateRange);
-          
-          return this.updateApartment(apartmentId, {
-            availability: {
-              ...apartment.availability,
-              bookedDates
-            }
-          });
-        } else {
-          const blackoutDates = apartment.availability.blackoutDates || [];
-          blackoutDates.push(newDateRange);
-          
-          return this.updateApartment(apartmentId, {
-            availability: {
-              ...apartment.availability,
-              blackoutDates
-            }
-          });
-        }
-      }),
+    const newDateRange: DateRange = { start: startDate, end: endDate };
+    const field = type === 'booking' ? 'bookedDates' : 'blackoutDates';
+
+    return from(runTransaction(this.firestore, async (tx) => {
+      const docSnap = await tx.get(apartmentDoc);
+      if (!docSnap.exists()) {
+        throw new Error('Apartment not found');
+      }
+
+      const apartment = docSnap.data() as Apartment;
+      const updatedDates = [...(apartment.availability[field] || []), newDateRange];
+
+      tx.update(apartmentDoc, {
+        [`availability.${field}`]: updatedDates,
+        updatedAt: Timestamp.now()
+      });
+    })).pipe(
+      tap(() => this.getAllApartments().subscribe()),
       catchError(error => {
         console.error('Error adding blocked dates:', error);
         throw error;
@@ -289,7 +281,8 @@ export class ApartmentManagementService {
   }
 
   /**
-   * Remove blocked dates from apartment
+   * Remove blocked dates from apartment. Same transactional guard as
+   * addBlockedDates above.
    */
   removeBlockedDates(
     apartmentId: string,
@@ -298,45 +291,29 @@ export class ApartmentManagementService {
     type: 'booking' | 'maintenance' = 'maintenance'
   ): Observable<void> {
     const apartmentDoc = doc(this.firestore, 'apartments', apartmentId);
-    
-    return from(getDoc(apartmentDoc)).pipe(
-      switchMap(docSnap => {
-        if (!docSnap.exists()) {
-          throw new Error('Apartment not found');
-        }
-        
-        const apartment = docSnap.data() as Apartment;
-        const targetStart = startDate.getTime();
-        const targetEnd = endDate.getTime();
-        
-        if (type === 'booking') {
-          const bookedDates = (apartment.availability.bookedDates || []).filter(range => {
-            const rangeStart = new Date(range.start).getTime();
-            const rangeEnd = new Date(range.end).getTime();
-            return !(rangeStart === targetStart && rangeEnd === targetEnd);
-          });
-          
-          return this.updateApartment(apartmentId, {
-            availability: {
-              ...apartment.availability,
-              bookedDates
-            }
-          });
-        } else {
-          const blackoutDates = (apartment.availability.blackoutDates || []).filter(range => {
-            const rangeStart = new Date(range.start).getTime();
-            const rangeEnd = new Date(range.end).getTime();
-            return !(rangeStart === targetStart && rangeEnd === targetEnd);
-          });
-          
-          return this.updateApartment(apartmentId, {
-            availability: {
-              ...apartment.availability,
-              blackoutDates
-            }
-          });
-        }
-      }),
+    const targetStart = startDate.getTime();
+    const targetEnd = endDate.getTime();
+    const field = type === 'booking' ? 'bookedDates' : 'blackoutDates';
+
+    return from(runTransaction(this.firestore, async (tx) => {
+      const docSnap = await tx.get(apartmentDoc);
+      if (!docSnap.exists()) {
+        throw new Error('Apartment not found');
+      }
+
+      const apartment = docSnap.data() as Apartment;
+      const updatedDates = (apartment.availability[field] || []).filter(range => {
+        const rangeStart = new Date(range.start).getTime();
+        const rangeEnd = new Date(range.end).getTime();
+        return !(rangeStart === targetStart && rangeEnd === targetEnd);
+      });
+
+      tx.update(apartmentDoc, {
+        [`availability.${field}`]: updatedDates,
+        updatedAt: Timestamp.now()
+      });
+    })).pipe(
+      tap(() => this.getAllApartments().subscribe()),
       catchError(error => {
         console.error('Error removing blocked dates:', error);
         throw error;

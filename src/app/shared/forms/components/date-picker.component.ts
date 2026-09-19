@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
     <div class="date-picker-container">
       <button
         type="button"
-        class="date-trigger"
+        class="date-trigger gradient-border-field"
         [class.open]="isOpen()"
         [class.disabled]="disabled"
         [class.has-value]="displayValue()"
@@ -91,57 +91,18 @@ import { CommonModule } from '@angular/common';
       width: 100%;
     }
 
+    /* Border/fill/focus look comes from .gradient-border-field (styles.css) */
     .date-trigger {
       width: 100%;
       padding: 0.75rem;
-      border: 2px solid transparent;
-      border-radius: var(--border-radius, 0.5rem);
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 50%, 
-          var(--color-sage) 100%
-        );
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
       display: flex;
       align-items: center;
       gap: 0.75rem;
       cursor: pointer;
-      transition: all 0.3s ease;
       font-size: 1rem;
       text-align: left;
       position: relative;
       z-index: 10;
-    }
-
-    .date-trigger:hover:not(.disabled) {
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 30%,
-          var(--color-sage) 60%,
-          var(--color-burgundy) 100%
-        );
-      box-shadow: 0 2px 8px rgba(125, 25, 53, 0.1);
-    }
-
-    .date-trigger.open,
-    .date-trigger.has-value {
-      background-image: 
-        linear-gradient(var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, 
-          var(--color-burgundy) 0%, 
-          var(--color-tan) 30%,
-          var(--color-sage) 60%,
-          var(--color-burgundy) 100%
-        );
-    }
-
-    .date-trigger.open {
-      box-shadow: 0 0 0 3px rgba(125, 25, 53, 0.1);
     }
 
     .date-trigger.disabled {
@@ -149,34 +110,16 @@ import { CommonModule } from '@angular/common';
       opacity: 0.6;
     }
 
-    /* Dark mode gradient borders */
-    :root.dark-theme .date-trigger,
-    [data-theme='dark'] .date-trigger {
-      background-color: var(--bg-secondary);
-      background-image: 
-        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-        linear-gradient(135deg, 
-          #B84D66 0%,
-          #E8C4A0 50%,
-          #C9D4C7 100%
-        );
-    }
-
-    :root.dark-theme .date-trigger:hover:not(.disabled),
-    :root.dark-theme .date-trigger.open,
-    :root.dark-theme .date-trigger.has-value,
-    [data-theme='dark'] .date-trigger:hover:not(.disabled),
-    [data-theme='dark'] .date-trigger.open,
-    [data-theme='dark'] .date-trigger.has-value {
-      background-color: var(--bg-secondary);
-      background-image: 
-        linear-gradient(var(--bg-secondary), var(--bg-secondary)),
-        linear-gradient(135deg, 
-          #B84D66 0%,
-          #E8C4A0 30%,
-          #C9D4C7 60%,
-          #B84D66 100%
-        );
+    /* A native button doesn't automatically get :focus-within's own focus
+       state the way a wrapped <input> does, so mirror the active look
+       explicitly while the calendar is open. */
+    .date-trigger.open {
+      outline: none;
+      border-color: transparent;
+      box-shadow: 0 0 0 4px var(--field-ring);
+      background-image:
+        linear-gradient(var(--field-fill), var(--field-fill)),
+        var(--field-border-active);
     }
 
     .date-icon {

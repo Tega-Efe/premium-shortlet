@@ -190,19 +190,47 @@
           <div class="booking-modal-content">
             <!-- Apartment Summary -->
             <div class="apartment-summary">
-              <div class="summary-image-wrapper">
-                <img 
-                  [src]="selectedApartment()!.images[0]" 
-                  [alt]="selectedApartment()!.title"
-                  class="summary-image"
-                />
-                <div class="summary-badge">
-                  <i class="fas fa-check-circle"></i>
-                  Verified
+              <!-- Image slider: same slide/track/dots mechanism as the landing page
+                   gallery, but square corners, no label overlay, and arrows only
+                   shown on larger screens (dots always shown, swipe/tap works on
+                   mobile without them). -->
+              <div class="summary-slider" (touchstart)="onSummaryTouchStart($event)" (touchend)="onSummaryTouchEnd($event)">
+                <div class="summary-track" [style.transform]="'translateX(-' + (summarySlide() * 100) + '%)'">
+                  @for (image of selectedApartment()!.images; track $index) {
+                    <div class="summary-slide">
+                      <img [src]="image" [alt]="selectedApartment()!.title" class="summary-slide-image" />
+                    </div>
+                  }
                 </div>
+
+                @if (selectedApartment()!.images.length > 1) {
+                  <button class="summary-nav summary-nav-prev" (click)="summaryPrevSlide()" aria-label="Previous photo">
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+                  <button class="summary-nav summary-nav-next" (click)="summaryNextSlide()" aria-label="Next photo">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+
+                  <div class="summary-dots">
+                    @for (image of selectedApartment()!.images; track $index) {
+                      <button
+                        class="summary-dot"
+                        [class.active]="summarySlide() === $index"
+                        (click)="summaryGoToSlide($index)"
+                        [attr.aria-label]="'Go to photo ' + ($index + 1)"
+                      ></button>
+                    }
+                  </div>
+                }
               </div>
               <div class="summary-info">
-                <h3 class="summary-title">{{ selectedApartment()!.title }}</h3>
+                <div class="summary-title-row">
+                  <h3 class="summary-title">{{ selectedApartment()!.title }}</h3>
+                  <span class="summary-badge">
+                    <i class="fas fa-check-circle"></i>
+                    Verified
+                  </span>
+                </div>
                 <p class="summary-location">
                   <i class="fas fa-map-marker-alt"></i>
                   {{ selectedApartment()!.location.city }}, {{ selectedApartment()!.location.state }}

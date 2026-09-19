@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { EmailNotificationPayload } from '../interfaces/simplified-booking.interface';
+import { environment } from '../../../environments/environment';
 
 /**
  * Email Notification Service
@@ -11,27 +12,35 @@ import { EmailNotificationPayload } from '../interfaces/simplified-booking.inter
  * This service is independent of Firestore and sends notifications to:
  * - Admin when a new booking is submitted
  * - Guest when booking is approved or rejected
- * 
- * CURRENT MODE: DEVELOPMENT (No actual emails sent)
- * To enable email sending:
- * 1. Set USE_MOCK_EMAIL to false
- * 2. Update DJANGO_API_URL with your actual backend URL
- * 3. Update API_KEY with your actual API key
+ *
+ * CONFIG: url/apiKey/useMock now come from environment.ts / environment.prod.ts
+ * (see emailApi below) instead of being hardcoded here, so per-environment
+ * values aren't committed to source and dev/prod can differ without a code
+ * change. Add this to both environment files:
+ *
+ *   emailApi: {
+ *     useMock: true,                 // false once the backend is live
+ *     url: 'https://your-django-api.com/api/notifications/send',
+ *     apiKey: ''                     // see the security note below
+ *   }
+ *
+ * SECURITY: an API key read here still ships inside the compiled browser
+ * bundle — anyone can read it from dev tools. That's fine for a low-value
+ * "notify" webhook behind rate limiting, but if this key can do anything
+ * sensitive on the Django side, don't put it here at all: front this
+ * endpoint with a Firebase Cloud Function (e.g. triggered on a new
+ * `simplified-bookings` doc, or a callable function) that holds the real
+ * key server-side, and point `url` at that function instead.
  */
 @Injectable({
   providedIn: 'root'
 })
 export class EmailNotificationService {
   private http = inject(HttpClient);
-  
-  // Toggle between mock (development) and real email sending
-  private readonly USE_MOCK_EMAIL = true; // Set to false when backend is ready
-  
-  // TODO: Replace with your actual Django API endpoint
-  private readonly DJANGO_API_URL = 'https://your-django-api.com/api/notifications/send';
-  
-  // TODO: Add your API key for authentication if required
-  private readonly API_KEY = 'your-api-key-here';
+
+  private readonly USE_MOCK_EMAIL = environment.emailApi?.useMock ?? true;
+  private readonly DJANGO_API_URL = environment.emailApi?.url ?? '';
+  private readonly API_KEY = environment.emailApi?.apiKey ?? '';
   
   /**
    * Send booking received notification to admin
@@ -162,6 +171,11 @@ export class EmailNotificationService {
     }
 
     // PRODUCTION MODE: Make actual HTTP call to Django API
+    if (!this.DJANGO_API_URL) {
+      console.warn('⚠️ emailApi.useMock is false but no emailApi.url is configured — logging instead of sending.');
+      return of({ success: false, message: 'Email API URL not configured' });
+    }
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.API_KEY}`  // If your Django API requires auth

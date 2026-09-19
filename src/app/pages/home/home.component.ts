@@ -33,78 +33,28 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       background: var(--bg-primary);
     }
 
-    /* Page Header */
-    .page-header {
-      position: relative;
-      background: linear-gradient(135deg, var(--color-burgundy, #7D1935) 0%, #9B2447 50%, var(--color-terracotta, #C17D5C) 100%);
-      color: white;
-      padding: 3rem 0 3.5rem;
-      overflow: hidden;
-    }
-
-    .header-background {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100px;
-      opacity: 0.4;
-    }
-
-    .header-background svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .header-content {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .header-icon {
-      width: clamp(52px, 10vw, 60px);
-      height: clamp(52px, 10vw, 60px);
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      margin: 0 auto 1rem;
-      backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
+    /* NOTE: .page-header and its hero markup (icon/title/subtitle) were
+       removed from the template a while back for the single-apartment
+       layout, but the CSS was left behind — including a negative margin on
+       .content-grid meant to pull it up under a hero that no longer exists.
+       Removed below; .container is the only thing still in use here. */
     .container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
-    .page-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.75rem, 4.5vw, 2.375rem);
-      font-weight: 700;
-      margin: 0 0 0.75rem 0;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .page-subtitle {
-      font-size: clamp(0.9375rem, 2vw, 1.125rem);
-      margin: 0;
-      opacity: 0.95;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Content Grid - SIMPLIFIED FOR SINGLE APARTMENT */
+    /* Content Grid - SIMPLIFIED FOR SINGLE APARTMENT
+       No .page-header exists in the template anymore, so this only needs a
+       small, deliberate top gap (not the old negative-margin-to-clear-a-hero
+       trick, which flipped to a much larger positive margin on mobile and
+       is what was pushing the "Apartments Available" card down under the
+       navbar). */
     .content-grid {
       display: grid;
       grid-template-columns: 1fr;  /* Changed from 320px 1fr - no sidebar */
       gap: 1.75rem;
-      margin-top: -1.5rem;
+      margin-top: 1.25rem;
       position: relative;
       z-index: 10;
     }
@@ -442,40 +392,131 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
     .apartment-summary {
       display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2rem;
-      padding: 2rem;
+      grid-template-columns: 260px 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
       background: var(--bg-secondary);
       border-radius: 1rem;
       border: 1px solid var(--border-color);
     }
 
-    .summary-image-wrapper {
+    /* Image slider — deliberately square-cornered (no border-radius) and
+       with no label overlay, per the modal's own look; the landing page
+       gallery is the visual reference for slide/track/dot mechanics only. */
+    .summary-slider {
       position: relative;
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      touch-action: pan-y; /* let vertical scroll through, capture horizontal swipes ourselves */
     }
 
-    .summary-image {
+    .summary-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       width: 100%;
-      height: 180px;
+    }
+
+    .summary-slide {
+      min-width: 100%;
+      width: 100%;
+      aspect-ratio: 4/3;
+      flex-shrink: 0;
+    }
+
+    .summary-slide-image {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 12px rgba(125, 25, 53, 0.15);
+      display: block;
+    }
+
+    .summary-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      border: none;
+      color: var(--color-burgundy, #7D1935);
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: none; /* Arrows are desktop/tablet only — see the ≥768px override below */
+      align-items: center;
+      justify-content: center;
+    }
+
+    .summary-nav:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .summary-nav-prev {
+      left: 0.5rem;
+    }
+
+    .summary-nav-next {
+      right: 0.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .summary-nav {
+        display: flex;
+      }
+    }
+
+    .summary-dots {
+      position: absolute;
+      bottom: 0.625rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 0.375rem;
+      z-index: 10;
+    }
+
+    .summary-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .summary-dot.active {
+      background: white;
+      transform: scale(1.2);
+    }
+
+    .summary-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
     .summary-badge {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
+      flex-shrink: 0;
       background: var(--color-burgundy, #7D1935);
       color: white;
-      padding: 0.375rem 0.75rem;
+      padding: 0.25rem 0.625rem;
       border-radius: 0.375rem;
-      font-size: 0.75rem;
+      font-size: 0.6875rem;
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 0.375rem;
-      box-shadow: 0 2px 8px rgba(125, 25, 53, 0.3);
+      gap: 0.3125rem;
     }
 
     .summary-info {
@@ -577,39 +618,16 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     @media (max-width: 1024px) {
       .content-grid {
         grid-template-columns: 1fr;
-        margin-top: 2rem;
       }
 
       .sidebar {
         position: static;
-      }
-
-      .page-header {
-        padding: 3rem 0 4rem;
       }
     }
 
     @media (max-width: 768px) {
       .container {
         padding: 0 1rem;
-      }
-
-      .page-header {
-        padding: 2.5rem 0 3rem;
-      }
-
-      .header-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.75rem;
-      }
-
-      .page-title {
-        font-size: 2.25rem;
-      }
-
-      .page-subtitle {
-        font-size: 1.0625rem;
       }
 
       .results-header {
@@ -640,12 +658,12 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
       .apartment-summary {
         grid-template-columns: 1fr;
-        padding: 1.25rem;
+        padding: 1rem;
+        gap: 1rem;
       }
 
-      .summary-image {
-        width: 100%;
-        height: 220px;
+      .summary-slide {
+        aspect-ratio: 16/10;
       }
 
       .summary-info {
@@ -682,20 +700,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     }
 
     @media (max-width: 480px) {
-      .header-icon {
-        margin-top: 1.5rem; /* Add more space before icon on mobile */
-      }
-
-      .page-header {
-        padding: 2rem 0 2.5rem; /* Reduced padding to minimize top margin */
-      }
-
       .container {
         padding: 0 0.625rem;
-      }
-
-      .page-title {
-        font-size: 1.875rem;
       }
 
       .results-header {
@@ -727,8 +733,8 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       }
 
       .apartment-summary {
-        padding: 1rem;
-        gap: 1.25rem;
+        padding: 0.75rem;
+        gap: 0.875rem;
       }
 
       .summary-info {
@@ -1134,6 +1140,7 @@ export class HomeComponent implements OnInit {
   allApartments = signal<Apartment[]>([]);
   filteredApartments = signal<Apartment[]>([]);
   selectedApartment = signal<Apartment | null>(null);
+  summarySlide = signal(0);
 
   // Availability signals
   // Note: allApartments already filtered by isAvailable in loadApartments
@@ -1303,9 +1310,55 @@ export class HomeComponent implements OnInit {
     }
 
     this.selectedApartment.set(apartment);
+    this.summarySlide.set(0);
     this.showBookingModal.set(true);
     if (this.bookingModal) {
       this.bookingModal.openModal('Book ' + apartment.title);
+    }
+  }
+
+  // Booking modal image slider — same slide/dots mechanism as the landing
+  // page gallery, adapted per the apartment currently selected for booking.
+  summaryNextSlide(): void {
+    const images = this.selectedApartment()?.images ?? [];
+    if (images.length < 2) return;
+    this.summarySlide.update(current => current === images.length - 1 ? 0 : current + 1);
+  }
+
+  summaryPrevSlide(): void {
+    const images = this.selectedApartment()?.images ?? [];
+    if (images.length < 2) return;
+    this.summarySlide.update(current => current === 0 ? images.length - 1 : current - 1);
+  }
+
+  summaryGoToSlide(index: number): void {
+    this.summarySlide.set(index);
+  }
+
+  // Touch swipe support for the slider on mobile, where the nav arrows are
+  // hidden below 768px — this is the only way to navigate slides there.
+  private summaryTouchStartX = 0;
+  private summaryTouchStartY = 0;
+  private readonly SWIPE_THRESHOLD = 40; // px
+
+  onSummaryTouchStart(event: TouchEvent): void {
+    this.summaryTouchStartX = event.touches[0].clientX;
+    this.summaryTouchStartY = event.touches[0].clientY;
+  }
+
+  onSummaryTouchEnd(event: TouchEvent): void {
+    const deltaX = event.changedTouches[0].clientX - this.summaryTouchStartX;
+    const deltaY = event.changedTouches[0].clientY - this.summaryTouchStartY;
+
+    // Ignore mostly-vertical swipes so scrolling the modal still works
+    if (Math.abs(deltaX) < this.SWIPE_THRESHOLD || Math.abs(deltaX) < Math.abs(deltaY)) {
+      return;
+    }
+
+    if (deltaX < 0) {
+      this.summaryNextSlide();
+    } else {
+      this.summaryPrevSlide();
     }
   }
 

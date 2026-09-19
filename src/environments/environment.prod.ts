@@ -9,5 +9,11 @@ export const environment = {
     messagingSenderId: "605241409683",
     appId: "1:605241409683:web:68fffdf1da9f09b4384d66",
     measurementId: "G-270LHK7D02"
+  },
+  emailApi: {
+    useMock: true, // Flip to false only once url/apiKey below point at a real, live backend
+    url: 'https://your-django-api.com/api/notifications/send',
+    apiKey: '', // See the security note in email-notification.service.ts before filling this in
+    adminEmail: 'admin@shortletconnect.com'
   }
 };

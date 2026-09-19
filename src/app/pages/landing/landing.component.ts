@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApartmentBrowsingService } from '../../core/services/apartment-browsing.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { Apartment } from '../../core/interfaces';
 import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective } from '../../core/directives';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective],
+  imports: [CommonModule, AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective, ModalComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './landing.component.html', styles: [`
     .landing-page {
@@ -356,6 +357,12 @@ import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective }
       aspect-ratio: 16/9;
       flex-shrink: 0;
       position: relative;
+      cursor: zoom-in;
+    }
+
+    .gallery-slide:focus-visible {
+      outline: 3px solid var(--color-tan);
+      outline-offset: -3px;
     }
 
     .gallery-image {
@@ -393,6 +400,21 @@ import { AnimateOnScrollDirective, HoverEffectDirective, TypingEffectDirective }
       object-fit: cover;
       position: absolute;
       inset: 0;
+    }
+
+    .image-preview {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh;
+      background: var(--bg-primary);
+    }
+
+    .image-preview-image {
+      display: block;
+      width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
     }
 
     .gallery-label {
@@ -1167,6 +1189,8 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   // Gallery carousel state
   currentSlide = signal(0);
+  previewImage = signal<{ url: string; label: string } | null>(null);
+  @ViewChild('imagePreviewModal') imagePreviewModal?: ModalComponent;
   private autoPlayInterval?: number;
   galleryImages: { url?: string; icon?: string; label: string }[] = [];
 
@@ -1209,6 +1233,16 @@ export class LandingComponent implements OnInit, OnDestroy {
     this.stopAutoPlay(); // Stop auto-play when user manually navigates
     this.currentSlide.set(index);
     this.startAutoPlay(); // Restart auto-play
+  }
+
+  openImagePreview(image: { url?: string; label: string }): void {
+    if (!image.url) return;
+    this.previewImage.set({ url: image.url, label: image.label });
+    this.imagePreviewModal?.openModal(image.label);
+  }
+
+  closeImagePreview(): void {
+    this.previewImage.set(null);
   }
 
   loadFeaturedApartments(): void {

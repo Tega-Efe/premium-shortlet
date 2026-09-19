@@ -159,7 +159,15 @@
               <div class="gallery-slider">
                 <div class="gallery-track" [style.transform]="'translateX(-' + (currentSlide() * 100) + '%)'">
                   @for (image of galleryImages; track $index) {
-                    <div class="gallery-slide">
+                    <div
+                      class="gallery-slide"
+                      role="button"
+                      tabindex="0"
+                      (click)="openImagePreview(image)"
+                      (keydown.enter)="openImagePreview(image)"
+                      (keydown.space)="$event.preventDefault(); openImagePreview(image)"
+                      [attr.aria-label]="'View ' + image.label + ' full screen'"
+                    >
                       <div class="gallery-image">
                         @if (image.url) {
                           <img [src]="image.url" [alt]="image.label" class="gallery-actual-image">
@@ -190,6 +198,19 @@
               </div>
             </div>
           }
+
+          <app-modal
+            #imagePreviewModal
+            [size]="'xl'"
+            [showFooter]="false"
+            (modalClose)="closeImagePreview()"
+          >
+            @if (previewImage(); as image) {
+              <div class="image-preview">
+                <img [src]="image.url" [alt]="image.label" class="image-preview-image">
+              </div>
+            }
+          </app-modal>
 
           <div class="section-footer" appAnimateOnScroll="slide-up">
             <button 

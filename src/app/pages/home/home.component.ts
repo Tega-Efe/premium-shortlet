@@ -444,6 +444,27 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       height: 100%;
       object-fit: cover;
       display: block;
+      cursor: zoom-in;
+    }
+
+    .summary-slide:focus-visible {
+      outline: 3px solid var(--color-tan);
+      outline-offset: -3px;
+    }
+
+    .image-preview {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh;
+      background: var(--bg-primary);
+    }
+
+    .image-preview-image {
+      display: block;
+      width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
     }
 
     .summary-nav {
@@ -1194,6 +1215,7 @@ export class HomeComponent implements OnInit {
   protected themeService = inject(ThemeService);
 
   @ViewChild('bookingModal') bookingModal!: ModalComponent;
+  @ViewChild('imagePreviewModal') imagePreviewModal!: ModalComponent;
   @ViewChild('unavailableModal') unavailableModal!: ModalComponent;
   @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
 
@@ -1202,6 +1224,7 @@ export class HomeComponent implements OnInit {
   filteredApartments = signal<Apartment[]>([]);
   selectedApartment = signal<Apartment | null>(null);
   summarySlide = signal(0);
+  previewImage = signal<{ url: string; label: string } | null>(null);
 
   // Availability signals
   // Note: allApartments already filtered by isAvailable in loadApartments
@@ -1394,6 +1417,17 @@ export class HomeComponent implements OnInit {
 
   summaryGoToSlide(index: number): void {
     this.summarySlide.set(index);
+  }
+
+  openImagePreview(image: string): void {
+    const apartment = this.selectedApartment();
+    if (!apartment) return;
+    this.previewImage.set({ url: image, label: apartment.title });
+    this.imagePreviewModal?.openModal(apartment.title);
+  }
+
+  closeImagePreview(): void {
+    this.previewImage.set(null);
   }
 
   // Touch swipe support for the slider on mobile, where the nav arrows are

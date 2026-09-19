@@ -197,7 +197,15 @@
               <div class="summary-slider" (touchstart)="onSummaryTouchStart($event)" (touchend)="onSummaryTouchEnd($event)">
                 <div class="summary-track" [style.transform]="'translateX(-' + (summarySlide() * 100) + '%)'">
                   @for (image of selectedApartment()!.images; track $index) {
-                    <div class="summary-slide">
+                    <div
+                      class="summary-slide"
+                      role="button"
+                      tabindex="0"
+                      (click)="openImagePreview(image)"
+                      (keydown.enter)="openImagePreview(image)"
+                      (keydown.space)="$event.preventDefault(); openImagePreview(image)"
+                      [attr.aria-label]="'View photo ' + ($index + 1) + ' full screen'"
+                    >
                       <img [src]="image" [alt]="selectedApartment()!.title" class="summary-slide-image" />
                     </div>
                   }
@@ -271,6 +279,19 @@
                 (formSubmit)="onBookingSubmit($event)"
               />
             </div>
+          </div>
+        }
+      </app-modal>
+
+      <app-modal
+        #imagePreviewModal
+        [size]="'xl'"
+        [showFooter]="false"
+        (modalClose)="closeImagePreview()"
+      >
+        @if (previewImage(); as image) {
+          <div class="image-preview">
+            <img [src]="image.url" [alt]="image.label" class="image-preview-image" />
           </div>
         }
       </app-modal>

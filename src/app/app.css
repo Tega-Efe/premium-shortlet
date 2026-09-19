@@ -10,5 +10,11 @@
 main {
   flex: 1;
   width: 100%;
-  min-height: calc(100vh - var(--navbar-height) - 200px); /* viewport - navbar - footer */
+  /* Fill the first screen (viewport minus the navbar offset) so the footer
+     always starts below the fold - on every page, before and after its
+     content loads. It is only reachable by scrolling down to it.
+     dvh tracks the visible area on mobile browsers whose toolbar collapses;
+     the vh line is the fallback for browsers without dvh. */
+  min-height: calc(100vh - var(--navbar-height));
+  min-height: calc(100dvh - var(--navbar-height));
 }

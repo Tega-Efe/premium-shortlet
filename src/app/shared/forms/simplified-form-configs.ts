@@ -51,7 +51,7 @@ export const simplifiedBookingFormConfig: FormConfig = {
       name: 'guestPhone',
       label: 'Phone Number',
       type: 'tel',
-      placeholder: '+234 800 123 4567',
+      placeholder: '800 123 4567',
       validators: [
         Validators.required,
         ValidationUtils.phoneValidator()

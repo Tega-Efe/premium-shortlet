@@ -390,6 +390,14 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
       gap: 2.5rem;
     }
 
+    /* Each block keeps its full content height. If a browser ever treats this
+       column as height-constrained, blocks then scroll instead of shrinking
+       and overlapping the next block. */
+    .booking-modal-content > * {
+      flex-shrink: 0;
+      min-width: 0;
+    }
+
     .apartment-summary {
       display: grid;
       grid-template-columns: 260px 1fr;
@@ -406,25 +414,32 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
     .summary-slider {
       position: relative;
       width: 100%;
+      /* The slider owns its height. Photos are absolutely positioned inside,
+         so their natural size / load timing can never change the height of
+         the summary card (or push the form below it around). */
+      aspect-ratio: 4/3;
       overflow: hidden;
       border: 1px solid var(--border-color);
       touch-action: pan-y; /* let vertical scroll through, capture horizontal swipes ourselves */
     }
 
     .summary-track {
+      position: absolute;
+      inset: 0;
       display: flex;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 100%;
     }
 
     .summary-slide {
+      position: relative;
+      flex: 0 0 100%;
       min-width: 100%;
-      width: 100%;
-      aspect-ratio: 4/3;
-      flex-shrink: 0;
+      height: 100%;
     }
 
     .summary-slide-image {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -662,8 +677,25 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
         gap: 1rem;
       }
 
-      .summary-slide {
+      .summary-slider {
         aspect-ratio: 16/10;
+      }
+
+      /* Beds / Baths / Guests stay on one row on phones */
+      .summary-specs {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      .spec {
+        white-space: nowrap;
+        gap: 0.375rem;
+        font-size: 0.875rem;
+      }
+
+      .spec i {
+        font-size: 1rem;
       }
 
       .summary-info {
@@ -737,6 +769,19 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
         gap: 0.875rem;
       }
 
+      .summary-specs {
+        gap: 0.375rem;
+      }
+
+      .spec {
+        font-size: 0.8125rem;
+        gap: 0.3125rem;
+      }
+
+      .spec i {
+        font-size: 0.9375rem;
+      }
+
       .summary-info {
         gap: 0.625rem;
       }
@@ -751,6 +796,22 @@ import { AnimateOnScrollDirective } from '../../core/directives/animate-on-scrol
 
       .booking-modal-content {
         gap: 1.5rem;
+      }
+    }
+
+    /* Very small phones (320px class): keep Beds / Baths / Guests on one row */
+    @media (max-width: 340px) {
+      .summary-specs {
+        gap: 0.25rem;
+      }
+
+      .spec {
+        font-size: 0.75rem;
+        gap: 0.25rem;
+      }
+
+      .spec i {
+        font-size: 0.875rem;
       }
     }
 
@@ -1533,4 +1594,3 @@ export class HomeComponent implements OnInit {
     }
   }
 }
-
